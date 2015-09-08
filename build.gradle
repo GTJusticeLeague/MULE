@@ -1,0 +1,22 @@
+defaultTasks 'jar'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+//sourceCompatibility = 1.8
+version = '1.0'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'MULE',
+                'Implementation-Version': version ,
+                'Main-Class' : 'MULE.Main'
+    }
+}
+
+idea{
+    module{
+        inheritOutputDirs = false
+        outputDir = compileJava.destinationDir
+        testOutputDir = compileTestJava.destinationDir
+    }
+}
