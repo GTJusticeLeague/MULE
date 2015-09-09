@@ -1,9 +1,11 @@
 defaultTasks 'jar'
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'application'
 
 //sourceCompatibility = 1.8
 version = '1.0'
+mainClassName = "MULE.Main"
 
 jar {
     manifest {
