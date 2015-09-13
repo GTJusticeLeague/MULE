@@ -1,35 +1,62 @@
 package MULE;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 
 public class MainController {
+    private GameConfig GAMECONFIG;
+
     @FXML
     private Button GameConfigButton;
 
-    @FXML
-    private RadioButton PlayerNum_4;
+//    @FXML
+//    private RadioButton PlayerNum_4;
+//
+//    @FXML
+//    private RadioButton PlayerNum_3;
+//
+//    @FXML
+//    private RadioButton PlayerNum_2;
+//
+//    @FXML
+//    private RadioButton MapType_Standard;
+//
+//    @FXML
+//    private RadioButton MapType_Random;
+//
+//    @FXML
+//    private RadioButton Difficulty_Beginner;
+//
+//    @FXML
+//    private RadioButton Difficulty_Intermediate;
+//
+//    @FXML
+//    private RadioButton Difficulty_Advanced;
 
     @FXML
-    private RadioButton PlayerNum_3;
+    private Label DifficultyLabel;
 
     @FXML
-    private RadioButton PlayerNum_2;
+    private ToggleGroup NumPlayers;
 
     @FXML
-    private RadioButton MapType_Standard;
+    private ToggleGroup MapType;
 
     @FXML
-    private RadioButton MapType_Random;
+    private ToggleGroup Difficulty;
 
     @FXML
-    private RadioButton Difficulty_Beginner;
+    private void handleGameConfigButton (ActionEvent event) {
+        String selected_dificulty = Difficulty.getSelectedToggle().toString();
+        DifficultyLabel.setText(selected_dificulty);
+        //String selected_MapType = MapType.selectedToggleProperty().toString();
+        //int selected_Num = Integer.parseInt(NumPlayers.selectedToggleProperty().toString());
 
-    @FXML
-    private RadioButton Difficulty_Intermediate;
+        //GameConfig = new GameConfig();
+    }
 
-    @FXML
-    private RadioButton Difficulty_Advanced;
 
 }
