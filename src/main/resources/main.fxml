@@ -68,7 +68,7 @@
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="Diffiulty_Beginner" contentDisplay="CENTER" layoutX="72.0" layoutY="34.0" mnemonicParsing="false" text="Beginner" toggleGroup="$Difficulty">
+                                    <RadioButton fx:id="Difficulty_Beginner" contentDisplay="CENTER" layoutX="72.0" layoutY="34.0" mnemonicParsing="false" selected="true" text="Beginner" toggleGroup="$Difficulty">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -85,7 +85,7 @@
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="MapType_Standard" layoutX="87.0" layoutY="38.0" mnemonicParsing="false" text="Standard" toggleGroup="$MapType">
+                                    <RadioButton fx:id="MapType_Standard" layoutX="87.0" layoutY="38.0" mnemonicParsing="false" selected="true" text="Standard" toggleGroup="$MapType">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -102,7 +102,7 @@
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="PlayerNum_2" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" text="2" toggleGroup="$NumPlayers">
+                                    <RadioButton fx:id="PlayerNum_2" layoutX="81.0" layoutY="35.0" mnemonicParsing="false" selected="true" text="2" toggleGroup="$NumPlayers">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -122,7 +122,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Button fx:id="GameConfigButton" layoutX="651.0" layoutY="526.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="135.0" text="OK">
+      <Button fx:id="GameConfigButton" layoutX="651.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleGameConfigButton" prefHeight="46.0" prefWidth="135.0" text="OK">
          <font>
             <Font size="16.0" />
          </font>
