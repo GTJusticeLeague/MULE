@@ -16,12 +16,15 @@ public class GameConfig {
 
     private final Difficulty difficulty;
     private final MapType mapType;
-    private final int players;
+    private final Player[] players;
+    private final int numPlayers;
+    private final int MAX_NUM_PLAYERS = 4;
 
-    public GameConfig(Difficulty difficulty, MapType mapType, int players) {
+    public GameConfig(Difficulty difficulty, MapType mapType, int numPlayers) {
         this.difficulty = difficulty;
         this.mapType = mapType;
-        this.players = players;
+        this.numPlayers = numPlayers;
+        this.players = new Player[MAX_NUM_PLAYERS];
     }
 
     public Difficulty getDifficulty() {
@@ -32,7 +35,11 @@ public class GameConfig {
         return mapType;
     }
 
-    public int getPlayers() {
+    public Player[] getPlayers() {
         return players;
+    }
+
+    public int getNumPlayers() {
+        return numPlayers;
     }
 }

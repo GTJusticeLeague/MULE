@@ -6,21 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController {
-    private GameConfig GAMECONFIG;
+public class GameConfigController {
 
     @FXML
     private Button GameConfigButton;
-
-    @FXML
-    private Label DifficultyLabel;
 
     @FXML
     private ToggleGroup NumPlayers;
@@ -54,7 +49,7 @@ public class MainController {
             GameMapType = GameConfig.MapType.RANDOM;
         }
 
-        GAMECONFIG = new GameConfig(GameDifficulty, GameMapType,
+        Main.GAMECONFIG = new GameConfig(GameDifficulty, GameMapType,
                 Integer.parseInt(((RadioButton)NumPlayers.getSelectedToggle()).getText()));
 
         // Move to the next scene (player configuration)
