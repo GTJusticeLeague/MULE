@@ -5,6 +5,15 @@ package MULE;
  * 9/13/2015 - Changed level to difficulty, make variables final, add getters
  */
 public class GameConfig {
+
+    public enum Difficulty {
+        BEGINNER, INTERMEDIATE, ADVANCED
+    }
+
+    public enum MapType {
+        STANDARD, RANDOM
+    }
+
     private final Difficulty difficulty;
     private final MapType mapType;
     private final int players;

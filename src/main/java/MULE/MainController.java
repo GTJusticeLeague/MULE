@@ -16,10 +16,6 @@ import java.io.IOException;
 public class MainController {
     private GameConfig GAMECONFIG;
 
-    Difficulty GameDifficulty;
-
-    MapType GameMapType;
-
     @FXML
     private Button GameConfigButton;
 
@@ -36,21 +32,26 @@ public class MainController {
     private ToggleGroup Difficulty;
 
     @FXML
-    private void handleGameConfigButton (ActionEvent event) throws IOException {
-        String selected_dificulty = ((RadioButton)Difficulty.getSelectedToggle()).getText();
-        if (selected_dificulty.equals("Beginner")) {
-            GameDifficulty = MULE.Difficulty.BEGINNER;
-        } else if (selected_dificulty.equals("Intermediate")) {
-            GameDifficulty = MULE.Difficulty.INTERMEDIATE;
+    private void handleGameConfigButton(ActionEvent event) throws IOException {
+        GameConfig.Difficulty GameDifficulty;
+        GameConfig.MapType GameMapType;
+
+        // Get selected difficulty from the radio buttons
+        String selected_difficulty = ((RadioButton)Difficulty.getSelectedToggle()).getText();
+        if (selected_difficulty.equals("Beginner")) {
+            GameDifficulty = MULE.GameConfig.Difficulty.BEGINNER;
+        } else if (selected_difficulty.equals("Intermediate")) {
+            GameDifficulty = MULE.GameConfig.Difficulty.INTERMEDIATE;
         } else {
-            GameDifficulty = MULE.Difficulty.ADVANCED;
+            GameDifficulty = MULE.GameConfig.Difficulty.ADVANCED;
         }
 
+        // Get selected map type from the radio buttons
         String selected_MapType = ((RadioButton)MapType.getSelectedToggle()).getText();
         if (selected_MapType.equals("Standard")) {
-            GameMapType = MULE.MapType.STANDARD;
+            GameMapType = GameConfig.MapType.STANDARD;
         } else {
-            GameMapType = MULE.MapType.RANDOM;
+            GameMapType = GameConfig.MapType.RANDOM;
         }
 
         GAMECONFIG = new GameConfig(GameDifficulty, GameMapType,

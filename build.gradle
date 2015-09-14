@@ -10,8 +10,8 @@ mainClassName = "MULE.Main"
 jar {
     manifest {
         attributes 'Implementation-Title': 'MULE',
-                'Implementation-Version': version ,
-                'Main-Class' : 'MULE.Main'
+                'Implementation-Version': version,
+                'Main-Class': mainClassName
     }
 }
 

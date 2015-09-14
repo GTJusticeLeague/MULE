@@ -22,9 +22,9 @@ public class Player {
         PURPLE
     }
 
-    private String name;
-    private Race race;
-    private Color color;
+    private final String name;
+    private final Race race;
+    private final Color color;
 
     public Player (String name, Race race, Color color) {
             this.name = name;
