@@ -2,10 +2,16 @@ package MULE;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainController {
     private GameConfig GAMECONFIG;
@@ -30,7 +36,7 @@ public class MainController {
     private ToggleGroup Difficulty;
 
     @FXML
-    private void handleGameConfigButton (ActionEvent event) {
+    private void handleGameConfigButton (ActionEvent event) throws IOException {
         String selected_dificulty = ((RadioButton)Difficulty.getSelectedToggle()).getText();
         if (selected_dificulty.equals("Beginner")) {
             GameDifficulty = MULE.Difficulty.BEGINNER;
@@ -49,6 +55,13 @@ public class MainController {
 
         GAMECONFIG = new GameConfig(GameDifficulty, GameMapType,
                 Integer.parseInt(((RadioButton)NumPlayers.getSelectedToggle()).getText()));
+
+        // Move to the next scene (player configuration)
+        Stage stage=(Stage) GameConfigButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/playerConfiguration.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
