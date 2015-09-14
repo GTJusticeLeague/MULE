@@ -30,6 +30,7 @@ public class Player {
             this.name = name;
             this.race = race;
             this.color = color;
+
     }
 
     public String getName() {
@@ -43,4 +44,9 @@ public class Player {
     public Race getRace() {
         return race;
     }
+
+    public String toString() {
+        return "name: " + name + ", race: " + race.toString() + ", color: " + color.toString();
+    }
+
 }

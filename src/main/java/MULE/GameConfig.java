@@ -16,7 +16,7 @@ public class GameConfig {
 
     private final Difficulty difficulty;
     private final MapType mapType;
-    private final Player[] players;
+    public Player[] players;
     private final int numPlayers;
     private final int MAX_NUM_PLAYERS = 4;
 
