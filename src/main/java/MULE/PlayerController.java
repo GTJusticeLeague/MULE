@@ -1,16 +1,16 @@
 package MULE;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.GridPane;
-import javafx.collections.FXCollections;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -68,12 +68,12 @@ public class PlayerController {
         loadRaceColorValues();
 
         // Shows player config based on number of players chosen.
-        if (Main.GAMECONFIG.getNumPlayers() == 2) {
+        if (GamePlay.GAMECONFIG.getNumPlayers() == 2) {
 
             playerGrid.getChildren().remove(2);
             playerGrid.getChildren().remove(2);
 
-        } else if (Main.GAMECONFIG.getNumPlayers() == 3) {
+        } else if (GamePlay.GAMECONFIG.getNumPlayers() == 3) {
             playerGrid.getChildren().remove(3);
 
         }
@@ -118,23 +118,23 @@ public class PlayerController {
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player1Color.getSelectionModel().getSelectedIndex()]);
-        Main.GAMECONFIG.players[0] = firstPlayer;
+        GamePlay.GAMECONFIG.players[0] = firstPlayer;
 
         Player secondPlayer = new Player(player2Name.getText(),
                 Player.Race.values()[player2Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()]);
-        Main.GAMECONFIG.players[1] = secondPlayer;
+        GamePlay.GAMECONFIG.players[1] = secondPlayer;
 
-        if (Main.GAMECONFIG.getNumPlayers() > 2) {
+        if (GamePlay.GAMECONFIG.getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
                     Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()]);
-            Main.GAMECONFIG.players[2] = thirdPlayer;
-            if (Main.GAMECONFIG.getNumPlayers() > 3) {
+            GamePlay.GAMECONFIG.players[2] = thirdPlayer;
+            if (GamePlay.GAMECONFIG.getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
                         Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()]);
-                Main.GAMECONFIG.players[3] = fourthPlayer;
+                GamePlay.GAMECONFIG.players[3] = fourthPlayer;
             }
         }
 
