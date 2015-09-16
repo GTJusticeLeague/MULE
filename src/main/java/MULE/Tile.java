@@ -10,7 +10,8 @@ public class Tile {
         PLAIN,
         ONEMOUNTAIN,
         TWOMOUNTAIN,
-        THREEMOUNTAIN
+        THREEMOUNTAIN,
+        TOWN
     }
 
     private Terrain terrain;
