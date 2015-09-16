@@ -51,6 +51,7 @@ public class GameConfigController {
 
         GamePlay.GAMECONFIG = new GameConfig(GameDifficulty, GameMapType,
                 Integer.parseInt(((RadioButton)NumPlayers.getSelectedToggle()).getText()));
+        GamePlay.GAMEBOARD = new Board();
 
         // Move to the next scene (player configuration)
         Stage stage=(Stage) GameConfigButton.getScene().getWindow();
@@ -58,6 +59,7 @@ public class GameConfigController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        System.out.println(GamePlay.GAMEBOARD);
     }
 
 
