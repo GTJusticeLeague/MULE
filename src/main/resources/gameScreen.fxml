@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MULE.GameScreenController">
    <children>
        <AnchorPane layoutX="-6.0" layoutY="-8.0" prefHeight="614.0" prefWidth="806.0">
            <children>
@@ -29,69 +29,6 @@
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                    </rowConstraints>
-                   <children>
-                       <ImageView fx:id="tile00" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
-                       <ImageView fx:id="tile10" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile20" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile30" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile01" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                       <ImageView fx:id="tile11" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile21" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile31" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile02" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                       <ImageView fx:id="tile12" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile22" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile32" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile03" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                       <ImageView fx:id="tile13" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile23" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile33" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile04" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                       <ImageView fx:id="tile14" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile24" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile34" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile05" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-                       <ImageView fx:id="tile15" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile25" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile35" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile06" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
-                       <ImageView fx:id="tile16" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile26" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile36" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile07" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" />
-                       <ImageView fx:id="tile17" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile27" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile37" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile08" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" />
-                       <ImageView fx:id="tile18" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                       <ImageView fx:id="tile28" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                       <ImageView fx:id="tile38" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3" />
-                       <ImageView fx:id="tile40" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile41" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile42" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile44" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile45" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile46" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile47" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile48" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="4" />
-                       <ImageView fx:id="tile43" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="1" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="2" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="3" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="8" GridPane.rowIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="8" GridPane.rowIndex="3" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="8" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="6" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="4" />
-                       <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" />
-                   </children>
                </GridPane>
                <Label layoutX="245.0" layoutY="533.0" text="This area is for text. Buttons show where grid is." />
            </children>
