@@ -1,5 +1,7 @@
 package MULE;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Donald on 9/13/2015.
  * 9/13/2015 - Changed level to difficulty, make variables final, add getters
@@ -15,16 +17,19 @@ public class GameConfig {
     }
 
     private final Difficulty difficulty;
+    private final Board GAMEBOARD;
     private final MapType mapType;
     public Player[] players;
     private final int numPlayers;
     private final int MAX_NUM_PLAYERS = 4;
 
-    public GameConfig(Difficulty difficulty, MapType mapType, int numPlayers) {
+
+    public GameConfig(Difficulty difficulty, MapType mapType, int numPlayers) throws FileNotFoundException {
         this.difficulty = difficulty;
         this.mapType = mapType;
         this.numPlayers = numPlayers;
         this.players = new Player[MAX_NUM_PLAYERS];
+        this.GAMEBOARD = new Board();
     }
 
     public Difficulty getDifficulty() {
@@ -42,4 +47,6 @@ public class GameConfig {
     public int getNumPlayers() {
         return numPlayers;
     }
+
+    public Board getGAMEBOARD() { return GAMEBOARD; }
 }

@@ -63,4 +63,8 @@ public class Board {
         }
         return temp.toString();
     }
+
+    public Tile[][] getTiles() {
+        return tiles;
+    }
 }
