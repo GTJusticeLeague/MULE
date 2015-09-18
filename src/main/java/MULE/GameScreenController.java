@@ -1,9 +1,16 @@
 package MULE;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
 
 public class GameScreenController {
 
@@ -40,7 +47,26 @@ public class GameScreenController {
                     Pane.add(new ImageView(mountain3), j, i);
                 } else {
                     //town
-                    Pane.add(new ImageView(town), j, i);
+                    ImageView townImage = new ImageView(town);
+                    townImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<javafx.scene.input.MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            Stage stage = (Stage) Pane.getScene().getWindow();
+                            Parent root = null;
+                            try {
+                                // Load the town when the town is clicked
+                                root = FXMLLoader.load(getClass().getResource("/town.fxml"));
+                            } catch (java.io.IOException e) {
+                                e.printStackTrace();
+                                System.exit(-1);
+                            }
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.show();
+                            event.consume();
+                        }
+                    });
+                    Pane.add(townImage, j, i);
                 }
             }
         }
