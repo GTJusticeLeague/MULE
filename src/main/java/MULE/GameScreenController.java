@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -16,6 +17,9 @@ public class GameScreenController {
 
     @FXML
     private GridPane Pane;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
@@ -31,20 +35,30 @@ public class GameScreenController {
     }
 
     private void buildMap() {
+        anchorPane.setStyle("-fx-background-color: #83d95e;");
         Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j].getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(new ImageView(mountain1), j, i);
+                    ImageView mtn1 = new ImageView(mountain1);
+                    mtn1.setFitHeight(90);
+                    mtn1.setFitWidth(90);
+                    Pane.add(mtn1, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(new ImageView(plain), j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.RIVER) {
                     Pane.add(new ImageView(river), j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(new ImageView(mountain2), j, i);
+                    ImageView mtn2 = new ImageView(mountain2);
+                    mtn2.setFitHeight(90);
+                    mtn2.setFitWidth(90);
+                    Pane.add(mtn2, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(new ImageView(mountain3), j, i);
+                    ImageView mtn3 = new ImageView(mountain3);
+                    mtn3.setFitHeight(90);
+                    mtn3.setFitWidth(90);
+                    Pane.add(mtn3, j, i);
                 } else {
                     //town
                     ImageView townImage = new ImageView(town);
