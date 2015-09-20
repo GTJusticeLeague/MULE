@@ -51,7 +51,7 @@
                            <children>
                               <Pane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Text layoutX="33.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                    <Text fx:id="Player1" layoutX="33.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>
@@ -70,7 +70,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Text layoutX="33.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                    <Text fx:id="Player2" layoutX="33.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>
@@ -89,7 +89,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                  <children>
-                                    <Text layoutX="32.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                    <Text fx:id="Player3" layoutX="32.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>
@@ -108,7 +108,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                  <children>
-                                    <Text layoutX="43.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                    <Text fx:id="Player4" layoutX="43.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>

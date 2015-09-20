@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -20,6 +21,12 @@ public class GameScreenController {
 
     @FXML
     private AnchorPane anchorPane;
+
+    @FXML
+    private Text Player1,Player2,Player3,Player4;
+    private Text score1, score2, score3, score4;
+    private Text playerTimer;
+
 
     Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
@@ -32,6 +39,16 @@ public class GameScreenController {
     @FXML
     public void initialize() {
         buildMap();
+
+        Player1.setText(GamePlay.GAMECONFIG.players[0].getName());
+        Player2.setText(GamePlay.GAMECONFIG.players[1].getName());
+        if (GamePlay.GAMECONFIG.getNumPlayers()  > 2) {
+            Player3.setText(GamePlay.GAMECONFIG.players[2].getName());
+            if (GamePlay.GAMECONFIG.getNumPlayers() > 3) {
+                Player4.setText(GamePlay.GAMECONFIG.players[3].getName());
+            }
+        }
+
     }
 
     private void buildMap() {
