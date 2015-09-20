@@ -18,6 +18,12 @@
                         <Font size="35.0" />
                      </font>
                   </Text>
+                   <Label fx:id="errorMsg" layoutX="210.0" layoutY="65.0"
+                          text="ERROR: Two or more players appear to have the same color." textFill="RED">
+                       <font>
+                           <Font name="System Bold" size="13.0"/>
+                       </font>
+                   </Label>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
