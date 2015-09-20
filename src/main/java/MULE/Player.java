@@ -25,6 +25,7 @@ public class Player {
     private final String name;
     private final Race race;
     private final Color color;
+    private int money;
 
     public Player (String name, Race race, Color color) {
             this.name = name;
@@ -43,6 +44,15 @@ public class Player {
 
     public Race getRace() {
         return race;
+    }
+
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public String toString() {

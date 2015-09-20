@@ -8,10 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
 
 public class GameScreenController {
 
@@ -20,6 +22,18 @@ public class GameScreenController {
 
     @FXML
     private AnchorPane anchorPane;
+
+    @FXML
+    private GridPane playerStatsGrid;
+
+    @FXML
+    private Text playerName;
+
+    @FXML
+    private Text playerMoney;
+
+    @FXML
+    private Text playerTimer;
 
     Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
@@ -32,6 +46,7 @@ public class GameScreenController {
     @FXML
     public void initialize() {
         buildMap();
+        setPlayerStats();
     }
 
     private void buildMap() {
@@ -85,6 +100,56 @@ public class GameScreenController {
             }
         }
 
+    }
+
+    private void setPlayerStats() {
+        //show player stat boxes based on number of players
+        if (GamePlay.GAMECONFIG.getNumPlayers() == 2) {
+
+            playerStatsGrid.getChildren().remove(2);
+            playerStatsGrid.getChildren().remove(2);
+
+        } else if (GamePlay.GAMECONFIG.getNumPlayers() == 3) {
+            playerStatsGrid.getChildren().remove(3);
+
+        }
+
+        Player[] players = GamePlay.GAMECONFIG.getPlayers();
+
+        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
+
+            //get the pane
+            Pane playerStatGridPane = (Pane) playerStatsGrid.getChildren().get(i);
+
+            //get the current player
+            Player currentPlayer = players[i];
+
+            //set the name and money for specific pane
+            playerName = (Text) playerStatGridPane.getChildren().get(0);
+            playerName.setText(currentPlayer.getName());
+            playerMoney = (Text) playerStatGridPane.getChildren().get(1);
+            int money = initializeMoney(players[i]);
+            playerMoney.setText("$" + money);
+
+        }
+
+    }
+
+    /**
+     * Helper method to initial money amount
+     * @param player player
+     * @return money
+     */
+    private int initializeMoney(Player player) {
+        int money;
+        if (player.getRace() == Player.Race.HUMAN) {
+            money = 600;
+        } else if (player.getRace() == Player.Race.FLAPPER) {
+            money = 1600;
+        } else {
+            money = 1000;
+        }
+        return money;
     }
 
 }
