@@ -92,6 +92,7 @@ public class GameScreenController {
     public void initialize() {
         buildMap();
         setPlayerStats();
+
     }
 
     private void buildMap() {
