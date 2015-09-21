@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class GameScreenController {
@@ -34,6 +34,21 @@ public class GameScreenController {
 
     @FXML
     private Text playerTimer;
+
+    @FXML
+    private Label food;
+
+    @FXML
+    private Label energy;
+
+    @FXML
+    private Label smithore;
+
+    @FXML
+    private Label crystite;
+
+    @FXML
+    private Label mule;
 
     Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
@@ -124,32 +139,30 @@ public class GameScreenController {
             //get the current player
             Player currentPlayer = players[i];
 
-            //set the name and money for specific pane
+            //set the name, money, and resources
             playerName = (Text) playerStatGridPane.getChildren().get(0);
             playerName.setText(currentPlayer.getName());
+
             playerMoney = (Text) playerStatGridPane.getChildren().get(1);
-            int money = initializeMoney(players[i]);
-            playerMoney.setText("$" + money);
+            playerMoney.setText("$" + currentPlayer.getMoney());
+
+            food = (Label) playerStatGridPane.getChildren().get(3);
+            food.setText(currentPlayer.getFood() + " Food");
+
+            energy = (Label) playerStatGridPane.getChildren().get(4);
+            energy.setText(currentPlayer.getEnergy() + " Energy");
+
+            smithore = (Label) playerStatGridPane.getChildren().get(5);
+            smithore.setText(currentPlayer.getSmithore() + " Smithore");
+
+            crystite = (Label) playerStatGridPane.getChildren().get(6);
+            crystite.setText(currentPlayer.getCrystite() + " Crystite");
+
+            mule = (Label) playerStatGridPane.getChildren().get(7);
+            mule.setText(currentPlayer.getMule() + " Mule");
 
         }
 
-    }
-
-    /**
-     * Helper method to initial money amount
-     * @param player player
-     * @return money
-     */
-    private int initializeMoney(Player player) {
-        int money;
-        if (player.getRace() == Player.Race.HUMAN) {
-            money = 600;
-        } else if (player.getRace() == Player.Race.FLAPPER) {
-            money = 1600;
-        } else {
-            money = 1000;
-        }
-        return money;
     }
 
 }
