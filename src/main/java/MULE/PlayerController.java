@@ -11,6 +11,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import java.io.IOException;
 
@@ -58,6 +62,9 @@ public class PlayerController {
     @FXML
     private Button startGameButton;
 
+    @FXML
+    private Label errorMsg;
+
     public PlayerController() {
 
     }
@@ -82,6 +89,9 @@ public class PlayerController {
     }
 
     private void loadRaceColorValues() {
+
+        errorMsg.setText("");
+
         player1Race.setItems(FXCollections.observableArrayList(
                 "Human", "Flapper", "Bonzoid", "Ugaite", "Buzzite"));
         player1Race.getSelectionModel().selectFirst();
@@ -114,6 +124,7 @@ public class PlayerController {
 
     @FXML
     private void handleStartGame(ActionEvent event) throws IOException {
+        boolean inputMismatch = false;
 
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
@@ -125,25 +136,47 @@ public class PlayerController {
                 Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()]);
         GamePlay.GAMECONFIG.players[1] = secondPlayer;
 
+
         if (GamePlay.GAMECONFIG.getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
                     Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()]);
             GamePlay.GAMECONFIG.players[2] = thirdPlayer;
+
             if (GamePlay.GAMECONFIG.getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
                         Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()]);
                 GamePlay.GAMECONFIG.players[3] = fourthPlayer;
+
             }
         }
 
-        // Move to the next scene (player configuration)
-        Stage stage = (Stage) startGameButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/gameScreen.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        ArrayList<Player.Color> colors = new ArrayList<Player.Color>(Player.Color.values().length);
+        colors.add(Player.Color.RED);
+        colors.add(Player.Color.GREEN);
+        colors.add(Player.Color.BLUE);
+        colors.add(Player.Color.YELLOW);
+        colors.add(Player.Color.PURPLE);
+        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
+            Player[] players = GamePlay.GAMECONFIG.players;
+            if (colors.contains(players[i].getColor())) {
+                colors.remove(players[i].getColor());
+            } else {
+                inputMismatch = true;
+                errorMsg.setText("ERROR: Two or more players appear to have the same color.");
+            }
+        }
+
+        if (!inputMismatch) {
+            // Move to the next scene (player configuration)
+            Stage stage = (Stage) startGameButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/gameScreen.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
 
 

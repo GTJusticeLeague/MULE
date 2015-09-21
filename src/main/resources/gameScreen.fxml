@@ -38,7 +38,7 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <GridPane fx:id="playerStatsGrid" layoutX="15.0" layoutY="-3.0" prefHeight="124.0" prefWidth="804.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                         <GridPane fx:id="playerStatsGrid" layoutX="15.0" layoutY="3.0" prefHeight="123.0" prefWidth="804.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -51,78 +51,66 @@
                            <children>
                               <Pane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="playerName" layoutX="33.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                     <Text fx:id="playerName" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="playerMoney" fill="#1d5e24" layoutX="68.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text fx:id="playerTimer" fill="#ee1717" layoutX="71.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
+                                     <Text fx:id="playerMoney" fill="#1d5e24" layoutX="58.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00" />
+                                     <Text fx:id="playerTimer" fill="#ee1717" layoutX="109.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
+                                     <Label fx:id="food" layoutX="23.0" layoutY="45.0" text="__ Food" />
+                                     <Label fx:id="energy" layoutX="18.0" layoutY="69.0" text="__ Energy" />
+                                     <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
+                                     <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
+                                     <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Text fx:id="playerName" layoutX="33.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                     <Text fx:id="playerName1" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="playerMoney" fill="#1d5e24" layoutX="68.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text fx:id="playerTimer" fill="#ee1717" layoutX="78.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
+                                     <Text fx:id="playerMoney1" fill="#1d5e24" layoutX="58.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00" />
+                                     <Text fx:id="playerTimer1" fill="#ee1717" layoutX="109.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
+                                     <Label fx:id="food" layoutX="23.0" layoutY="45.0" text="__ Food" />
+                                     <Label fx:id="energy" layoutX="18.0" layoutY="69.0" text="__ Energy" />
+                                     <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
+                                     <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
+                                     <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                  <children>
-                                    <Text fx:id="playerName" layoutX="32.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                     <Text fx:id="playerName2" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="playerMoney" fill="#1d5e24" layoutX="70.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text fx:id="playerTimer" fill="#ee1717" layoutX="75.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
+                                     <Text fx:id="playerMoney2" fill="#1d5e24" layoutX="58.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00" />
+                                     <Text fx:id="playerTimer2" fill="#ee1717" layoutX="109.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
+                                     <Label fx:id="food" layoutX="23.0" layoutY="45.0" text="__ Food" />
+                                     <Label fx:id="energy" layoutX="18.0" layoutY="69.0" text="__ Energy" />
+                                     <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
+                                     <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
+                                     <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                  <children>
-                                    <Text fx:id="playerName" layoutX="43.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name">
+                                     <Text fx:id="playerName3" layoutX="1.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
-                                          <Font name="System Bold" size="20.0" />
+                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="playerMoney" fill="#1d5e24" layoutX="75.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text fx:id="playerTimer" fill="#ee1717" layoutX="75.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
+                                     <Text fx:id="playerMoney3" fill="#1d5e24" layoutX="58.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$00.00" />
+                                     <Text fx:id="playerTimer3" fill="#ee1717" layoutX="109.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
+                                     <Label fx:id="food" layoutX="23.0" layoutY="45.0" text="__ Food" />
+                                     <Label fx:id="energy" layoutX="18.0" layoutY="69.0" text="__ Energy" />
+                                     <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
+                                     <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
+                                     <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
                            </children>

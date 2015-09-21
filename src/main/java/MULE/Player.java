@@ -26,11 +26,46 @@ public class Player {
     private final Race race;
     private final Color color;
     private int money;
+    private int food;
+    private int energy;
+    private int smithore;
+    private int crystite;
+    private int mule;
 
     public Player (String name, Race race, Color color) {
-            this.name = name;
-            this.race = race;
-            this.color = color;
+        this.name = name;
+        this.race = race;
+        this.color = color;
+
+        //initial money amount
+        if (race == Race.HUMAN) {
+            this.money = 600;
+        } else if (race == Race.FLAPPER) {
+            this.money = 1600;
+        } else {
+            this.money = 1000;
+        }
+
+        //initial resources amounts
+        if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.BEGINNER) {
+            this.food = 8;
+            this.energy = 4;
+            this.smithore = 0;
+            this.crystite = 0;
+            this.mule = 0;
+        } else if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
+            this.food = 4;
+            this.energy = 2;
+            this.smithore = 0;
+            this.crystite = 0;
+            this.mule = 0;
+        } else {
+            this.food = 4;
+            this.energy = 2;
+            this.smithore = 0;
+            this.crystite = 0;
+            this.mule = 0;
+        }
 
     }
 
@@ -46,13 +81,52 @@ public class Player {
         return race;
     }
 
-
     public int getMoney() {
         return money;
     }
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public int getSmithore() {
+        return smithore;
+    }
+
+    public void setSmithore(int smithore) {
+        this.smithore = smithore;
+    }
+
+    public int getCrystite() {
+        return crystite;
+    }
+
+    public void setCrystite(int crystite) {
+        this.crystite = crystite;
+    }
+
+    public int getMule() {
+        return mule;
+    }
+
+    public void setMule(int mule) {
+        this.mule = mule;
     }
 
     public String toString() {
