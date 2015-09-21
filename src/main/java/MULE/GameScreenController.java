@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class GameScreenController {
 
     @FXML
@@ -70,7 +72,7 @@ public class GameScreenController {
 
             yes.setOnAction(event1 -> {
 
-            GamePlay.buyLand((GridPane.getRowIndex((javafx.scene.Node) event.getSource())),
+            buyLand((GridPane.getRowIndex((javafx.scene.Node) event.getSource())),
                     (GridPane.getColumnIndex((javafx.scene.Node) event.getSource())));
 
                 Pane.getChildren().remove(popup);
@@ -203,10 +205,27 @@ public class GameScreenController {
 
     }
 
-    public static void UpdatePlayer(int playerNum) {
-//        String money = "$" + GamePlay.GAMECONFIG.players[playerNum].getMoney();
-//        Pane playerStatsPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
-//        playerMoney = (Text) playerStatsPane.getChildren().get(1);
-//        playerMoney.setText("$" + money);
+    public void UpdatePlayer(int playerNum) {
+        String money = "$" + GamePlay.GAMECONFIG.players[playerNum].getMoney();
+        Pane playerStatsPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
+        playerMoney = (Text) playerStatsPane.getChildren().get(1);
+        playerMoney.setText(money);
+    }
+
+    public void buyLand(int x, int y) {
+        Tile current = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
+        Random rand = new Random();
+        int price = 300 + GamePlay.round * rand.nextInt(101);
+
+        //HARDOCDED
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+
+        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null) {
+            current.setOwner(GamePlay.currentPlayer);
+            GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
+        }
+
+
+        UpdatePlayer(GamePlay.currentPlayer.getNumber());
     }
 }

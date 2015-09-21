@@ -63,6 +63,4 @@ public class GameConfigController {
         stage.setScene(scene);
         stage.show();
     }
-
-
 }
