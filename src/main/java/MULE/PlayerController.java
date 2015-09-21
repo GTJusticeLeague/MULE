@@ -126,25 +126,25 @@ public class PlayerController {
 
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
-                Player.Color.values()[player1Color.getSelectionModel().getSelectedIndex()]);
+                Player.Color.values()[player1Color.getSelectionModel().getSelectedIndex()], 1);
         GamePlay.GAMECONFIG.players[0] = firstPlayer;
 
         Player secondPlayer = new Player(player2Name.getText(),
                 Player.Race.values()[player2Race.getSelectionModel().getSelectedIndex()],
-                Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()]);
+                Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()], 2);
         GamePlay.GAMECONFIG.players[1] = secondPlayer;
 
 
         if (GamePlay.GAMECONFIG.getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
-                    Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()]);
+                    Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()], 3);
             GamePlay.GAMECONFIG.players[2] = thirdPlayer;
 
             if (GamePlay.GAMECONFIG.getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
-                        Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()]);
+                        Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()], 4);
                 GamePlay.GAMECONFIG.players[3] = fourthPlayer;
 
             }
