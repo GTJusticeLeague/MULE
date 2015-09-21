@@ -25,6 +25,7 @@ public class Player {
     private final String name;
     private final Race race;
     private final Color color;
+    private final int number;
     private int money;
     private int food;
     private int energy;
@@ -32,10 +33,11 @@ public class Player {
     private int crystite;
     private int mule;
 
-    public Player (String name, Race race, Color color) {
+    public Player(String name, Race race, Color color, int number) {
         this.name = name;
         this.race = race;
         this.color = color;
+        this.number = number;
 
         //initial money amount
         if (race == Race.HUMAN) {
@@ -79,6 +81,10 @@ public class Player {
 
     public Race getRace() {
         return race;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public int getMoney() {

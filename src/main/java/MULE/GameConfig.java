@@ -44,6 +44,8 @@ public class GameConfig {
         return players;
     }
 
+
+
     public int getNumPlayers() {
         return numPlayers;
     }
