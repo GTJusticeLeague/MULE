@@ -3,16 +3,17 @@ package MULE;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class GameScreenController {
@@ -42,7 +43,31 @@ public class GameScreenController {
     Image river = new Image(getClass().getResourceAsStream("/river_tile.png"));
     Image town = new Image(getClass().getResourceAsStream("/town_tile.png"));
 
+    Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
 
+    @FXML
+    private void handleLandPurchase(MouseEvent event) {
+        Text popup = new Text(100, 100, "Would you like to purchase this property?");
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+
+        yes.setOnAction(event1 -> {
+            //GamePlay.buyLand();
+            int row = GridPane.getRowIndex((Node) event1.getSource());
+            int column = GridPane.getColumnIndex((Node) event1.getSource());
+            Pane.getChildren().remove(popup);
+            Pane.getChildren().remove(yes);
+            Pane.getChildren().remove(no);
+        });
+        no.setOnAction(event1 -> {
+            Pane.getChildren().remove(popup);
+            Pane.getChildren().remove(yes);
+            Pane.getChildren().remove(no);
+        });
+        Pane.add(popup, 98, 100);
+        Pane.add(yes, 98, 101);
+        Pane.add(no, 99, 101);
+    }
     @FXML
     public void initialize() {
         buildMap();
@@ -51,7 +76,7 @@ public class GameScreenController {
 
     private void buildMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
-        Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
+        board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -61,7 +86,8 @@ public class GameScreenController {
                     mtn1.setFitWidth(90);
                     Pane.add(mtn1, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(new ImageView(plain), j, i);
+                    ImageView plainImageView = new ImageView(plain);
+                    Pane.add(plainImageView, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.RIVER) {
                     Pane.add(new ImageView(river), j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
