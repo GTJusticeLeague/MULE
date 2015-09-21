@@ -1,5 +1,6 @@
 package MULE;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,6 +54,9 @@ public class GameScreenController {
     @FXML
     private Label mule;
 
+    @FXML
+    private Button endButton;
+
     Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
     Image mountain3 = new Image(getClass().getResourceAsStream("/mountain3_tile.png"));
@@ -94,7 +98,17 @@ public class GameScreenController {
     public void initialize() {
         buildMap();
         setPlayerStats();
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+    }
 
+    @FXML
+    private void handleEndTurn(ActionEvent event) {
+        if (GamePlay.currentPlayer.getNumber() == GamePlay.GAMECONFIG.getNumPlayers()) {
+            GamePlay.round++;
+            GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+            return;
+        }
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber() + 1];
     }
 
     private void buildMap() {
@@ -213,19 +227,16 @@ public class GameScreenController {
     }
 
     public void buyLand(int x, int y) {
-        Tile current = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
+        Tile current = board[x][y];
         Random rand = new Random();
         int price = 300 + GamePlay.round * rand.nextInt(101);
 
-        //HARDOCDED
-        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
-
-        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null) {
+        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null || GamePlay.round > 3) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
+            UpdatePlayer(GamePlay.currentPlayer.getNumber());
         }
+         //INSERT UPDATE MAP HERE
 
-
-        UpdatePlayer(GamePlay.currentPlayer.getNumber());
     }
 }
