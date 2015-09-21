@@ -33,12 +33,16 @@ public class GameConfigController {
 
         // Get selected difficulty from the radio buttons
         String selected_difficulty = ((RadioButton)Difficulty.getSelectedToggle()).getText();
-        if (selected_difficulty.equals("Beginner")) {
-            GameDifficulty = MULE.GameConfig.Difficulty.BEGINNER;
-        } else if (selected_difficulty.equals("Intermediate")) {
-            GameDifficulty = MULE.GameConfig.Difficulty.INTERMEDIATE;
-        } else {
-            GameDifficulty = MULE.GameConfig.Difficulty.ADVANCED;
+        switch (selected_difficulty) {
+            case "Beginner":
+                GameDifficulty = GameConfig.Difficulty.BEGINNER;
+                break;
+            case "Intermediate":
+                GameDifficulty = GameConfig.Difficulty.INTERMEDIATE;
+                break;
+            default:
+                GameDifficulty = GameConfig.Difficulty.ADVANCED;
+                break;
         }
 
         // Get selected map type from the radio buttons

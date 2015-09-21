@@ -8,15 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerController {
 
@@ -176,7 +174,6 @@ public class PlayerController {
             stage.setScene(scene);
             stage.show();
         }
-
     }
 
 

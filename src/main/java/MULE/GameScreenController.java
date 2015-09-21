@@ -3,11 +3,10 @@ package MULE;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +25,7 @@ public class GameScreenController {
     private AnchorPane anchorPane;
 
     @FXML
-    private GridPane playerStatsGrid;
+    private  GridPane playerStatsGrid;
 
     @FXML
     private Text playerName;
@@ -61,29 +60,34 @@ public class GameScreenController {
 
     Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
 
-    @FXML
-    private void handleLandPurchase(MouseEvent event) {
-        Text popup = new Text(100, 100, "Would you like to purchase this property?");
-        Button yes = new Button("Yes");
-        Button no = new Button("No");
 
-        yes.setOnAction(event1 -> {
-            //GamePlay.buyLand();
-            int row = GridPane.getRowIndex((Node) event1.getSource());
-            int column = GridPane.getColumnIndex((Node) event1.getSource());
-            Pane.getChildren().remove(popup);
-            Pane.getChildren().remove(yes);
-            Pane.getChildren().remove(no);
-        });
-        no.setOnAction(event1 -> {
-            Pane.getChildren().remove(popup);
-            Pane.getChildren().remove(yes);
-            Pane.getChildren().remove(no);
-        });
-        Pane.add(popup, 98, 100);
-        Pane.add(yes, 98, 101);
-        Pane.add(no, 99, 101);
-    }
+    EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            Text popup = new Text(100, 100, "Would you like to purchase this property?");
+            Button yes = new Button("Yes");
+            Button no = new Button("No");
+
+            yes.setOnAction(event1 -> {
+
+            GamePlay.buyLand((GridPane.getRowIndex((javafx.scene.Node) event.getSource())),
+                    (GridPane.getColumnIndex((javafx.scene.Node) event.getSource())));
+
+                Pane.getChildren().remove(popup);
+                Pane.getChildren().remove(yes);
+                Pane.getChildren().remove(no);
+            });
+            no.setOnAction(event1 -> {
+                Pane.getChildren().remove(popup);
+                Pane.getChildren().remove(yes);
+                Pane.getChildren().remove(no);
+            });
+            Pane.add(popup, 98, 100);
+            Pane.add(yes, 98, 101);
+            Pane.add(no, 99, 101);
+        }
+    };
+
     @FXML
     public void initialize() {
         buildMap();
@@ -100,20 +104,27 @@ public class GameScreenController {
                     ImageView mtn1 = new ImageView(mountain1);
                     mtn1.setFitHeight(90);
                     mtn1.setFitWidth(90);
+                    mtn1.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
                     Pane.add(mtn1, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(new ImageView(plain), j, i);
+                    ImageView ImagePlain = new ImageView(plain);
+                    ImagePlain.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                    Pane.add(ImagePlain, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(new ImageView(river), j, i);
+                    ImageView ImageRiver = new ImageView(river);
+                    ImageRiver.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                    Pane.add(ImageRiver, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
                     ImageView mtn2 = new ImageView(mountain2);
                     mtn2.setFitHeight(90);
                     mtn2.setFitWidth(90);
+                    mtn2.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
                     Pane.add(mtn2, j, i);
                 } else if (board[i][j].getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
                     ImageView mtn3 = new ImageView(mountain3);
                     mtn3.setFitHeight(90);
                     mtn3.setFitWidth(90);
+                    mtn3.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
                     Pane.add(mtn3, j, i);
                 } else {
                     //town
@@ -191,4 +202,10 @@ public class GameScreenController {
 
     }
 
+    public static void UpdatePlayer(int playerNum) {
+//        String money = "$" + GamePlay.GAMECONFIG.players[playerNum].getMoney();
+//        Pane playerStatsPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
+//        playerMoney = (Text) playerStatsPane.getChildren().get(1);
+//        playerMoney.setText("$" + money);
+    }
 }
