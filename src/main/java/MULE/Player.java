@@ -32,6 +32,7 @@ public class Player {
     private int smithore;
     private int crystite;
     private int mule;
+    private int numLand;
 
     public Player(String name, Race race, Color color, int number) {
         this.name = name;
@@ -139,4 +140,11 @@ public class Player {
         return "name: " + name + ", race: " + race.toString() + ", color: " + color.toString();
     }
 
+    public int getNumLand() {
+        return numLand;
+    }
+
+    public void incrementLand() {
+        numLand = numLand + 1;
+    }
 }

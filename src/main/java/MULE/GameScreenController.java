@@ -291,15 +291,17 @@ public class GameScreenController {
         }
         //When the round is above 2 purchasing property costs money
         if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null &&
-                GamePlay.round > 2 && current.getTerrain() != Tile.Terrain.TOWN) {
+                GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
         } else if(current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN) {
             current.setOwner(GamePlay.currentPlayer);
+            GamePlay.currentPlayer.incrementLand();
         }
         // Update the board
         updateTile(x, y);
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
     }
 
     /**
