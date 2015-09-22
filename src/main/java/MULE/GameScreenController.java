@@ -114,7 +114,7 @@ public class GameScreenController {
 
     @FXML
     public void initialize() {
-        buildMap();
+        displayMap();
         setPlayerStats();
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
     }
@@ -132,7 +132,7 @@ public class GameScreenController {
     /**
      * Displays the map on the screen. Adds the images to the GameScreen's GridPane
      */
-    private void buildMap() {
+    private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
         Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
 
@@ -174,6 +174,12 @@ public class GameScreenController {
                 image.setFitHeight(90);
                 image.setFitWidth(90);
                 box.getChildren().add(image);
+                if (board[i][j].getOwner() != null) {
+                    String color = board[i][j].getOwner().getColor().toString();
+                    box.setStyle("-fx-border-color: " + color + ";\n" +
+                            "-fx-border-width: 5;\n" +
+                            "-fx-border-style: solid;\n");
+                }
                 Pane.add(box, j, i);
             }
         }
