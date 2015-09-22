@@ -121,12 +121,12 @@ public class GameScreenController {
 
     @FXML
     private void handleEndTurn(ActionEvent event) {
-        if (GamePlay.currentPlayer.getNumber() == GamePlay.GAMECONFIG.getNumPlayers()) {
+        if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
             GamePlay.round++;
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
             return;
         }
-        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber() + 1];
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber()+ 1];
     }
 
     /**
@@ -183,7 +183,6 @@ public class GameScreenController {
                 Pane.add(box, j, i);
             }
         }
-
     }
 
     private void setPlayerStats() {
@@ -245,10 +244,14 @@ public class GameScreenController {
             System.err.println("ERROR: Current player null!");
             return;
         }
-        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null || GamePlay.round > 3) {
+        //When the round is above 2 purchasing property costs money
+        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null &&
+                GamePlay.round > 2 && current.getTerrain() != Tile.Terrain.TOWN) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
+        } else if(current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN) {
+            current.setOwner(GamePlay.currentPlayer);
         }
         // Update the board
         updateTile(x, y);
@@ -275,7 +278,7 @@ public class GameScreenController {
         Node result = null;
         ObservableList<Node> childrens = Pane.getChildren();
         for (Node node : childrens) {
-            if (Pane.getRowIndex(node) == x && Pane.getColumnIndex(node) == y) {
+            if (GridPane.getRowIndex(node) == x && GridPane.getColumnIndex(node) == y) {
                 result = node;
                 break;
             }
