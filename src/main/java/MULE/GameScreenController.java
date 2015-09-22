@@ -122,11 +122,56 @@ public class GameScreenController {
     @FXML
     private void handleEndTurn(ActionEvent event) {
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
+            //TODO: ADD AUCTION LOGIC HERE
+            //auction();
             GamePlay.round++;
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
             return;
         }
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber()+ 1];
+    }
+
+//
+//    private void auction() {
+//        Tile property = getFreeTile();
+//        Text popup = new Text("WELCOME TO THE AUCTION!");
+//        Player[] players = GamePlay.GAMECONFIG.players;
+//        Pair<Player, Integer> bidder = null;
+//
+//        while(property.getOwner() == null) {
+//            for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
+//                //TODO: Add x, y coordinates to tile constructor, and toString method to Tile
+//                String text = "How much is your bid for: " + property.getTerrain() + " (-1 to pass) ";
+//                Text info = new Text(text);
+//                TextField textField = new TextField();
+//                Button button = new Button("Input");
+//                button.setOnAction(event -> {
+//                    int bid = Integer.parseInt(textField.getText());
+//
+//                });
+//            }
+//        }
+//
+//    }
+
+    /*
+        Returns a random Tile which has no owner
+     */
+    private Tile getFreeTile() {
+        Random rand = new Random();
+        Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
+        Tile randTile = null;
+
+        while (randTile == null) {
+            int x = rand.nextInt(board.length);
+            int y = rand.nextInt(board[0].length);
+
+            if (board[x][y].getOwner() == null) {
+                randTile = board[x][y];
+            }
+        }
+
+        return randTile;
     }
 
     /**
@@ -276,8 +321,8 @@ public class GameScreenController {
 
         // Get the Node that contains this tile
         Node result = null;
-        ObservableList<Node> childrens = Pane.getChildren();
-        for (Node node : childrens) {
+        ObservableList<Node> children = Pane.getChildren();
+        for (Node node : children) {
             if (GridPane.getRowIndex(node) == x && GridPane.getColumnIndex(node) == y) {
                 result = node;
                 break;
