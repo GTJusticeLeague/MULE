@@ -184,8 +184,6 @@ public class GameScreenController {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 HBox box = new HBox();
-                box.setMaxHeight(90);
-                box.setMaxWidth(90);
                 ImageView image = null;
                 switch (board[i][j].getTerrain()) {
                     case ONEMOUNTAIN:
@@ -216,8 +214,8 @@ public class GameScreenController {
                         System.err.println("ERROR: Invalid Terrain when displaying map!");
                         System.exit(1);
                 }
-                image.setFitHeight(90);
-                image.setFitWidth(90);
+                image.setFitHeight(80);
+                image.setFitWidth(80);
                 box.getChildren().add(image);
                 if (board[i][j].getOwner() != null) {
                     String color = board[i][j].getOwner().getColor().toString();

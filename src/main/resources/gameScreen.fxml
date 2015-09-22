@@ -10,7 +10,9 @@
    <children>
        <AnchorPane layoutX="-6.0" layoutY="-8.0" prefHeight="614.0" prefWidth="806.0">
            <children>
-            <SplitPane dividerPositions="0.7924836601307189, 0.5" orientation="VERTICAL" prefHeight="614.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <SplitPane dividerPositions="0.75, 0.5" orientation="VERTICAL" prefHeight="614.0" prefWidth="806.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
               <items>
                   <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="804.0" SplitPane.resizableWithParent="false">
                      <children>
