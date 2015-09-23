@@ -10,9 +10,7 @@
    <children>
        <AnchorPane layoutX="-6.0" layoutY="-8.0" prefHeight="614.0" prefWidth="806.0">
            <children>
-               <SplitPane dividerPositions="0.75, 0.5" orientation="VERTICAL" prefHeight="614.0" prefWidth="806.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0">
+               <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="614.0" prefWidth="806.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
                   <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="804.0" SplitPane.resizableWithParent="false">
                      <children>
@@ -40,7 +38,7 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                      <children>
-                         <GridPane fx:id="playerStatsGrid" layoutX="15.0" layoutY="3.0" prefHeight="123.0" prefWidth="804.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
+                         <GridPane fx:id="playerStatsGrid" layoutX="15.0" layoutY="27.0" prefHeight="125.0" prefWidth="804.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -67,7 +65,7 @@
                                      <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                              <Pane prefHeight="133.0" prefWidth="197.0" GridPane.columnIndex="1">
                                  <children>
                                      <Text fx:id="playerName1" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
@@ -117,9 +115,10 @@
                               </Pane>
                            </children>
                         </GridPane>
+                        <Button fx:id="endButton" layoutX="366.0" mnemonicParsing="false" onAction="#handleEndTurn" text="Pass" />
+                        <Label fx:id="currentPlayer" layoutX="244.0" layoutY="2.0" text="Donald, Let's Go!" />
                      </children>
                   </AnchorPane>
-                  <Button fx:id="endButton" mnemonicParsing="false" onAction="#handleEndTurn" text="End Turn" />
               </items>
             </SplitPane>
            </children>

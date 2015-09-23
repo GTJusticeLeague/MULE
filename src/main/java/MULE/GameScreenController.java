@@ -60,6 +60,9 @@ public class GameScreenController {
     @FXML
     private Button endButton;
 
+    @FXML
+    private Label currentPlayer;
+
     private final Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
     private final Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
     private final Image mountain3 = new Image(getClass().getResourceAsStream("/mountain3_tile.png"));
@@ -117,6 +120,7 @@ public class GameScreenController {
         displayMap();
         setPlayerStats();
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 
     @FXML
@@ -126,9 +130,11 @@ public class GameScreenController {
             //auction();
             GamePlay.round++;
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
             return;
         }
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber()+ 1];
+        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 
 //
@@ -293,13 +299,17 @@ public class GameScreenController {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
+            updateTile(x, y);
+            GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
+            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
         } else if(current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
+            updateTile(x, y);
+            GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
+            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
         }
         // Update the board
-        updateTile(x, y);
-        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
     }
 
     /**
