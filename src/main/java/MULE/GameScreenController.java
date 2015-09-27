@@ -19,6 +19,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 
 import java.util.Random;
 
@@ -73,28 +76,47 @@ public class GameScreenController {
     private final EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            Text popup = new Text(100, 100, "Would you like to purchase this property?");
-            Button yes = new Button("Yes");
-            Button no = new Button("No");
+            // Setup dialog box to purchase a property
+            final Stage dialogStage = new Stage();
+            dialogStage.setTitle("Purchase a Property");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
 
-            yes.setOnAction(event1 -> {
-                buyLand((GridPane.getRowIndex(((javafx.scene.Node) event.getSource()).getParent())),
-                        (GridPane.getColumnIndex(((javafx.scene.Node) event.getSource()).getParent())));
 
-                Pane.getChildren().remove(popup);
-                Pane.getChildren().remove(yes);
-                Pane.getChildren().remove(no);
+            Label purchaseLandLabel = new Label("Would you like to purchase this property?");
+            purchaseLandLabel.setAlignment(Pos.CENTER);
+
+            Button yesBtn = new Button("Yes");
+            Button noBtn = new Button("No");
+            yesBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                public void handle(ActionEvent arg0) {
+                    buyLand((GridPane.getRowIndex(((javafx.scene.Node) event.getSource()).getParent())),
+                            (GridPane.getColumnIndex(((javafx.scene.Node) event.getSource()).getParent())));
+                    dialogStage.close();
+                }
             });
-            no.setOnAction(event1 -> {
-                Pane.getChildren().remove(popup);
-                Pane.getChildren().remove(yes);
-                Pane.getChildren().remove(no);
+            noBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                public void handle(ActionEvent arg0) {
+                    dialogStage.close();
+                }
             });
-            Pane.add(popup, 98, 100);
-            Pane.add(yes, 98, 101);
-            Pane.add(no, 99, 101);
+
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER);
+            hBox.setSpacing(40.0);
+            hBox.getChildren().addAll(yesBtn, noBtn);
+
+
+            VBox vBox = new VBox();
+            vBox.setSpacing(40.0);
+            vBox.getChildren().addAll(purchaseLandLabel, hBox);
+
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
         }
     };
+
 
     private final EventHandler<MouseEvent> townClickHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -256,6 +278,8 @@ public class GameScreenController {
             //set the name, money, and resources
             playerName = (Text) playerStatGridPane.getChildren().get(0);
             playerName.setText(currentPlayer.getName());
+            String playerColor = currentPlayer.getColor().toString();
+            playerName.setStyle("-fx-stroke: " + playerColor + ";");
 
             playerMoney = (Text) playerStatGridPane.getChildren().get(1);
             playerMoney.setText("$" + currentPlayer.getMoney());
