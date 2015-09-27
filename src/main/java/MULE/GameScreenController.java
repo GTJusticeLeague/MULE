@@ -300,14 +300,18 @@ public class GameScreenController {
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
             updateTile(x, y);
-            GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
-            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+            if (GamePlay.round == 0) {
+                GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
+                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+            }
         } else if(current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
             updateTile(x, y);
-            GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber()+ 1) % GamePlay.GAMECONFIG.getNumPlayers()];
-            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+            if (GamePlay.round == 0) {
+                GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
+                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+            }
         }
         // Update the board
     }

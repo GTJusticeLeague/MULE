@@ -7,7 +7,7 @@ public class GamePlay {
     public static GameConfig GAMECONFIG;
     //public static Board GAMEBOARD;
     private static boolean isGameOver = false;
-    public static int round = 1;
+    public static int round = 0;
     public static Player currentPlayer;
 
     public static void startGame() {
