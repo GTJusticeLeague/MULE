@@ -14,6 +14,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 
+import java.util.Random;
+
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
@@ -39,14 +41,48 @@ public class TownController {
             // (37-50 seconds = 200), (25-37 seconds = 150), (12-25 seconds = 100), (0-12 seconds = 50)
             // max is 250 points
 
+            //TODO: Add timer bonus after timer is completed & Remove print lines
+            int playerMoney = GamePlay.currentPlayer.getMoney();
+
+            System.out.println("playerMoney: " + playerMoney);
+            //Normal Bonus Calculation
+            int timerBonus = 0;
+            Random rand = new Random();
+            int randomBonus = rand.nextInt(timerBonus + 1);
+            System.out.println("randomBonus: " + randomBonus);
+
+            //Round Bonus Calculation
+            int currentRound = GamePlay.round;
+            int roundBonus = 0;
+            if (currentRound >= 1 && currentRound <= 3) {
+                roundBonus = 50;
+            } else if (currentRound >= 4 && currentRound <= 7) {
+                roundBonus = 100;
+            } else if (currentRound >= 8 && currentRound <= 11) {
+                roundBonus = 150;
+            } else if (currentRound == 12) {
+                roundBonus = 200;
+            }
+            System.out.println("curRound: " + currentRound);
+            System.out.println("roundBonus: " + roundBonus);
+
+            // Total Bonus Check
+            int totalBonus = roundBonus * randomBonus;
+            if (totalBonus > 250) {
+                totalBonus = 250;
+            }
+            int newPlayerMoney = playerMoney + totalBonus;
+            GamePlay.currentPlayer.setMoney(newPlayerMoney);
+
+            System.out.println("totalBonus: " + totalBonus);
+            System.out.println("newPlayerMoney: " + newPlayerMoney);
+
             final Stage dialogStage = new Stage();
             dialogStage.setTitle("You've entered the pub.");
             dialogStage.initModality(Modality.WINDOW_MODAL);
 
-            Label purchaseLandLabel = new Label("You have earned infinite amounts of money.");
+            Label purchaseLandLabel = new Label("You have earned " + totalBonus + " money.");
             purchaseLandLabel.setAlignment(Pos.CENTER);
-
-            //TODO: PUT CALCULATIONS HERE & ADD TO PLAYER MONEY, END PLAYER's TURN
 
             Button okBtn = new Button("OK");
             okBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -54,9 +90,10 @@ public class TownController {
                 public void handle(ActionEvent arg0) {
                     dialogStage.close();
                     try {
+                        //TODO: End player's turn here.
                         exitTown();
                     } catch (java.io.IOException e) {
-                        System.out.println("An IO Exception has occured in the pub's handler.");
+                        System.out.println("An IO Exception has occurred in the pub's handler.");
                         System.out.println(e.getStackTrace());
                     }
 
