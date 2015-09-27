@@ -6,19 +6,63 @@ package MULE;
  */
 public class Player {
 
+    /**
+     * Race of player
+     */
     public enum Race {
+        /**
+         * Human race; most difficult
+         */
         HUMAN,
+
+        /**
+         * Flapper race; intermediate
+         */
         FLAPPER,
+
+        /**
+         * Bonzoid race; beginner
+         */
         BONZOID,
+
+        /**
+         * Ugaite race; beginner
+         */
         UGAITE,
+
+        /**
+         * Buzzite race; beginner
+         */
         BUZZITE
     }
 
+    /**
+     * Color for players' identification throughout the game
+     */
     public enum Color {
+        /**
+         * Red
+         */
         RED,
+
+        /**
+         * Green
+         */
         GREEN,
+
+        /**
+         * Blue
+         */
         BLUE,
+
+        /**
+         * Yellow
+         */
         YELLOW,
+
+        /**
+         * Purple
+         */
         PURPLE
     }
 
@@ -34,6 +78,14 @@ public class Player {
     private int mule;
     private int numLand;
 
+    /**
+     * Initialization of players. Sets race, color (which cannot
+     * be the same as other players),
+     * @param name player name
+     * @param race player race
+     * @param color player color
+     * @param number position of player in player array
+     */
     public Player(String name, Race race, Color color, int number) {
         this.name = name;
         this.race = race;
@@ -72,78 +124,153 @@ public class Player {
 
     }
 
+    /**
+     * Get name
+     * @return player name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get color
+     * @return player color
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Get race
+     * @return player race
+     */
     public Race getRace() {
         return race;
     }
 
+    /**
+     * Get number
+     * @return player position in players array
+     */
     public int getNumber() {
         return number;
     }
 
+    /**
+     * Get money
+     * @return player money
+     */
     public int getMoney() {
         return money;
     }
 
+    /**
+     * Set money
+     * @param money
+     */
     public void setMoney(int money) {
         this.money = money;
     }
 
+    /**
+     * Get food
+     * @return player food
+     */
     public int getFood() {
         return food;
     }
 
+    /**
+     * Set number of food resource
+     * @param food
+     */
     public void setFood(int food) {
         this.food = food;
     }
 
+    /**
+     * Get energy
+     * @return player energy
+     */
     public int getEnergy() {
         return energy;
     }
 
+    /**
+     * Set number of energy resource
+     * @param energy
+     */
     public void setEnergy(int energy) {
         this.energy = energy;
     }
 
+    /**
+     * Get smithore
+     * @return player smithore
+     */
     public int getSmithore() {
         return smithore;
     }
 
+    /**
+     * Set number of smithore resource
+     * @param smithore
+     */
     public void setSmithore(int smithore) {
         this.smithore = smithore;
     }
 
+    /**
+     * Get crystite
+     * @return player crystite
+     */
     public int getCrystite() {
         return crystite;
     }
 
+    /**
+     * Set number of crystite resource
+     * @param crystite
+     */
     public void setCrystite(int crystite) {
         this.crystite = crystite;
     }
 
+    /**
+     * Get mule
+     * @return player mule
+     */
     public int getMule() {
         return mule;
     }
 
+    /**
+     * Set number of mule resource
+     * @param mule
+     */
     public void setMule(int mule) {
         this.mule = mule;
     }
 
+    /**
+     * String representtion of player
+     * @return string representation of player
+     */
     public String toString() {
         return "name: " + name + ", race: " + race.toString() + ", color: " + color.toString();
     }
 
+    /**
+     * Get number of land resource
+     * @return player land
+     */
     public int getNumLand() {
         return numLand;
     }
 
+    /**
+     * Increase the number of land resources a player owns
+     */
     public void incrementLand() {
         numLand = numLand + 1;
     }

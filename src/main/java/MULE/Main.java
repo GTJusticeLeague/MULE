@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Loads the stage with the initial scene
+ */
 public class Main extends Application {
 
     @Override
