@@ -66,12 +66,12 @@ public class GameScreenController {
     @FXML
     private Label currentPlayer;
 
-    private final Image mountain1 = new Image(getClass().getResourceAsStream("/mountain1_tile.png"));
-    private final Image mountain2 = new Image(getClass().getResourceAsStream("/mountain2_tile.png"));
-    private final Image mountain3 = new Image(getClass().getResourceAsStream("/mountain3_tile.png"));
-    private final Image plain = new Image(getClass().getResourceAsStream("/plain_tile.png"));
-    private final Image river = new Image(getClass().getResourceAsStream("/river_tile.png"));
-    private final Image town = new Image(getClass().getResourceAsStream("/town_tile.png"));
+    private final Image mountain1 = new Image(getClass().getResourceAsStream("/img/mountain1_tile.png"));
+    private final Image mountain2 = new Image(getClass().getResourceAsStream("/img/mountain2_tile.png"));
+    private final Image mountain3 = new Image(getClass().getResourceAsStream("/img/mountain3_tile.png"));
+    private final Image plain = new Image(getClass().getResourceAsStream("/img/plain_tile.png"));
+    private final Image river = new Image(getClass().getResourceAsStream("/img/river_tile.png"));
+    private final Image town = new Image(getClass().getResourceAsStream("/img/town_tile.png"));
 
     private final EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -125,7 +125,7 @@ public class GameScreenController {
             Parent root = null;
             try {
                 // Load the town when the town is clicked
-                root = FXMLLoader.load(getClass().getResource("/town.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
             } catch (java.io.IOException e) {
                 e.printStackTrace();
                 System.exit(-1);

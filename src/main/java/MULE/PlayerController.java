@@ -169,7 +169,7 @@ public class PlayerController {
         if (!inputMismatch) {
             // Move to the next scene (player configuration)
             Stage stage = (Stage) startGameButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/gameScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

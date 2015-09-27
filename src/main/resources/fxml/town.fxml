@@ -10,7 +10,7 @@
     <children>
         <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@town.png" />
+                <Image url="@../img/town.png"/>
             </image>
         </ImageView>
         <GridPane fx:id="townGridPane" prefHeight="606.0" prefWidth="807.0">

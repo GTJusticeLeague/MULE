@@ -58,7 +58,7 @@ public class GameConfigController {
 
         // Move to the next scene (player configuration)
         Stage stage=(Stage) GameConfigButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/playerConfiguration.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/playerConfiguration.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

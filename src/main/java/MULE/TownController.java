@@ -90,7 +90,7 @@ public class TownController {
 
     private void exitTown() throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/gameScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
