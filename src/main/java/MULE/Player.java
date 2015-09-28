@@ -276,14 +276,25 @@ public class Player {
         numLand = numLand + 1;
     }
 
-    public void timer() {
+    /**
+     * Initialize the player's timer
+     */
+    public void initTimer() {
         timer = new PlayerTimer(this);
     }
 
+    /**
+     * Start the player's timer
+     */
     public void startTime() {
         timer.startTime();
     }
 
+    /**
+     * Stop the player's timer early and return the number of seconds that are left
+     *
+     * @return The number of seconds left on the clock
+     */
     public int stopTime() {
         return timer.stopTime();
     }

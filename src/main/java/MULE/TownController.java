@@ -1,4 +1,5 @@
 package MULE;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,16 +9,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
 
-import java.util.Random;
-
-import javafx.scene.input.MouseEvent;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Emeke on 9/19/2015.
@@ -41,15 +41,25 @@ public class TownController {
             // (37-50 seconds = 200), (25-37 seconds = 150), (12-25 seconds = 100), (0-12 seconds = 50)
             // max is 250 points
 
-            //TODO: Add timer bonus after timer is completed & Remove print lines
+            // TODO: Remove print lines once tested
             int playerMoney = GamePlay.currentPlayer.getMoney();
 
             System.out.println("playerMoney: " + playerMoney);
             //Normal Bonus Calculation
-            int timerBonus = 0;
+            int timeRemaining = GamePlay.currentPlayer.stopTime();
+            int timerBonus;
+            if (timeRemaining >= 37) {
+                timerBonus = 200;
+            } else if (timeRemaining >= 25) {
+                timerBonus = 150;
+            } else if (timeRemaining >= 12) {
+                timerBonus = 100;
+            } else {
+                timerBonus = 50;
+            }
             Random rand = new Random();
             int randomBonus = rand.nextInt(timerBonus + 1);
-            System.out.println("randomBonus: " + randomBonus);
+            System.out.println("TimeRemaining: " + timeRemaining + " randomBonus: " + randomBonus);
 
             //Round Bonus Calculation
             int currentRound = GamePlay.round;
@@ -90,7 +100,7 @@ public class TownController {
                 public void handle(ActionEvent arg0) {
                     dialogStage.close();
                     try {
-                        //TODO: End player's turn here.
+                        GamePlay.nextPlayer();
                         exitTown();
                     } catch (java.io.IOException e) {
                         System.out.println("An IO Exception has occurred in the pub's handler.");
