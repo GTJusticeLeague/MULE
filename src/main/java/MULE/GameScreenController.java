@@ -146,6 +146,9 @@ public class GameScreenController {
     private void initialize() {
         displayMap();
         setPlayerStats();
+        if (GamePlay.round != 0) {
+            endButton.setVisible(false);
+        }
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 

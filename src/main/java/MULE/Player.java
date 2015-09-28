@@ -4,7 +4,7 @@ package MULE;
  * Created by Donald on 9/13/2015.
  * 9/13/2015 - Made Race/Color enums, created getters, made variables private
  */
-public class Player {
+public class Player implements Comparable<Player> {
 
     /**
      * Race of player
@@ -78,7 +78,7 @@ public class Player {
     private int mule;
     private int numLand;
     public PlayerTimer timer;
-
+    private int score;
     /**
      * Initialization of players. Sets race, color (which cannot
      * be the same as other players),
@@ -297,5 +297,24 @@ public class Player {
      */
     public int stopTime() {
         return timer.stopTime();
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Calculates and returns a player's score
+     * @return
+     */
+    public void calcScore() {
+        this.score = money + 500*numLand + energy + food + smithore + crystite;
+    }
+
+    @Override
+    public int compareTo(Player other) {
+        this.calcScore();
+        other.calcScore();
+        return this.score - other.getScore();
     }
 }

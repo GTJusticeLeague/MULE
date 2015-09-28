@@ -1,6 +1,7 @@
 package MULE;
 
-import java.util.Stack;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * Contains the main game logic
@@ -9,7 +10,7 @@ public class GamePlay {
     public static GameConfig GAMECONFIG;
     public static int round = 0;
     public static Player currentPlayer;
-    private static Stack<Player> playerOrder = new Stack<>();
+    private static Queue<Player> playerOrder = new PriorityQueue<>();
 
     public static void startGame() {
         nextPlayer(); // increments round number and initializes stack if nothing on stack
@@ -19,14 +20,13 @@ public class GamePlay {
      * End the current players turn by beginning the turn of the next player
      */
     public static void nextPlayer() {
-        Player nextPlayer = playerOrder.pop();
+        Player nextPlayer = playerOrder.peek();
         if (nextPlayer == null) {
             // We have gone through all players in the stack, round is over
             round++;
             initializePlayerOrder();
-            nextPlayer = playerOrder.pop();
         }
-        currentPlayer = nextPlayer;
+        currentPlayer = playerOrder.poll();
         // TODO: Set up timer for player
     }
 
@@ -34,10 +34,9 @@ public class GamePlay {
      * Sets up the stack of players in the correct order (based on score)
      */
     private static void initializePlayerOrder() {
-        // TODO: Reorder this so that the players are pushed in order of score
         for (int i = 0; i < GAMECONFIG.getNumPlayers(); i++) {
             Player temp = GAMECONFIG.getPlayers()[i];
-            playerOrder.push(temp);
+            playerOrder.add(temp);
         }
     }
 }
