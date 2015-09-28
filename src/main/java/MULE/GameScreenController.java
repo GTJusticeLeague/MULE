@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,15 +14,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.Modality;
-import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
+import javafx.stage.Stage;
 
 import java.util.Random;
 
@@ -117,7 +113,6 @@ public class GameScreenController {
         }
     };
 
-
     private final EventHandler<MouseEvent> townClickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -141,69 +136,31 @@ public class GameScreenController {
     public void initialize() {
         displayMap();
         setPlayerStats();
-        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
+        //Setting this in PlayerController so only happens at beginning of game
+        //GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 
+    /**
+     * Gets called when a player passes during the land selection phase
+     *
+     * @param event The event from the button click
+     */
     @FXML
     private void handleEndTurn(ActionEvent event) {
+        //TODO: Keep track of players who pass. When all players pass, end land selection
+        //TODO: After land selection, begin game (calling method in GamePlay)
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
-            //TODO: ADD AUCTION LOGIC HERE
-            //auction();
-            GamePlay.round++;
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
             currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
             return;
         }
-        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber()+ 1];
+        GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber() + 1];
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 
-//
-//    private void auction() {
-//        Tile property = getFreeTile();
-//        Text popup = new Text("WELCOME TO THE AUCTION!");
-//        Player[] players = GamePlay.GAMECONFIG.players;
-//        Pair<Player, Integer> bidder = null;
-//
-//        while(property.getOwner() == null) {
-//            for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
-//                //TODO: Add x, y coordinates to tile constructor, and toString method to Tile
-//                String text = "How much is your bid for: " + property.getTerrain() + " (-1 to pass) ";
-//                Text info = new Text(text);
-//                TextField textField = new TextField();
-//                Button button = new Button("Input");
-//                button.setOnAction(event -> {
-//                    int bid = Integer.parseInt(textField.getText());
-//
-//                });
-//            }
-//        }
-//
-//    }
-
-    /*
-        Returns a random Tile which has no owner
-     */
-    private Tile getFreeTile() {
-        Random rand = new Random();
-        Tile[][] board = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles();
-        Tile randTile = null;
-
-        while (randTile == null) {
-            int x = rand.nextInt(board.length);
-            int y = rand.nextInt(board[0].length);
-
-            if (board[x][y].getOwner() == null) {
-                randTile = board[x][y];
-            }
-        }
-
-        return randTile;
-    }
-
     /**
-     * Displays the map on the screen. Adds the images to the GameScreen's GridPane
+     * Displays the entire map on the screen. Adds the images to the GameScreen's GridPane
      */
     private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
@@ -308,6 +265,13 @@ public class GameScreenController {
         playerMoney.setText(money);
     }
 
+    /**
+     * Attempt to buy a tile using the current player. Has no effect if the tile already has an owner, or the
+     * player doesn't have enough money.
+     *
+     * @param x The X coordinate of the tile
+     * @param y The Y coordinate of the tile
+     */
     private void buyLand(int x, int y) {
         Tile current = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         Random rand = new Random();
@@ -317,7 +281,7 @@ public class GameScreenController {
             System.err.println("ERROR: Current player null!");
             return;
         }
-        //When the round is above 2 purchasing property costs money
+        //When the player already owns 2 land tiles, buying land costs money
         if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null &&
                 GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
             current.setOwner(GamePlay.currentPlayer);
@@ -328,7 +292,7 @@ public class GameScreenController {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
             }
-        } else if(current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
+        } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
             updateTile(x, y);
@@ -337,7 +301,6 @@ public class GameScreenController {
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
             }
         }
-        // Update the board
     }
 
     /**
