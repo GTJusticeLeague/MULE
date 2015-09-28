@@ -77,6 +77,7 @@ public class Player {
     private int crystite;
     private int mule;
     private int numLand;
+    public PlayerTimer timer;
 
     /**
      * Initialization of players. Sets race, color (which cannot
@@ -273,5 +274,17 @@ public class Player {
      */
     public void incrementLand() {
         numLand = numLand + 1;
+    }
+
+    public void timer() {
+        timer = new PlayerTimer(this);
+    }
+
+    public void startTime() {
+        timer.startTime();
+    }
+
+    public int stopTime() {
+        return timer.stopTime();
     }
 }
