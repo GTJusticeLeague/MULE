@@ -8,12 +8,39 @@ import java.io.FileNotFoundException;
  */
 public class GameConfig {
 
+    /**
+     * Game difficulty
+     */
     public enum Difficulty {
-        BEGINNER, INTERMEDIATE, ADVANCED
+        /**
+         * Beginner difficulty
+         */
+        BEGINNER,
+
+        /**
+         * Intermediate difficulty
+         */
+        INTERMEDIATE,
+
+        /**
+         * Advanced difficulty
+         */
+        ADVANCED
     }
 
+    /**
+     * Type of map for game play
+     */
     public enum MapType {
-        STANDARD, RANDOM
+        /**
+         * Original map layout
+         */
+        STANDARD,
+
+        /**
+         * Random map layout
+         */
+        RANDOM
     }
 
     private final Difficulty difficulty;
@@ -24,6 +51,13 @@ public class GameConfig {
     private final int MAX_NUM_PLAYERS = 4;
 
 
+    /**
+     * Sets up the game with the user-specified configurations
+     * @param difficulty difficulty
+     * @param mapType mapType
+     * @param numPlayers number of players
+     * @throws FileNotFoundException
+     */
     public GameConfig(Difficulty difficulty, MapType mapType, int numPlayers) throws FileNotFoundException {
         this.difficulty = difficulty;
         this.mapType = mapType;
@@ -32,23 +66,41 @@ public class GameConfig {
         this.GAMEBOARD = new Board();
     }
 
+    /**
+     * Get the difficulty
+     * @return difficulty
+     */
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Get the map type
+     * @return mapType
+     */
     public MapType getMapType() {
         return mapType;
     }
 
+    /**
+     * Get the array of Players
+     * @return array of players
+     */
     public Player[] getPlayers() {
         return players;
     }
 
-
-
+    /**
+     * Get the number of players
+     * @return numPlayers
+     */
     public int getNumPlayers() {
         return numPlayers;
     }
 
+    /**
+     * Get the game board
+     * @return game board
+     */
     public Board getGAMEBOARD() { return GAMEBOARD; }
 }

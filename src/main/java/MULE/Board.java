@@ -8,13 +8,21 @@ import java.util.Scanner;
  * A Board is the grid that the game is played on. Consists of a 2D array of tiles.
  */
 public class Board {
+
     private Tile[][] tiles;
 
-    // Default constructor for a board (build the default map)
+    /**
+     * Default constructor for a board (build the default map)
+     * @throws java.io.FileNotFoundException
+     */
     public Board() throws java.io.FileNotFoundException {
         this("defaultMap.csv");
     }
 
+    /**
+     * Places land images on the board based on map type
+     * @param map map
+     */
     public Board(String map) {
         tiles = new Tile[5][9];
         Scanner scan = new Scanner(getClass().getClassLoader().getResourceAsStream(map));
@@ -53,6 +61,10 @@ public class Board {
         }
     }
 
+    /**
+     * Prints the layout of the map to the console
+     * @return map design
+     */
     public String toString() {
         StringBuilder temp = new StringBuilder();
         for (int i = 0; i < tiles.length; i++) {
@@ -64,6 +76,10 @@ public class Board {
         return temp.toString();
     }
 
+    /**
+     * Get the array of tiles
+     * @return array of tiles
+     */
     public Tile[][] getTiles() {
         return tiles;
     }
