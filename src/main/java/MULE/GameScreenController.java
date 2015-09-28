@@ -116,19 +116,22 @@ public class GameScreenController {
     private final EventHandler<MouseEvent> townClickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            Stage stage = (Stage) Pane.getScene().getWindow();
-            Parent root = null;
-            try {
-                // Load the town when the town is clicked
-                root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-                System.exit(-1);
+            // Don't let player enter town until after land selection phase has been finished
+            if (GamePlay.round != 0) {
+                Stage stage = (Stage) Pane.getScene().getWindow();
+                Parent root = null;
+                try {
+                    // Load the town when the town is clicked
+                    root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
+                } catch (java.io.IOException e) {
+                    e.printStackTrace();
+                    System.exit(-1);
+                }
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                event.consume();
             }
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            event.consume();
         }
     };
 
@@ -148,8 +151,8 @@ public class GameScreenController {
      */
     @FXML
     private void handleEndTurn(ActionEvent event) {
-        //TODO: Keep track of players who pass. When all players pass, end land selection
-        //TODO: After land selection, begin game (calling method in GamePlay)
+        //TODO: Keep track of which players have passed. When all players pass, end land selection
+        //TODO: After land selection, begin game (calling GamePlay.startGame())
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
             currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
