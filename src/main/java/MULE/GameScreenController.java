@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.HashSet;
 import java.util.Random;
 
 public class GameScreenController {
@@ -62,12 +63,16 @@ public class GameScreenController {
     @FXML
     private Label currentPlayer;
 
+    // Images to use for the tiles
     private final Image mountain1 = new Image(getClass().getResourceAsStream("/img/mountain1_tile.png"));
     private final Image mountain2 = new Image(getClass().getResourceAsStream("/img/mountain2_tile.png"));
     private final Image mountain3 = new Image(getClass().getResourceAsStream("/img/mountain3_tile.png"));
     private final Image plain = new Image(getClass().getResourceAsStream("/img/plain_tile.png"));
     private final Image river = new Image(getClass().getResourceAsStream("/img/river_tile.png"));
     private final Image town = new Image(getClass().getResourceAsStream("/img/town_tile.png"));
+
+    // Keep track of which players have passed during the land selection phase
+    private final HashSet<Player> passedPlayers = new HashSet<>();
 
     private final EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -76,7 +81,6 @@ public class GameScreenController {
             final Stage dialogStage = new Stage();
             dialogStage.setTitle("Purchase a Property");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-
 
             Label purchaseLandLabel = new Label("Would you like to purchase this property?");
             purchaseLandLabel.setAlignment(Pos.CENTER);
@@ -102,7 +106,6 @@ public class GameScreenController {
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(40.0);
             hBox.getChildren().addAll(yesBtn, noBtn);
-
 
             VBox vBox = new VBox();
             vBox.setSpacing(40.0);
@@ -135,12 +138,14 @@ public class GameScreenController {
         }
     };
 
+    /**
+     * Initialize is called whenever this screen is loaded (beginning of game and returning from town)
+     * Should display the game grid, and set up the player statistics on the bottom of the screen
+     */
     @FXML
-    public void initialize() {
+    private void initialize() {
         displayMap();
         setPlayerStats();
-        //Setting this in PlayerController so only happens at beginning of game
-        //GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
     }
 
@@ -151,8 +156,14 @@ public class GameScreenController {
      */
     @FXML
     private void handleEndTurn(ActionEvent event) {
-        //TODO: Keep track of which players have passed. When all players pass, end land selection
-        //TODO: After land selection, begin game (calling GamePlay.startGame())
+        passedPlayers.add(GamePlay.currentPlayer);
+        if (passedPlayers.size() == GamePlay.GAMECONFIG.getNumPlayers()) {
+            // Remove pass button from screen
+            endButton.setVisible(false);
+            // All players have passed, begin actual game
+            GamePlay.startGame();
+            return;
+        }
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
             currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
