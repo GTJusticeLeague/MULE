@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -104,11 +105,13 @@ public class GameScreenController {
 
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
-            hBox.setSpacing(40.0);
+            hBox.setSpacing(20.0);
             hBox.getChildren().addAll(yesBtn, noBtn);
 
+
             VBox vBox = new VBox();
-            vBox.setSpacing(40.0);
+            vBox.setSpacing(20.0);
+            vBox.setPadding(new Insets(10, 10, 10, 10));
             vBox.getChildren().addAll(purchaseLandLabel, hBox);
 
             dialogStage.setScene(new Scene(vBox));
@@ -147,9 +150,9 @@ public class GameScreenController {
         displayMap();
         setPlayerStats();
         if (GamePlay.round != 0) {
-            endButton.setVisible(false);
+            endButton.setDisable(true);
         }
-        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
     }
 
     /**
@@ -162,18 +165,18 @@ public class GameScreenController {
         passedPlayers.add(GamePlay.currentPlayer);
         if (passedPlayers.size() == GamePlay.GAMECONFIG.getNumPlayers()) {
             // Remove pass button from screen
-            endButton.setVisible(false);
+            endButton.setDisable(true);
             // All players have passed, begin actual game
             GamePlay.startGame();
             return;
         }
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.GAMECONFIG.getNumPlayers()) {
             GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[0];
-            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             return;
         }
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber() + 1];
-        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
     }
 
     /**
@@ -298,6 +301,66 @@ public class GameScreenController {
             System.err.println("ERROR: Current player null!");
             return;
         }
+
+        //Notify user if current tile is taken or cannot afford the property
+        if (GamePlay.currentPlayer.getMoney() <= price) {
+            final Stage dialogStage = new Stage();
+            dialogStage.setTitle("Sorry");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+
+            Label errorLabel = new Label("You cannot afford this property.");
+            errorLabel.setAlignment(Pos.CENTER);
+
+            Button okBtn = new Button("OK");
+            okBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                public void handle(ActionEvent arg0) {
+                    dialogStage.close();
+                }
+            });
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER);
+            hBox.setSpacing(20.0);
+            hBox.getChildren().addAll(okBtn);
+
+
+            VBox vBox = new VBox();
+            vBox.setSpacing(20.0);
+            vBox.setPadding(new Insets(10, 10, 10, 10));
+            vBox.getChildren().addAll(errorLabel, hBox);
+
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        } else if (current.getOwner() != null) {
+            final Stage dialogStage = new Stage();
+            dialogStage.setTitle("Sorry");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+
+            Label errorLabel = new Label("This property already has an owner!");
+            errorLabel.setAlignment(Pos.CENTER);
+
+            Button okBtn = new Button("OK");
+            okBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                public void handle(ActionEvent arg0) {
+                    dialogStage.close();
+                }
+            });
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER);
+            hBox.setSpacing(20.0);
+            hBox.getChildren().addAll(okBtn);
+
+
+            VBox vBox = new VBox();
+            vBox.setSpacing(20.0);
+            vBox.setPadding(new Insets(10, 10, 10, 10));
+            vBox.getChildren().addAll(errorLabel, hBox);
+
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        }
+
         //When the player already owns 2 land tiles, buying land costs money
         if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null &&
                 GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
@@ -307,7 +370,7 @@ public class GameScreenController {
             updateTile(x, y);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
-                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
@@ -315,7 +378,7 @@ public class GameScreenController {
             updateTile(x, y);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
-                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", take your turn.");
+                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         }
     }

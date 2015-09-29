@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -88,7 +89,7 @@ public class TownController {
             System.out.println("newPlayerMoney: " + newPlayerMoney);
 
             final Stage dialogStage = new Stage();
-            dialogStage.setTitle("You've entered the pub.");
+            dialogStage.setTitle("Congrats!");
             dialogStage.initModality(Modality.WINDOW_MODAL);
 
             Label purchaseLandLabel = new Label("You have earned " + totalBonus + " money.");
@@ -112,12 +113,13 @@ public class TownController {
             });
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
-            hBox.setSpacing(40.0);
+            hBox.setSpacing(20.0);
             hBox.getChildren().addAll(okBtn);
 
 
             VBox vBox = new VBox();
-            vBox.setSpacing(40.0);
+            vBox.setSpacing(20.0);
+            vBox.setPadding(new Insets(10, 10, 10, 10));
             vBox.getChildren().addAll(purchaseLandLabel, hBox);
 
             dialogStage.setScene(new Scene(vBox));

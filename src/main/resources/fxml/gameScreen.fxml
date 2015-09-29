@@ -115,8 +115,13 @@
                               </Pane>
                            </children>
                         </GridPane>
-                        <Button fx:id="endButton" layoutX="366.0" mnemonicParsing="false" onAction="#handleEndTurn" text="Pass" />
-                        <Label fx:id="currentPlayer" layoutX="244.0" layoutY="2.0" text="Donald, Let's Go!" />
+                         <Button fx:id="endButton" layoutX="757.0" mnemonicParsing="false" onAction="#handleEndTurn"
+                                 text="Pass"/>
+                         <Label fx:id="currentPlayer" layoutX="339.0" layoutY="4.0" text="Donald, Let's Go!">
+                             <font>
+                                 <Font name="System Bold" size="15.0"/>
+                             </font>
+                         </Label>
                      </children>
                   </AnchorPane>
               </items>
