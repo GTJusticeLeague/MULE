@@ -27,7 +27,8 @@ public class GamePlay {
             initializePlayerOrder();
         }
         currentPlayer = playerOrder.poll();
-        // TODO: Set up timer for player
+        currentPlayer.initTimer();
+        currentPlayer.startTime();
     }
 
     /**
