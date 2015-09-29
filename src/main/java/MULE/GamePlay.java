@@ -11,6 +11,7 @@ public class GamePlay {
     public static int round = 0;
     public static Player currentPlayer;
     private static Queue<Player> playerOrder = new PriorityQueue<>();
+    public static int turnSeconds = 0;
 
     public static void startGame() {
         nextPlayer(); // increments round number and initializes stack if nothing on stack

@@ -9,9 +9,10 @@ import javafx.util.Duration;
  */
 public class PlayerTimer {
     private int time;
+    private int elapsedTime = 0;
     private Player current;
     private Timeline ticker;
-    private Timeline timer;
+
     public PlayerTimer (Player current) {
         this.current = current;
         int food = current.getFood();
@@ -42,22 +43,27 @@ public class PlayerTimer {
                 time = 30;
             }
         }
-        ticker = new Timeline(new KeyFrame(Duration.seconds(time), ae -> increment()));
+        GamePlay.turnSeconds = time;
+        ticker = new Timeline(new KeyFrame(Duration.seconds(1), ae -> increment()));
         ticker.setCycleCount(Animation.INDEFINITE);
-        timer = new Timeline(new KeyFrame(Duration.seconds(time), ae -> GamePlay.nextPlayer()));
     }
     private void increment() {
-        time--;
+        elapsedTime++;
+        System.err.println("Time remaining: " + (GamePlay.turnSeconds - elapsedTime));
+        // TODO: show remaining time on the game screen
+        if (elapsedTime >= GamePlay.turnSeconds) {
+            // TODO: Alert that player change is happening
+            ticker.stop();
+            GamePlay.nextPlayer();
+        }
     }
 
     public void startTime() {
         ticker.play();
-        timer.play();
     }
 
     public int stopTime() {
         ticker.stop();
-        timer.stop();
-        return time++;
+        return GamePlay.turnSeconds - elapsedTime;
     }
 }

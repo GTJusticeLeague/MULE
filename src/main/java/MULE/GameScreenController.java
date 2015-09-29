@@ -303,7 +303,7 @@ public class GameScreenController {
         }
 
         //Notify user if current tile is taken or cannot afford the property
-        if (GamePlay.currentPlayer.getMoney() <= price) {
+        if (GamePlay.currentPlayer.getMoney() < price) {
             final Stage dialogStage = new Stage();
             dialogStage.setTitle("Sorry");
             dialogStage.initModality(Modality.WINDOW_MODAL);
