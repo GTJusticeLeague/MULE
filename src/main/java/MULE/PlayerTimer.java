@@ -8,7 +8,6 @@ import javafx.util.Duration;
  * Created by Donald on 9/27/2015.
  */
 public class PlayerTimer {
-    private int time;
     private int elapsedTime = 0;
     private Player current;
     private Timeline ticker;
@@ -56,6 +55,10 @@ public class PlayerTimer {
             ticker.stop();
             GamePlay.nextPlayer();
         }
+    }
+
+    public int getRemainingTime() {
+        return GamePlay.turnSeconds - elapsedTime;
     }
 
     public void startTime() {

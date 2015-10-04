@@ -1,5 +1,8 @@
 package MULE;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +22,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -74,6 +78,10 @@ public class GameScreenController {
 
     // Keep track of which players have passed during the land selection phase
     private final HashSet<Player> passedPlayers = new HashSet<>();
+
+    // Used to trigger an update every second
+    private Timeline ticker;
+
 
     private final EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -153,6 +161,19 @@ public class GameScreenController {
             endButton.setDisable(true);
         }
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+
+        ticker = new Timeline(new KeyFrame(Duration.millis(100), ae -> updateScreen()));
+        ticker.setCycleCount(Animation.INDEFINITE);
+        ticker.play();
+    }
+
+    /**
+     * Method to be called by the Timeline every so often, so that things on the screen get updated
+     */
+    private void updateScreen() {
+        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
+            updatePlayer(i);
+        }
     }
 
     /**
@@ -278,11 +299,24 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Updates the player information at the bottom of the screen (player money and time left)
+     * Gets called by the Timeline created in initialize()
+     *
+     * @param playerNum The index of the Player to update in the player array
+     */
     private void updatePlayer(int playerNum) {
-        String money = "$" + GamePlay.GAMECONFIG.players[playerNum].getMoney();
+        Player cur = GamePlay.GAMECONFIG.players[playerNum];
+        String money = "$" + cur.getMoney();
         Pane playerStatsPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
         playerMoney = (Text) playerStatsPane.getChildren().get(1);
+        playerTimer = (Text) playerStatsPane.getChildren().get(2);
         playerMoney.setText(money);
+        if (cur.timer != null && cur == GamePlay.currentPlayer) {
+            playerTimer.setText(cur.timer.getRemainingTime() + " secs");
+        } else {
+            playerTimer.setText("Timer");
+        }
     }
 
     /**
