@@ -317,4 +317,5 @@ public class Player implements Comparable<Player> {
         other.calcScore();
         return this.score - other.getScore();
     }
+    //TODO: Player needs an equals method
 }

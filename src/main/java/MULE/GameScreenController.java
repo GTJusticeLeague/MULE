@@ -75,39 +75,45 @@ public class GameScreenController {
     // Keep track of which players have passed during the land selection phase
     private final HashSet<Player> passedPlayers = new HashSet<>();
 
-    private final EventHandler<MouseEvent> purchaseHandler = new EventHandler<MouseEvent>() {
+    /**
+     * Event fires when a tile besides the town is clicked on the map
+     * The player can choose between buying property, placing a mule
+     * or exiting the screen.
+     */
+    private final EventHandler<MouseEvent> tileClickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            // Setup dialog box to purchase a property
+
             final Stage dialogStage = new Stage();
-            dialogStage.setTitle("Purchase a Property");
+            dialogStage.setTitle("Property Options");
             dialogStage.initModality(Modality.WINDOW_MODAL);
 
-            Label purchaseLandLabel = new Label("Would you like to purchase this property?");
+            Label purchaseLandLabel = new Label("Would you like to Purchase Property, or Place a Mule?");
             purchaseLandLabel.setAlignment(Pos.CENTER);
 
-            Button yesBtn = new Button("Yes");
-            Button noBtn = new Button("No");
-            yesBtn.setOnAction(new EventHandler<ActionEvent>() {
+            Button purchaseBtn = new Button("Purchase Property");
+            Button muleBtn = new Button("Place a Mule");
 
-                public void handle(ActionEvent arg0) {
-                    buyLand((GridPane.getRowIndex(((javafx.scene.Node) event.getSource()).getParent())),
-                            (GridPane.getColumnIndex(((javafx.scene.Node) event.getSource()).getParent())));
-                    dialogStage.close();
-                }
+            //Hook up event handler for purchase land and place mule
+            purchaseBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+            muleBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, placeMuleHandler);
+
+            //Purchase handler needs to fire when button is clicked with event args
+            purchaseBtn.setOnAction(arg0 -> {
+                purchaseHandler.handle(event);
+                dialogStage.close();
             });
-            noBtn.setOnAction(new EventHandler<ActionEvent>() {
 
-                public void handle(ActionEvent arg0) {
-                    dialogStage.close();
-                }
+            //Place mule handler needs to fire when button is clicked with event args
+            muleBtn.setOnAction(arg0 -> {
+                placeMuleHandler.handle(event);
+                dialogStage.close();
             });
 
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(20.0);
-            hBox.getChildren().addAll(yesBtn, noBtn);
-
+            hBox.getChildren().addAll(purchaseBtn, muleBtn);
 
             VBox vBox = new VBox();
             vBox.setSpacing(20.0);
@@ -117,6 +123,92 @@ public class GameScreenController {
             dialogStage.setScene(new Scene(vBox));
             dialogStage.show();
         }
+    };
+
+    private final EventHandler<MouseEvent> purchaseHandler = event -> {
+        // Setup dialog box to purchase a property
+        final Stage dialogStage = new Stage();
+        dialogStage.setTitle("Property Options");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+
+        Label purchaseLandLabel = new Label("Purchase this Property?");
+        purchaseLandLabel.setAlignment(Pos.CENTER);
+
+        Button yesBtn = new Button("Yes");
+        Button noBtn = new Button("No");
+        yesBtn.setOnAction(arg0 -> {
+            buyLand((GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+                    (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
+            dialogStage.close();
+        });
+        noBtn.setOnAction(arg0 -> dialogStage.close());
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(20.0);
+        hBox.getChildren().addAll(yesBtn, noBtn);
+
+
+        VBox vBox = new VBox();
+        vBox.setSpacing(20.0);
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.getChildren().addAll(purchaseLandLabel, hBox);
+
+        dialogStage.setScene(new Scene(vBox));
+        dialogStage.show();
+    };
+
+    private final EventHandler<MouseEvent> placeMuleHandler = event -> {
+        // Setup dialog box to purchase a property
+        final Stage dialogStage = new Stage();
+        dialogStage.setTitle("Property Options");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+
+        Label purchaseLandLabel = new Label("\t\tSelect a Mule");
+        purchaseLandLabel.setAlignment(Pos.CENTER);
+
+        Button foodBtn = new Button("Food");
+        Button energyBtn = new Button("Energy");
+        Button smithBtn = new Button("Smithore");
+        Button crystBtn = new Button("Crystite");
+
+        foodBtn.setOnAction(arg0 -> {
+            placeMule("FOOD",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+                    (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
+            dialogStage.close();
+        });
+
+        energyBtn.setOnAction(arg0 -> {
+            placeMule("ENERGY",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+                    (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
+            dialogStage.close();
+        });
+
+        smithBtn.setOnAction(arg0 -> {
+            placeMule("SMITHORE",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+                    (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
+            dialogStage.close();
+        });
+
+        crystBtn.setOnAction(arg0 ->  {
+            placeMule("CRYSTITE",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+                    (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
+            dialogStage.close();
+        });
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(20.0);
+        hBox.getChildren().addAll(foodBtn, energyBtn, smithBtn, crystBtn);
+
+
+        VBox vBox = new VBox();
+        vBox.setSpacing(20.0);
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.getChildren().addAll(purchaseLandLabel, hBox);
+
+        dialogStage.setScene(new Scene(vBox));
+        dialogStage.show();
     };
 
     private final EventHandler<MouseEvent> townClickHandler = new EventHandler<MouseEvent>() {
@@ -193,23 +285,23 @@ public class GameScreenController {
                 switch (board[i][j].getTerrain()) {
                     case ONEMOUNTAIN:
                         image = new ImageView(mountain1);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                         break;
                     case TWOMOUNTAIN:
                         image = new ImageView(mountain2);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                         break;
                     case THREEMOUNTAIN:
                         image = new ImageView(mountain3);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                         break;
                     case PLAIN:
                         image = new ImageView(plain);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                         break;
                     case RIVER:
                         image = new ImageView(river);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
+                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
                         break;
                     case TOWN:
                         image = new ImageView(town);
@@ -280,9 +372,24 @@ public class GameScreenController {
 
     private void updatePlayer(int playerNum) {
         String money = "$" + GamePlay.GAMECONFIG.players[playerNum].getMoney();
-        Pane playerStatsPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
-        playerMoney = (Text) playerStatsPane.getChildren().get(1);
+        Pane playerStatGridPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
+        playerMoney = (Text) playerStatGridPane.getChildren().get(1);
         playerMoney.setText(money);
+
+        food = (Label) playerStatGridPane.getChildren().get(3);
+        food.setText(GamePlay.GAMECONFIG.players[playerNum].getFood() + " Food");
+
+        energy = (Label) playerStatGridPane.getChildren().get(4);
+        energy.setText(GamePlay.GAMECONFIG.players[playerNum].getEnergy() + " Energy");
+
+        smithore = (Label) playerStatGridPane.getChildren().get(5);
+        smithore.setText(GamePlay.GAMECONFIG.players[playerNum].getSmithore() + " Smithore");
+
+        crystite = (Label) playerStatGridPane.getChildren().get(6);
+        crystite.setText(GamePlay.GAMECONFIG.players[playerNum].getCrystite() + " Crystite");
+
+        mule = (Label) playerStatGridPane.getChildren().get(7);
+        mule.setText(GamePlay.GAMECONFIG.players[playerNum].getMule() + " Mule");
     }
 
     /**
@@ -382,6 +489,87 @@ public class GameScreenController {
             }
         }
     }
+    private void placeMule(String MULE, Integer x, Integer y) {
+        Tile curTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
+        Player curPlayer = GamePlay.currentPlayer;
+
+        switch (MULE) {
+            case "FOOD":
+                //Checks if player has lost MULE
+                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                    //Decrement if MULE count is above 0
+                    if (curPlayer.getFood() > 0) {
+                        curPlayer.setFood(curPlayer.getFood() - 1);
+                        //TODO: alert user they have lost mule
+                    }
+                } else {
+                    //Place corresponding MULE else do nothing
+                    if (curPlayer.getFood() > 0) {
+                        curPlayer.setFood(curPlayer.getFood() - 1);
+                        curTile.setHasMule(true);
+                        //UPDATE UI?
+                        //TODO: update UI to draw mule
+                    }
+                }
+                updatePlayer(curPlayer.getNumber());
+                break;
+            case "ENERGY":
+                //Checks if player has lost MULE
+                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                    //Decrement if MULE count is above 0
+                    if (curPlayer.getEnergy() > 0) {
+                        curPlayer.setEnergy(curPlayer.getEnergy() - 1);
+                    }
+                } else {
+                    //Place corresponding MULE else do nothing
+                    if (curPlayer.getEnergy() > 0) {
+                        curPlayer.setEnergy(curPlayer.getEnergy() - 1);
+                        curTile.setHasMule(true);
+                        //UPDATE UI?
+                    }
+                }
+                updatePlayer(curPlayer.getNumber());
+                break;
+            case "SMITHORE":
+                //Checks if player has lost MULE
+                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                    //Decrement if MULE count is above 0
+                    if (curPlayer.getSmithore() > 0) {
+                        curPlayer.setSmithore(curPlayer.getSmithore() - 1);
+                    }
+                } else {
+                    //Place corresponding MULE else do nothing
+                    if (curPlayer.getSmithore() > 0) {
+                        curPlayer.setSmithore(curPlayer.getSmithore() - 1);
+                        curTile.setHasMule(true);
+                        //UPDATE UI?
+                    }
+                }
+                updatePlayer(curPlayer.getNumber());
+                break;
+            case "CRYSTITE":
+                //Checks if player has lost MULE
+                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                    //Decrement if MULE count is above 0
+                    if (curPlayer.getCrystite() > 0) {
+                        curPlayer.setCrystite(curPlayer.getCrystite() - 1);
+                    }
+                } else {
+                    //Place corresponding MULE else do nothing
+                    if (curPlayer.getCrystite() > 0) {
+                        curPlayer.setCrystite(curPlayer.getCrystite() - 1);
+                        curTile.setHasMule(true);
+                        //UPDATE UI?
+                    }
+                }
+                updatePlayer(curPlayer.getNumber());
+                break;
+            default:
+                System.out.println("Error placing MULE");
+                System.exit(1);
+        }
+    }
+
 
     /**
      * Updates a tile displayed on the screen (adds a colored border based on the owner)
