@@ -48,7 +48,6 @@ public class GameConfig {
     private final MapType mapType;
     public Player[] players;
     private final int numPlayers;
-    private final int MAX_NUM_PLAYERS = 4;
 
 
     /**
@@ -62,6 +61,7 @@ public class GameConfig {
         this.difficulty = difficulty;
         this.mapType = mapType;
         this.numPlayers = numPlayers;
+        int MAX_NUM_PLAYERS = 4;
         this.players = new Player[MAX_NUM_PLAYERS];
         this.GAMEBOARD = new Board();
     }
