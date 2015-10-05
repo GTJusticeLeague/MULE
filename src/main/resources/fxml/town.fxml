@@ -25,6 +25,7 @@
             <children>
                 <Pane fx:id="pubPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
                       GridPane.rowIndex="1"/>
+                <Pane fx:id="storePane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
       <Button fx:id="exitButton" layoutX="362.0" layoutY="556.0" mnemonicParsing="false" onAction="#handleExitTown" prefHeight="44.0" prefWidth="84.0" text="Exit Town" />

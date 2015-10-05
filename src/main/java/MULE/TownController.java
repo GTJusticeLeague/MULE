@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Created by Emeke on 9/19/2015.
@@ -32,6 +34,9 @@ public class TownController {
 
     @FXML
     private Pane pubPane;
+
+    @FXML
+    private Pane storePane;
 
 
 
@@ -126,9 +131,28 @@ public class TownController {
         dialogStage.show();
     };
 
+    private final EventHandler<javafx.scene.input.MouseEvent> storeHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
+        @Override
+        public void handle(javafx.scene.input.MouseEvent event) {
+            Stage stage = (Stage) storePane.getScene().getWindow();
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/store.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            } catch (java.io.IOException e) {
+                System.out.println("An IO Exception has occurred in the store's handler.");
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                System.out.println(sw.toString());
+            }
+            stage.show();
+        }
+    };
+
     @FXML
     public void initialize() {
         pubPane.addEventHandler(MouseEvent.MOUSE_CLICKED, pubHandler);
+        storePane.addEventHandler(MouseEvent.MOUSE_CLICKED, storeHandler);
     }
 
     @FXML
