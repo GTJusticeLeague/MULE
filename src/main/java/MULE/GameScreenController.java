@@ -534,13 +534,13 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getFood() > 0) {
+                    if (curPlayer.getFood() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setFood(curPlayer.getFood() - 1);
                         //TODO: alert user they have lost mule
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getFood() > 0) {
+                    if (curPlayer.getFood() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setFood(curPlayer.getFood() - 1);
                         curTile.setHasMule(true);
                         //UPDATE UI?
@@ -553,12 +553,12 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getEnergy() > 0) {
+                    if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setEnergy(curPlayer.getEnergy() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getEnergy() > 0) {
+                    if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setEnergy(curPlayer.getEnergy() - 1);
                         curTile.setHasMule(true);
                         //UPDATE UI?
@@ -570,12 +570,12 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getSmithore() > 0) {
+                    if (curPlayer.getSmithore() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setSmithore(curPlayer.getSmithore() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getSmithore() > 0) {
+                    if (curPlayer.getSmithore() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setSmithore(curPlayer.getSmithore() - 1);
                         curTile.setHasMule(true);
                         //UPDATE UI?
@@ -587,12 +587,12 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getCrystite() > 0) {
+                    if (curPlayer.getCrystite() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setCrystite(curPlayer.getCrystite() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getCrystite() > 0) {
+                    if (curPlayer.getCrystite() > 0 && curPlayer.getMule() > 0) {
                         curPlayer.setCrystite(curPlayer.getCrystite() - 1);
                         curTile.setHasMule(true);
                         //UPDATE UI?

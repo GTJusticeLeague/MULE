@@ -317,5 +317,22 @@ public class Player implements Comparable<Player> {
         other.calcScore();
         return this.score - other.getScore();
     }
-    //TODO: Player needs an equals method
+
+    @Override
+    public int hashCode() {
+        this.calcScore();
+        return this.score*17 + this.crystite + this.food + this.energy + this.smithore;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Player))
+            return false;
+        if (obj == this)
+            return true;
+
+        Player other = (Player) obj;
+
+        return this.number == other.getNumber();
+    }
 }

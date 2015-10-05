@@ -1,19 +1,268 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-      prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="MULE.StoreController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MULE.StoreController">
     <children>
         <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../img/store.png"/>
+                <Image url="@../img/store.png" />
             </image>
         </ImageView>
+      <GridPane layoutX="248.0" layoutY="67.0" prefHeight="128.0" prefWidth="526.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" layoutY="4.0" prefHeight="15.0" prefWidth="263.0" text="Available Store Items" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Text fx:id="foodInStore" layoutX="15.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="energyInStore" layoutX="152.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Energy">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="smithoreInStore" layoutX="15.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="crystiteInStore" layoutX="149.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <Text fx:id="playerCrystite" layoutX="154.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="playerSmithore" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="playerEnergy" layoutX="160.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Energy">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="playerFood" layoutX="21.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Label alignment="CENTER" layoutY="4.0" prefHeight="15.0" prefWidth="263.0" text="Your Items" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+      <Label alignment="CENTER" layoutX="248.0" layoutY="31.0" prefHeight="29.0" prefWidth="532.0" text="Welcome to The Store!">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="28.0" layoutY="228.0" prefHeight="350.0" prefWidth="747.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="263.0" text="Resource" underline="true">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="263.0" text="No. to Buy" underline="true" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="263.0" text="Cost" underline="true" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="263.0" text="No. to Sell" underline="true" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="263.0" text="Recieve" underline="true" GridPane.columnIndex="4">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="foodBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="energyBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="smithoreBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="CrystiteBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="muleBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="foodSell" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="energySell" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="smithoreSell" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="crystiteSell" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="Food" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="Energy" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="Smithore" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="Crystite" GridPane.rowIndex="4">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="mule" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="Mule" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="foodTotal" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#d30f08" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="energyTotal" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#d30f08" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="smithoreTotal" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#d30f08" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="crystiteTotal" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#d30f08" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="muleTotal" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#d30f08" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="foodRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="energyReciept" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="smithoreRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="crystiteRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="checkout" mnemonicParsing="false" prefHeight="25.0" prefWidth="153.0" text="Done" GridPane.columnIndex="4" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="returnToTown" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Return to Town" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Didn't mean to come to The Store?" textAlignment="CENTER" wrappingWidth="149.47412109375" GridPane.rowIndex="6" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ready to buy/sell your resources?" textAlignment="CENTER" wrappingWidth="149.47412109375" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+         </children>
+      </GridPane>
     </children>
 </Pane>
