@@ -643,6 +643,6 @@ public class GameScreenController {
 
     //TODO: add method to create HBoxes
     private HBox hBoxMaker() {
-
+        return null;
     }
 }
