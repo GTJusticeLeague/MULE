@@ -92,6 +92,12 @@ public class GameScreenController {
         @Override
         public void handle(MouseEvent event) {
 
+            //Defaults to purchaseHandler when in
+            // land selection phase
+            if (GamePlay.round < 1) {
+                purchaseHandler.handle(event);
+                return;
+            }
             final Stage dialogStage = new Stage();
             dialogStage.setTitle("Property Options");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -455,17 +461,12 @@ public class GameScreenController {
             errorLabel.setAlignment(Pos.CENTER);
 
             Button okBtn = new Button("OK");
-            okBtn.setOnAction(new EventHandler<ActionEvent>() {
+            okBtn.setOnAction(arg0 -> dialogStage.close());
 
-                public void handle(ActionEvent arg0) {
-                    dialogStage.close();
-                }
-            });
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(20.0);
             hBox.getChildren().addAll(okBtn);
-
 
             VBox vBox = new VBox();
             vBox.setSpacing(20.0);
@@ -483,12 +484,8 @@ public class GameScreenController {
             errorLabel.setAlignment(Pos.CENTER);
 
             Button okBtn = new Button("OK");
-            okBtn.setOnAction(new EventHandler<ActionEvent>() {
+            okBtn.setOnAction(arg0 -> dialogStage.close());
 
-                public void handle(ActionEvent arg0) {
-                    dialogStage.close();
-                }
-            });
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(20.0);
@@ -642,5 +639,10 @@ public class GameScreenController {
         } else {
             System.err.println("ERROR: Not an HBox.");
         }
+    }
+
+    //TODO: add method to create HBoxes
+    private HBox hBoxMaker() {
+
     }
 }
