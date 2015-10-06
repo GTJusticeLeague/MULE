@@ -145,7 +145,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="CrystiteBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="crystiteBuy" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin>
@@ -229,22 +229,22 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="foodRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <Label fx:id="foodReceive" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="energyReciept" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Label fx:id="energyReceive" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="smithoreRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <Label fx:id="smithoreReceive" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="crystiteRecieve" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <Label fx:id="crystiteReceive" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <font>
                   <Font size="15.0" />
                </font>
