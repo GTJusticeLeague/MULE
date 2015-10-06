@@ -46,6 +46,7 @@ public class GameConfig {
     private final Difficulty difficulty;
     private final Board GAMEBOARD;
     private final MapType mapType;
+    private final Store store;
     public Player[] players;
     private final int numPlayers;
 
@@ -64,6 +65,7 @@ public class GameConfig {
         int MAX_NUM_PLAYERS = 4;
         this.players = new Player[MAX_NUM_PLAYERS];
         this.GAMEBOARD = new Board();
+        this.store = new Store(difficulty);
     }
 
     /**
@@ -103,4 +105,8 @@ public class GameConfig {
      * @return game board
      */
     public Board getGAMEBOARD() { return GAMEBOARD; }
+
+    public Store getStore() {
+        return store;
+    }
 }
