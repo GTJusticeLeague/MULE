@@ -69,11 +69,6 @@ public class GameScreenController {
     private Label currentPlayer;
 
     // Images to use for the tiles
-    private final Image mountain1 = new Image(getClass().getResourceAsStream("/img/mountain1_tile.png"));
-    private final Image mountain2 = new Image(getClass().getResourceAsStream("/img/mountain2_tile.png"));
-    private final Image mountain3 = new Image(getClass().getResourceAsStream("/img/mountain3_tile.png"));
-    private final Image plain = new Image(getClass().getResourceAsStream("/img/plain_tile.png"));
-    private final Image river = new Image(getClass().getResourceAsStream("/img/river_tile.png"));
     private final Image town = new Image(getClass().getResourceAsStream("/img/town_tile.png"));
 
     // Keep track of which players have passed during the land selection phase
@@ -124,17 +119,7 @@ public class GameScreenController {
                 dialogStage.close();
             });
 
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER);
-            hBox.setSpacing(20.0);
-            hBox.getChildren().addAll(purchaseBtn, muleBtn);
-
-            VBox vBox = new VBox();
-            vBox.setSpacing(20.0);
-            vBox.setPadding(new Insets(10, 10, 10, 10));
-            vBox.getChildren().addAll(purchaseLandLabel, hBox);
-
-            dialogStage.setScene(new Scene(vBox));
+            dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, purchaseBtn, muleBtn))));
             dialogStage.show();
         }
     };
@@ -157,18 +142,7 @@ public class GameScreenController {
         });
         noBtn.setOnAction(arg0 -> dialogStage.close());
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(20.0);
-        hBox.getChildren().addAll(yesBtn, noBtn);
-
-
-        VBox vBox = new VBox();
-        vBox.setSpacing(20.0);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.getChildren().addAll(purchaseLandLabel, hBox);
-
-        dialogStage.setScene(new Scene(vBox));
+        dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, yesBtn, noBtn))));
         dialogStage.show();
     };
 
@@ -187,41 +161,30 @@ public class GameScreenController {
         Button crystBtn = new Button("Crystite");
 
         foodBtn.setOnAction(arg0 -> {
-            placeMule("FOOD",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("FOOD", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         energyBtn.setOnAction(arg0 -> {
-            placeMule("ENERGY",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("ENERGY", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         smithBtn.setOnAction(arg0 -> {
-            placeMule("SMITHORE",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("SMITHORE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
-        crystBtn.setOnAction(arg0 ->  {
-            placeMule("CRYSTITE",(GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+        crystBtn.setOnAction(arg0 -> {
+            placeMule("CRYSTITE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(20.0);
-        hBox.getChildren().addAll(foodBtn, energyBtn, smithBtn, crystBtn);
-
-
-        VBox vBox = new VBox();
-        vBox.setSpacing(20.0);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.getChildren().addAll(purchaseLandLabel, hBox);
-
-        dialogStage.setScene(new Scene(vBox));
+        dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, foodBtn, energyBtn, smithBtn, crystBtn))));
         dialogStage.show();
     };
 
@@ -307,45 +270,46 @@ public class GameScreenController {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                HBox box = new HBox();
+//                HBox box = new HBox();
                 ImageView image = null;
                 switch (board[i][j].getTerrain()) {
                     case ONEMOUNTAIN:
-                        image = new ImageView(mountain1);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+                        image = imageMaker("/img/mountain1_tile.png");
                         break;
                     case TWOMOUNTAIN:
-                        image = new ImageView(mountain2);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+                        image = imageMaker("/img/mountain2_tile.png");
                         break;
                     case THREEMOUNTAIN:
-                        image = new ImageView(mountain3);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+                        image = imageMaker("/img/mountain3_tile.png");
                         break;
                     case PLAIN:
-                        image = new ImageView(plain);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+                        image = imageMaker("/img/plain_tile.png");
                         break;
                     case RIVER:
-                        image = new ImageView(river);
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+                        image = imageMaker("/img/river_tile.png");
                         break;
                     case TOWN:
                         image = new ImageView(town);
+                        //TODO: add handlers to imageMaker
                         image.addEventHandler(MouseEvent.MOUSE_CLICKED, townClickHandler);
+                        image.setFitHeight(80);
+                        image.setFitWidth(80);
                         break;
                     default:
                         System.err.println("ERROR: Invalid Terrain when displaying map!");
                         System.exit(1);
                 }
-                image.setFitHeight(80);
-                image.setFitWidth(80);
-                box.getChildren().add(image);
+
+                HBox box;
                 if (board[i][j].getOwner() != null) {
                     String color = board[i][j].getOwner().getColor().toString();
-                    box.setStyle("-fx-border-color: " + color + ";\n" +
+                    String styles = "-fx-border-color: " + color + ";\n" +
                             "-fx-border-width: 5;\n" +
-                            "-fx-border-style: solid;\n");
+                            "-fx-border-style: solid;\n";
+                    box = hBoxMaker(styles, image);
+
+                } else {
+                    box = hBoxMaker(null, image);
                 }
                 Pane.add(box, j, i);
             }
@@ -463,17 +427,7 @@ public class GameScreenController {
             Button okBtn = new Button("OK");
             okBtn.setOnAction(arg0 -> dialogStage.close());
 
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER);
-            hBox.setSpacing(20.0);
-            hBox.getChildren().addAll(okBtn);
-
-            VBox vBox = new VBox();
-            vBox.setSpacing(20.0);
-            vBox.setPadding(new Insets(10, 10, 10, 10));
-            vBox.getChildren().addAll(errorLabel, hBox);
-
-            dialogStage.setScene(new Scene(vBox));
+            dialogStage.setScene(new Scene(vBoxMaker(errorLabel, hBoxMaker(null, okBtn))));
             dialogStage.show();
         } else if (current.getOwner() != null) {
             final Stage dialogStage = new Stage();
@@ -486,18 +440,7 @@ public class GameScreenController {
             Button okBtn = new Button("OK");
             okBtn.setOnAction(arg0 -> dialogStage.close());
 
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER);
-            hBox.setSpacing(20.0);
-            hBox.getChildren().addAll(okBtn);
-
-
-            VBox vBox = new VBox();
-            vBox.setSpacing(20.0);
-            vBox.setPadding(new Insets(10, 10, 10, 10));
-            vBox.getChildren().addAll(errorLabel, hBox);
-
-            dialogStage.setScene(new Scene(vBox));
+            dialogStage.setScene(new Scene(vBoxMaker(errorLabel, hBoxMaker(null, okBtn))));
             dialogStage.show();
         }
 
@@ -507,7 +450,7 @@ public class GameScreenController {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
-            updateTile(x, y);
+            updateTile(x, y, "none");
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
@@ -515,7 +458,7 @@ public class GameScreenController {
         } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
-            updateTile(x, y);
+            updateTile(x, y, "none");
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
@@ -537,11 +480,15 @@ public class GameScreenController {
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getFood() > 0 && curPlayer.getMule() > 0) {
+                    //TODO: FIX HARDCODED TEST
+                    //if (curPlayer.getFood() > 0 && curPlayer.getMule > 0)
+                    if (curPlayer.getFood() > 0 ) {
                         curPlayer.setFood(curPlayer.getFood() - 1);
                         curTile.setHasMule(true);
-                        //UPDATE UI?
                         //TODO: update UI to draw mule
+                        updateTile(x, y, MULE);
+
+
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
@@ -555,7 +502,9 @@ public class GameScreenController {
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
+                    //todo: remove hardcoded test
+                    //if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
+                    if (curPlayer.getEnergy() > 0) {
                         curPlayer.setEnergy(curPlayer.getEnergy() - 1);
                         curTile.setHasMule(true);
                         //UPDATE UI?
@@ -612,14 +561,13 @@ public class GameScreenController {
      * @param x The X position of the tile
      * @param y The Y position of the tile
      */
-    private void updateTile(int x, int y) {
+    private void updateTile(int x, int y, String mule) {
         // Get current tile, check what border color should be
         Tile currentTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         if (currentTile.getOwner() == null) {
             System.err.println("Tile has no owner. Likely due to land purchase failing");
             return; // No need to update border color of tile with no owner
         }
-        String color = currentTile.getOwner().getColor().toString();
 
         // Get the Node that contains this tile
         Node result = null;
@@ -630,19 +578,105 @@ public class GameScreenController {
                 break;
             }
         }
-
-        // Add colored border to image
-        if (result instanceof HBox) {
-            result.setStyle("-fx-border-color: " + color + ";\n" +
-                    "-fx-border-width: 5;\n" +
-                    "-fx-border-style: solid;\n");
-        } else {
-            System.err.println("ERROR: Not an HBox.");
+        String color = currentTile.getOwner().getColor().toString();
+        String styles = "-fx-border-color: " + color + ";\n" +
+                "-fx-border-width: 5;\n" +
+                "-fx-border-style: solid;\n";
+        ImageView image;
+        switch (mule) {
+            case "FOOD":
+                if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_food_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_food_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_food_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_food_tile.png")), y, x);
+                }
+                break;
+            case "ENERGY":
+                if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_energy_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_energy_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_energy_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_energy_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
+                }
+                break;
+            case "SMITHORE":
+                if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_smithore_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_smithore_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_smithore_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_smithore_tile.png")), y, x);
+                }
+                break;
+            case "CRYSTITE":
+                if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_crystite_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_crystite_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_crystite_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_crystite_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_crystite_tile.png")), y, x);
+                }
+                break;
+            default:
+                if (result instanceof HBox) {
+                    result.setStyle("-fx-border-color: " + color + ";\n" +
+                            "-fx-border-width: 5;\n" +
+                            "-fx-border-style: solid;\n");
+                }
         }
     }
 
-    //TODO: add method to create HBoxes
-    private HBox hBoxMaker() {
-        return null;
+    private HBox hBoxMaker(String styles, Node... nodes) {
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(20.0);
+        hBox.getChildren().addAll(nodes);
+
+        if (styles != null) {
+            hBox.setStyle(styles);
+        }
+
+        return hBox;
+
     }
+
+    private VBox vBoxMaker(Node... nodes) {
+        VBox vBox = new VBox();
+        vBox.setSpacing(20.0);
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.getChildren().addAll(nodes);
+
+        return vBox;
+    }
+
+    private ImageView imageMaker(String path) {
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream(path)));
+        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+        image.setFitHeight(80);
+        image.setFitWidth(80);
+
+        return image;
+    }
+
+    //TODO: Stage maker?
+    //TODO: BUG Player ordering when land selction phase
 }
