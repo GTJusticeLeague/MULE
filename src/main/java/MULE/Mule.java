@@ -8,7 +8,8 @@ public class Mule {
         FOOD,
         ENERGY,
         ORE,
-        CRYSTITE
+        CRYSTITE,
+        NONE
     }
 
     private MULETYPE type;

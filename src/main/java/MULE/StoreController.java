@@ -1,22 +1,18 @@
 package MULE;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Created by danielansher on 10/4/15.
@@ -123,7 +119,7 @@ public class StoreController {
     private Button checkout;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
         //store instance
         Store store = GamePlay.GAMECONFIG.getStore();
 
@@ -136,93 +132,75 @@ public class StoreController {
         //popular available player quantities
         populatePlayerItems();
 
-        checkout.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                //get data
-                int[] totalItemsToBuy = totalItemsToBuy();
-                int[] itemPriceTotals =  itemPriceTotals(totalItemsToBuy);
-                int[] itemsAvailable = itemsAvailable(store);
-                int finalTotal = overallBuyTotal(itemPriceTotals);
-                boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailable);
-
-                //create dialog box
-                final Stage dialogStage = new Stage();
-                dialogStage.setTitle("Buy & Sell Items");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
-
-                //if player doesn't have enough money
-                if (current.getMoney() < finalTotal) {
-                    Text message = new Text("You do not have enough money.");
-
-                    Button okay = new Button("Okay");
-                    okay.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hBox = createHBox(okay);
-                    VBox vBox = createVBox(message, hBox);
-                    dialogStage.setScene(new Scene(vBox));
-                }
-
-                //if player checks out unavailable number of items
-                else if (!checkoutAllowed) {
-                    Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailable);
-
-                    Button okay = new Button("Okay");
-                    okay.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hBox = createHBox(okay);
-                    VBox vBox = createVBox(message, hBox);
-                    dialogStage.setScene(new Scene(vBox));
-                }
-
-                //if everything is fine
-                else if (checkoutAllowed) {
-                    Text message = generateReceipt(totalItemsToBuy, itemPriceTotals, finalTotal);
-
-                    Button submit = new Button("Submit");
-                    submit.setOnAction(arg0 -> {
-                        //update player money
-                        current.setMoney(current.getMoney() - finalTotal);
-                        //update player resources
-                        updatePlayerResources(totalItemsToBuy, current);
-                        //TODO: Return to town
-                    });
-
-                    Button returnToStore = new Button("Edit Cart");
-                    returnToStore.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hbox = createHBox(returnToStore, submit);
-                    VBox vBox = createVBox(message, hbox);
-                    dialogStage.setScene(new Scene(vBox));
-                }
-
-                dialogStage.show();
+        returnToTown.setOnAction(e -> {
+            try {
+                exitStore();
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         });
-    }
 
-    //HBOX
-    private HBox createHBox(Node... elements) {
-        HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setSpacing(20.0);
-        hbox.getChildren().addAll(elements);
-        return hbox;
-    }
+        checkout.setOnAction(e -> {
+            //get data
+            int[] totalItemsToBuy = totalItemsToBuy();
+            int[] itemPriceTotals =  itemPriceTotals(totalItemsToBuy);
+            int[] itemsAvailable = itemsAvailable(store);
+            int finalTotal = overallBuyTotal(itemPriceTotals);
+            boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailable);
 
-    //VBOX
-    private VBox createVBox(Node... elements) {
-        VBox vbox = new VBox();
-        vbox.setSpacing(20.0);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.getChildren().addAll(elements);
-        return vbox;
+            //create dialog box
+            final Stage dialogStage = new Stage();
+            dialogStage.setTitle("Buy & Sell Items");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+
+            //if player doesn't have enough money
+            if (current.getMoney() < finalTotal) {
+                Text message = new Text("You do not have enough money.");
+
+                Button okay = new Button("Okay");
+                okay.setOnAction(arg0 -> dialogStage.close());
+
+                dialogStage.setScene(new Scene(GameScreenController.vBoxMaker(message,
+                        GameScreenController.hBoxMaker(null, okay))));
+            }
+
+            //if player checks out unavailable number of items
+            else if (!checkoutAllowed) {
+                Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailable);
+
+                Button okay = new Button("Okay");
+                okay.setOnAction(arg0 -> dialogStage.close());
+
+                dialogStage.setScene(new Scene(GameScreenController.vBoxMaker(message,
+                        GameScreenController.hBoxMaker(null, okay))));
+            }
+
+            //if everything is fine
+            else if (checkoutAllowed) {
+                Text message = generateReceipt(totalItemsToBuy, itemPriceTotals, finalTotal);
+
+                Button submit = new Button("Submit");
+                submit.setOnAction(arg0 -> {
+                    //update player money
+                    current.setMoney(current.getMoney() - finalTotal);
+                    //update player resources
+                    updatePlayerResources(totalItemsToBuy, current);
+                    try {
+                        exitStore();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
+                Button returnToStore = new Button("Edit Cart");
+                returnToStore.setOnAction(arg0 -> dialogStage.close());
+
+                dialogStage.setScene(new Scene(GameScreenController.vBoxMaker(message,
+                        GameScreenController.hBoxMaker(null, returnToStore, submit))));
+            }
+
+            dialogStage.show();
+        });
     }
 
     //NUM ITEMS ARRAY
@@ -356,5 +334,13 @@ public class StoreController {
         playerMule.setText("0 Mule");
 
         playerMoney.setText("$" + current.getMoney());
+    }
+
+    private void exitStore() throws IOException {
+        Stage stage = (Stage) returnToTown.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
