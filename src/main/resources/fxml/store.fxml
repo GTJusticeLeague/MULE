@@ -87,7 +87,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <GridPane layoutX="28.0" layoutY="228.0" prefHeight="350.0" prefWidth="747.0">
+      <GridPane fx:id="buySellGrid" layoutX="28.0" layoutY="228.0" prefHeight="350.0" prefWidth="747.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
