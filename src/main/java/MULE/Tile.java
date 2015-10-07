@@ -17,10 +17,14 @@ public class Tile {
     private Terrain terrain;
     private Player owner;
     private boolean hasMule = false;
+    private Mule mule;
 
     // Tile constructor (every tile needs a terrain)
     public Tile(Terrain terrain) {
         this.terrain = terrain;
+        this.owner = null;
+        this.hasMule = false;
+        this.mule = null;
     }
 
     public Terrain getTerrain() {
@@ -42,4 +46,13 @@ public class Tile {
     public void setHasMule(boolean hasMule) {
         this.hasMule = hasMule;
     }
+
+    public Mule getMule() {
+        return mule;
+    }
+
+    public void setMule(Mule mule) {
+        this.mule = mule;
+    }
+
 }
