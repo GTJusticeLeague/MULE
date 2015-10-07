@@ -29,7 +29,7 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Text fx:id="foodInStore" layoutX="15.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
+                  <Text fx:id="foodInStore" layoutX="30.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -39,12 +39,17 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="smithoreInStore" layoutX="15.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
+                  <Text fx:id="smithoreInStore" layoutX="15.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="crystiteInStore" layoutX="149.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
+                  <Text fx:id="crystiteInStore" layoutX="149.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="muleInStore" layoutX="102.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="____ Mule">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -53,22 +58,22 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Text fx:id="playerCrystite" layoutX="154.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
+                  <Text fx:id="playerCrystite" layoutX="154.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Crystite">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="playerSmithore" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
+                  <Text fx:id="playerSmithore" layoutX="22.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Smithore">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="playerEnergy" layoutX="160.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Energy">
+                  <Text fx:id="playerEnergy" layoutX="157.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Energy">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="playerFood" layoutX="21.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
+                  <Text fx:id="playerFood" layoutX="37.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_____ Food">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -76,6 +81,16 @@
                   <Label alignment="CENTER" layoutY="4.0" prefHeight="15.0" prefWidth="263.0" text="Your Items" underline="true">
                      <font>
                         <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Text fx:id="playerMule" layoutX="107.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="____ Mule">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="playerMoney" alignment="CENTER" layoutX="3.0" layoutY="25.0" prefHeight="19.0" prefWidth="263.0" text="\$00.00" textFill="#276b1b">
+                     <font>
+                        <Font size="15.0" />
                      </font>
                   </Label>
                </children>

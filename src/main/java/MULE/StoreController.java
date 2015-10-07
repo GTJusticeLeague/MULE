@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,6 +39,12 @@ public class StoreController {
     private Text crystiteInStore;
 
     @FXML
+    private Text muleInStore;
+
+    @FXML
+    private Label playerMoney;
+
+    @FXML
     private Text playerFood;
 
     @FXML
@@ -48,6 +55,9 @@ public class StoreController {
 
     @FXML
     private Text playerCrystite;
+
+    @FXML
+    private Text playerMule;
 
     @FXML
     private TextField foodBuy;
@@ -114,102 +124,82 @@ public class StoreController {
 
     @FXML
     private void initialize() {
+        //store instance
         Store store = GamePlay.GAMECONFIG.getStore();
-        //populate number of items in store
+
+        //current player
+        Player current = GamePlay.currentPlayer;
+
+        //populate store quantities
         populateStore(store);
-        //populate number of items player has available
+
+        //popular available player quantities
         populatePlayerItems();
-        //a player cannot input more items than the store has
-        //a player cannot sell more items than they have
-
-        int food = Integer.parseInt(foodBuy.getText());
-        int foodTotal = food * 30;
-
-        int energy = Integer.parseInt(energyBuy.getText());
-        int energyTotal = energy * 25;
-
-        int smithore = Integer.parseInt(smithoreBuy.getText());
-        int smithoreTotal = smithore * 50;
-
-        int crystite = Integer.parseInt(crystiteBuy.getText());
-        int crystiteTotal = crystite * 100;
-
-        int finalTotal = foodTotal + energyTotal + smithoreTotal + crystiteTotal;
 
         checkout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                //get data
+                int[] totalItemsToBuy = totalItemsToBuy();
+                int[] itemPriceTotals =  itemPriceTotals(totalItemsToBuy);
+                int[] itemsAvailable = itemsAvailable(store);
+                int finalTotal = overallBuyTotal(itemPriceTotals);
+                boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailable);
+
+                //create dialog box
                 final Stage dialogStage = new Stage();
-                dialogStage.setTitle("Buy and Sell Items");
+                dialogStage.setTitle("Buy & Sell Items");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
 
-                //if the user does not have enough money
-                if (GamePlay.currentPlayer.getMoney() < finalTotal) {
-                    Text receipt = new Text("You don't have enough money.");
+                //if player doesn't have enough money
+                if (current.getMoney() < finalTotal) {
+                    Text message = new Text("You do not have enough money.");
 
                     Button okay = new Button("Okay");
                     okay.setOnAction(arg0 -> {
                         dialogStage.close();
                     });
 
-                    HBox hbox = new HBox();
-                    hbox.setAlignment(Pos.CENTER);
-                    hbox.setSpacing(20.0);
-                    hbox.getChildren().addAll(okay);
-
-                    VBox vbox = new VBox();
-                    vbox.setSpacing(20.0);
-                    vbox.setPadding(new Insets(10, 10, 10, 10));
-                    vbox.getChildren().addAll(receipt, hbox);
-
-                    dialogStage.setScene(new Scene(vbox));
+                    HBox hBox = createHBox(okay);
+                    VBox vBox = createVBox(message, hBox);
+                    dialogStage.setScene(new Scene(vBox));
                 }
 
-                //if the user attempts to checkout an unavailable num items
-                if (!checkForAccuracy(store)) {
-                    Text receipt = cannotCheckout(store);
+                //if player checks out unavailable number of items
+                else if (!checkoutAllowed) {
+                    Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailable);
 
                     Button okay = new Button("Okay");
                     okay.setOnAction(arg0 -> {
                         dialogStage.close();
                     });
 
-                    HBox hbox = new HBox();
-                    hbox.setAlignment(Pos.CENTER);
-                    hbox.setSpacing(20.0);
-                    hbox.getChildren().addAll(okay);
-
-                    VBox vbox = new VBox();
-                    vbox.setSpacing(20.0);
-                    vbox.setPadding(new Insets(10, 10, 10, 10));
-                    vbox.getChildren().addAll(receipt, hbox);
-
-                    dialogStage.setScene(new Scene(vbox));
+                    HBox hBox = createHBox(okay);
+                    VBox vBox = createVBox(message, hBox);
+                    dialogStage.setScene(new Scene(vBox));
                 }
 
-                //if everything is fine show the final dialog box
-                if (checkForAccuracy(store)) {
-                    Text receipt = receipt();
+                //if everything is fine
+                else if (checkoutAllowed) {
+                    Text message = generateReceipt(totalItemsToBuy, itemPriceTotals, finalTotal);
 
-                    Button editPurchases = new Button("Edit Purchases");
-                    editPurchases.setOnAction(arg0 -> {
+                    Button submit = new Button("Submit");
+                    submit.setOnAction(arg0 -> {
+                        //update player money
+                        current.setMoney(current.getMoney() - finalTotal);
+                        //update player resources
+                        updatePlayerResources(totalItemsToBuy, current);
+                        //TODO: Return to town
+                    });
+
+                    Button returnToStore = new Button("Edit Cart");
+                    returnToStore.setOnAction(arg0 -> {
                         dialogStage.close();
                     });
 
-                    Button checkout = new Button("Checkout");
-
-                    HBox hbox = new HBox();
-                    hbox.setAlignment(Pos.CENTER);
-                    hbox.setSpacing(20.0);
-                    hbox.getChildren().addAll(editPurchases, checkout);
-
-                    VBox vbox = new VBox();
-                    vbox.setSpacing(20.0);
-                    vbox.setPadding(new Insets(10, 10, 10, 10));
-                    vbox.getChildren().addAll(receipt, hbox);
-
-
-                    dialogStage.setScene(new Scene(vbox));
+                    HBox hbox = createHBox(returnToStore, submit);
+                    VBox vBox = createVBox(message, hbox);
+                    dialogStage.setScene(new Scene(vBox));
                 }
 
                 dialogStage.show();
@@ -217,14 +207,125 @@ public class StoreController {
         });
     }
 
-    /*Current issue: This will always populate to initial
-    values - does not account for change after buying and selling.
-     */
+    //HBOX
+    private HBox createHBox(Node... elements) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(20.0);
+        hbox.getChildren().addAll(elements);
+        return hbox;
+    }
+
+    //VBOX
+    private VBox createVBox(Node... elements) {
+        VBox vbox = new VBox();
+        vbox.setSpacing(20.0);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().addAll(elements);
+        return vbox;
+    }
+
+    //NUM ITEMS ARRAY
+    private int[] totalItemsToBuy() {
+        int[] itemsToBuy = new int[4];
+        itemsToBuy[0] = Integer.parseInt(foodBuy.getText());
+        itemsToBuy[1] = Integer.parseInt(energyBuy.getText());
+        itemsToBuy[2] = Integer.parseInt(smithoreBuy.getText());
+        itemsToBuy[3] = Integer.parseInt(crystiteBuy.getText());
+        return itemsToBuy;
+    }
+
+    //NUM AVAILABLE ARRAY
+    private int[] itemsAvailable(Store store) {
+        int[] itemsAvailable = new int[4];
+        itemsAvailable[0] = store.getNumFood();
+        itemsAvailable[1] = store.getNumEnergy();
+        itemsAvailable[2] = store.getNumSmithore();
+        itemsAvailable[3] = store.getNumCrystite();
+        return itemsAvailable;
+    }
+
+    //total for items to buy
+    private int[] itemPriceTotals(int[] totalItemsToBuy) {
+
+        int[] totals = new int[4];
+
+        totals[0] = totalItemsToBuy[0] * 30; //food
+        totals[1] = totalItemsToBuy[1] * 25; //energy
+        totals[2] = totalItemsToBuy[2] * 50; //smithore
+        totals[3] = totalItemsToBuy[3] * 100; //crystite
+
+        return totals;
+    }
+
+    private int overallBuyTotal(int[] itemPriceTotals) {
+
+        int total = 0;
+
+        for(int i : itemPriceTotals) {
+            total += i;
+        }
+
+        return total;
+    }
+
+    private boolean checkAmountsAreAvailable(int[] totalItemsToBuy, int[] itemsAvailble) {
+
+        for (int i = 0; i < totalItemsToBuy.length; i++) {
+            if (totalItemsToBuy[i] > itemsAvailble[i]) {
+                return false;
+            } else if (totalItemsToBuy[i] < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private Text cannotCheckoutMemo(int[] totalItemsToBuy, int[] itemsAvailble) {
+
+        StringBuilder memo = new StringBuilder();
+
+        for (int i = 0; i < totalItemsToBuy.length; i++) {
+            String current = "";
+            if (i == 0) current = " food";
+            if (i == 1) current = " energy";
+            if (i == 2) current = " smithore";
+            if (i == 3) current = " crystite";
+
+            if (totalItemsToBuy[i] > itemsAvailble[i]) {
+                memo.append("You have too many" + current + " items. \n");
+            } else if (totalItemsToBuy[i] < 0) {
+                memo.append("You cannot purchase negative" + current + " items. \n");
+            }
+        }
+
+        return new Text(memo.toString());
+    }
+
+    private Text generateReceipt(int[] totalItemsToBuy, int[] itemPriceTotals, int overallTotal) {
+        Text receipt = new Text("Your Receipt: \n"
+                + totalItemsToBuy[0] + " Food: " + itemPriceTotals[0] + "\n"
+                + totalItemsToBuy[1] + " Energy: " + itemPriceTotals[1] + "\n"
+                + totalItemsToBuy[2] + " Smithore: " + itemPriceTotals[2] + "\n"
+                + totalItemsToBuy[3] + " Crystite: " + itemPriceTotals[3] + "\n"
+                + "Total: " + overallTotal);
+        return receipt;
+    }
+
+    private void updatePlayerResources(int[] totalItemsToBuy, Player player) {
+        player.setFood(player.getFood() + totalItemsToBuy[0]);
+        player.setEnergy(player.getEnergy() + totalItemsToBuy[1]);
+        player.setSmithore(player.getSmithore() + totalItemsToBuy[2]);
+        player.setCrystite(player.getCrystite() + totalItemsToBuy[3]);
+    }
+
     private void populateStore(Store store) {
         foodInStore.setText(store.getNumFood() + " Food");
         energyInStore.setText(store.getNumEnergy() + " Energy");
         smithoreInStore.setText(store.getNumSmithore() + " Smithore");
         crystiteInStore.setText(store.getNumCrystite() + " Crystite");
+        muleInStore.setText(store.getNumMule() + " Mule");
 
         //setAllTextBoxesToZero
         foodBuy.setText("0");
@@ -251,91 +352,9 @@ public class StoreController {
         playerEnergy.setText(current.getEnergy() + " Energy");
         playerSmithore.setText(current.getSmithore() + " Smithore");
         playerCrystite.setText(current.getCrystite() + " Crystite");
-    }
+        //need a get num mule function
+        playerMule.setText("0 Mule");
 
-    private boolean checkForAccuracy(Store store) {
-
-        int[] itemsToBuy = new int[4];
-        itemsToBuy[0] = Integer.parseInt(foodBuy.getText());
-        itemsToBuy[1] = Integer.parseInt(energyBuy.getText());
-        itemsToBuy[2] = Integer.parseInt(smithoreBuy.getText());
-        itemsToBuy[3] = Integer.parseInt(crystiteBuy.getText());
-
-        int[] itemsAvailable = new int[4];
-        itemsAvailable[0] = store.getNumFood();
-        itemsAvailable[1] = store.getNumEnergy();
-        itemsAvailable[2] = store.getNumSmithore();
-        itemsAvailable[3] = store.getNumCrystite();
-
-        for (int i = 0; i < itemsToBuy.length; i++) {
-            if (itemsToBuy[i] > itemsAvailable[i]) {
-                return false;
-            } else if (itemsToBuy[i] < itemsAvailable[i]){
-                return false;
-            } else if (itemsToBuy[i] < 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private Text cannotCheckout(Store store) {
-        StringBuilder memo = new StringBuilder();
-
-        int[] itemsToBuy = new int[4];
-        itemsToBuy[0] = Integer.parseInt(foodBuy.getText());
-        itemsToBuy[1] = Integer.parseInt(energyBuy.getText());
-        itemsToBuy[2] = Integer.parseInt(smithoreBuy.getText());
-        itemsToBuy[3] = Integer.parseInt(crystiteBuy.getText());
-
-        int[] itemsAvailable = new int[4];
-        itemsAvailable[0] = store.getNumFood();
-        itemsAvailable[1] = store.getNumEnergy();
-        itemsAvailable[2] = store.getNumSmithore();
-        itemsAvailable[3] = store.getNumCrystite();
-
-        for (int i = 0; i < itemsToBuy.length; i++) {
-
-            String current = "";
-            if (i == 0) current = " food";
-            if (i == 1) current = " energy";
-            if (i == 2) current = " smithore";
-            if (i == 3) current = " crystite";
-
-            if (itemsToBuy[i] > itemsAvailable[i]) {
-                memo.append("You have too many" + current + " items. \n");
-            } else if (itemsToBuy[i] < 0) {
-                memo.append("You cannot purchase negative items. \n");
-            }
-        }
-
-        return new Text(memo.toString());
-    }
-
-    private Text receipt() {
-        int food = Integer.parseInt(foodBuy.getText());
-        int foodTotal = food * 30;
-
-        int energy = Integer.parseInt(energyBuy.getText());
-        int energyTotal = energy * 25;
-
-        int smithore = Integer.parseInt(smithoreBuy.getText());
-        int smithoreTotal = smithore * 50;
-
-        int crystite = Integer.parseInt(crystiteBuy.getText());
-        int crystiteTotal = crystite * 100;
-
-        int finalTotal = foodTotal + energyTotal + smithoreTotal + crystiteTotal;
-
-        Text receipt = new Text("Your receipt: \n"
-                                + food + " Food: " + foodTotal + "\n"
-                                + energy + " Energy: " + energyTotal + "\n"
-                                + smithore + " Smithore: " + smithoreTotal + "\n"
-                                + crystite + " Crystite: " + crystiteTotal + "\n"
-                                + "Total: " + finalTotal);
-
-        return receipt;
+        playerMoney.setText("$" + current.getMoney());
     }
 }
-
