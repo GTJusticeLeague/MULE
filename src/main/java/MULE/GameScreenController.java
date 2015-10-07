@@ -357,7 +357,8 @@ public class GameScreenController {
             crystite.setText(currentPlayer.getCrystite() + " Crystite");
 
             mule = (Label) playerStatGridPane.getChildren().get(7);
-            mule.setText(currentPlayer.getMule() + " Mule");
+            // TODO: Show all mule types?
+            //mule.setText(currentPlayer.getMule() + " Mule");
         }
     }
 
@@ -395,7 +396,8 @@ public class GameScreenController {
         crystite.setText(GamePlay.GAMECONFIG.players[playerNum].getCrystite() + " Crystite");
 
         mule = (Label) playerStatGridPane.getChildren().get(7);
-        mule.setText(GamePlay.GAMECONFIG.players[playerNum].getMule() + " Mule");
+        // TODO: Show all mule types?
+        //mule.setText(GamePlay.GAMECONFIG.players[playerNum].getMule() + " Mule");
     }
 
     /**
@@ -472,41 +474,39 @@ public class GameScreenController {
         switch (MULE) {
             case "FOOD":
                 //Checks if player has lost MULE
-                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getFood() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setFood(curPlayer.getFood() - 1);
+                    if (curPlayer.getFoodMule() > 0) {
                         //TODO: alert user they have lost mule
+                        curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
                     //TODO: FIX HARDCODED TEST
                     //if (curPlayer.getFood() > 0 && curPlayer.getMule > 0)
-                    if (curPlayer.getFood() > 0 ) {
-                        curPlayer.setFood(curPlayer.getFood() - 1);
-                        curTile.setHasMule(true);
+                    if (curPlayer.getFoodMule() > 0) {
+                        curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
+                        curTile.setMule(new Mule(Mule.MULETYPE.FOOD, curPlayer, curTile.getTerrain()));
                         //TODO: update UI to draw mule
                         updateTile(x, y, MULE);
-
-
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
             case "ENERGY":
                 //Checks if player has lost MULE
-                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setEnergy(curPlayer.getEnergy() - 1);
+                    if (curPlayer.getEnergyMule() > 0) {
+                        curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
                     //todo: remove hardcoded test
                     //if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
-                    if (curPlayer.getEnergy() > 0) {
-                        curPlayer.setEnergy(curPlayer.getEnergy() - 1);
-                        curTile.setHasMule(true);
+                    if (curPlayer.getEnergyMule() > 0) {
+                        curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
+                        curTile.setMule(new Mule(Mule.MULETYPE.ENERGY, curPlayer, curTile.getTerrain()));
                         //UPDATE UI?
                     }
                 }
@@ -516,14 +516,14 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getSmithore() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setSmithore(curPlayer.getSmithore() - 1);
+                    if (curPlayer.getSmithoreMule() > 0) {
+                        curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getSmithore() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setSmithore(curPlayer.getSmithore() - 1);
-                        curTile.setHasMule(true);
+                    if (curPlayer.getSmithoreMule() > 0) {
+                        curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
+                        curTile.setMule(new Mule(Mule.MULETYPE.ORE, curPlayer, curTile.getTerrain()));
                         //UPDATE UI?
                     }
                 }
@@ -533,14 +533,14 @@ public class GameScreenController {
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getCrystite() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setCrystite(curPlayer.getCrystite() - 1);
+                    if (curPlayer.getCrystiteMuleMule() > 0) {
+                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMuleMule() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getCrystite() > 0 && curPlayer.getMule() > 0) {
-                        curPlayer.setCrystite(curPlayer.getCrystite() - 1);
-                        curTile.setHasMule(true);
+                    if (curPlayer.getCrystiteMuleMule() > 0) {
+                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMuleMule() - 1);
+                        curTile.setMule(new Mule(Mule.MULETYPE.CRYSTITE, curPlayer, curTile.getTerrain()));
                         //UPDATE UI?
                     }
                 }
