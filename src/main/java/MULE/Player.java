@@ -75,7 +75,10 @@ public class Player implements Comparable<Player> {
     private int energy;
     private int smithore;
     private int crystite;
-    private int mule;
+    private int foodMule;
+    private int energyMule;
+    private int smithoreMule;
+    private int crystiteMule;
     private int numLand;
     public PlayerTimer timer;
     private int score;
@@ -108,19 +111,28 @@ public class Player implements Comparable<Player> {
             this.energy = 4;
             this.smithore = 0;
             this.crystite = 0;
-            this.mule = 0;
+            this.foodMule = 0;
+            this.energyMule = 0;
+            this.smithoreMule = 0;
+            this.crystiteMule = 0;
         } else if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
             this.food = 4;
             this.energy = 2;
             this.smithore = 0;
             this.crystite = 0;
-            this.mule = 0;
+            this.foodMule = 0;
+            this.energyMule = 0;
+            this.smithoreMule = 0;
+            this.crystiteMule = 0;
         } else {
             this.food = 4;
             this.energy = 2;
             this.smithore = 0;
             this.crystite = 0;
-            this.mule = 0;
+            this.foodMule = 0;
+            this.energyMule = 0;
+            this.smithoreMule = 0;
+            this.crystiteMule = 0;
         }
 
     }
@@ -238,19 +250,73 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * Get mule
-     * @return player mule
+     * Get food mule
+     * @return player food mule
      */
-    public int getMule() {
-        return mule;
+    public int getFoodMule() {
+        return foodMule;
     }
 
     /**
-     * Set number of mule resource
+     * Set number of mule resource for food
      * @param mule
      */
-    public void setMule(int mule) {
-        this.mule = mule;
+    public void setFoodMule(int mule) {
+        this.foodMule = mule;
+    }
+
+    /**
+     * Get energy mule
+     *
+     * @return player energy mule
+     */
+    public int getEnergyMule() {
+        return energyMule;
+    }
+
+    /**
+     * Set number of mule resource for energy
+     *
+     * @param mule
+     */
+    public void setEnergyMule(int mule) {
+        this.energyMule = mule;
+    }
+
+    /**
+     * Get smithore mule
+     *
+     * @return player mule smithore
+     */
+    public int getSmithoreMule() {
+        return smithoreMule;
+    }
+
+    /**
+     * Set number of smithore mule resource
+     *
+     * @param mule
+     */
+    public void setSmithoreMule(int mule) {
+        this.smithoreMule = mule;
+    }
+
+    /**
+     * Get crystite mule
+     *
+     * @return player crystite mule
+     */
+    public int getCrystiteMuleMule() {
+        return crystiteMule;
+    }
+
+    /**
+     * Set number of crystite mule resource
+     *
+     * @param mule
+     */
+    public void setCrystiteMule(int mule) {
+        this.crystiteMule = mule;
     }
 
     /**
