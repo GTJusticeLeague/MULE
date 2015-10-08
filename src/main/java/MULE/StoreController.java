@@ -1,5 +1,7 @@
 package MULE;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Toggle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -19,6 +22,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.Override;
 
 /**
  * Created by danielansher on 10/4/15.
@@ -146,7 +150,7 @@ public class StoreController {
             public void handle(ActionEvent e) {
                 //get buying data
                 int[] totalItemsToBuy = totalItemsToBuy();
-                int[] itemPriceTotals =  itemPriceTotals(totalItemsToBuy);
+                int[] itemPriceTotals = itemPriceTotals(totalItemsToBuy);
                 int[] itemsAvailableToBuy = itemsAvailableToBuy(store);
                 int finalBuyTotal = overallBuyTotal(itemPriceTotals);
                 boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailableToBuy);
@@ -165,65 +169,24 @@ public class StoreController {
 
                 //if player doesn't have enough money
                 if (current.getMoney() < finalBuyTotal) {
-                    Text message = new Text("You do not have enough money.");
-
-                    Button okay = new Button("Okay");
-                    okay.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hBox = createHBox(okay);
-                    VBox vBox = createVBox(message, hBox);
-                    dialogStage.setScene(new Scene(vBox));
+                    notEnoughMoney();
                 }
 
                 //if player checks out unavailable number of items
                 //if player sells unavailable number of items
                 else if (!checkoutAllowed || !sellAllowed) {
-                    Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
-
-                    Button okay = new Button("Okay");
-                    okay.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hBox = createHBox(okay);
-                    VBox vBox = createVBox(message, hBox);
-                    dialogStage.setScene(new Scene(vBox));
+                    unavailableNumberOfItems();
                 }
 
                 //if everything is fine
                 else if (checkoutAllowed && sellAllowed) {
-                    Text buyMessage = generateBuyReceipt(totalItemsToBuy, itemPriceTotals, finalBuyTotal);
-                    Text sellMessage = generateSellReceipt(totalItemsToSell, itemSellPriceTotals, finalSellTotal);
 
                     if (wantToBuyMule(totalItemsToBuy)) {
                         equipMule(totalItemsToBuy);
+                    } else if (!wantToBuyMule(totalItemsToBuy)) {
+                        playerCheckout();
                     }
 
-                    Button submit = new Button("Submit");
-                    submit.setOnAction(arg0 -> {
-                        //update player money
-                        current.setMoney(current.getMoney() + finalSellTotal - finalBuyTotal);
-
-                        //update player resources
-                        updatePlayerResources(totalItemsToBuy, totalItemsToSell, current);
-                        //return to town
-                        try {
-                            returnToTown();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    });
-
-                    Button returnToStore = new Button("Edit Cart");
-                    returnToStore.setOnAction(arg0 -> {
-                        dialogStage.close();
-                    });
-
-                    HBox hbox = createHBox(returnToStore, submit);
-                    VBox vBox = createVBox(buyMessage, sellMessage, hbox);
-                    dialogStage.setScene(new Scene(vBox));
                 }
 
                 dialogStage.show();
@@ -258,6 +221,70 @@ public class StoreController {
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.getChildren().addAll(elements);
         return vbox;
+    }
+
+    //THIS METHOD CANNOT GET THE NECESSARY ARGUMENTS
+    private void notEnoughMoney() {
+        Text message = new Text("You do not have enough money.");
+
+        Button okay = new Button("Okay");
+        okay.setOnAction(arg0 -> {
+            dialogStage.close();
+        });
+
+        HBox hBox = createHBox(okay);
+        VBox vBox = createVBox(message, hBox);
+        dialogStage.setScene(new Scene(vBox));
+    }
+
+    //THIS METHOD CANNOT GET THE NECESSARY ARGUMENTS
+    private void unavailableNumberOfItems() {
+        Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
+
+        Button okay = new Button("Okay");
+        okay.setOnAction(arg0 -> {
+            dialogStage.close();
+        });
+
+        HBox hBox = createHBox(okay);
+        VBox vBox = createVBox(message, hBox);
+        dialogStage.setScene(new Scene(vBox));
+    }
+
+    //THIS METHOD CANNOT GET THE NECESSARY ARGUMENTS
+    private void playerCheckout() {
+        Text buyMessage = generateBuyReceipt(totalItemsToBuy, itemPriceTotals, finalBuyTotal);
+        Text sellMessage = generateSellReceipt(totalItemsToSell, itemSellPriceTotals, finalSellTotal);
+
+        Button submit = new Button("Submit");
+        submit.setOnAction(arg0 -> {
+            //update player money
+            current.setMoney(current.getMoney() + finalSellTotal - finalBuyTotal);
+
+            //update player resources
+            updatePlayerResources(totalItemsToBuy, totalItemsToSell, current);
+
+            //update player mule if mule is bought
+            if(wantToBuyMule(totalItemsToBuy)) {
+                updatePlayerBuyMule(itemPriceTotals, current);
+            }
+
+            //return to town
+            try {
+                returnToTown();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        Button returnToStore = new Button("Edit Cart");
+        returnToStore.setOnAction(arg0 -> {
+            dialogStage.close();
+        });
+
+        HBox hbox = createHBox(returnToStore, submit);
+        VBox vBox = createVBox(buyMessage, sellMessage, hbox);
+        dialogStage.setScene(new Scene(vBox));
     }
 
     //NUM ITEMS ARRAY
@@ -409,7 +436,18 @@ public class StoreController {
         player.setEnergy(player.getEnergy() + totalItemsToBuy[1] - totalItemsToSell[1]);
         player.setSmithore(player.getSmithore() + totalItemsToBuy[2] - totalItemsToSell[2]);
         player.setCrystite(player.getCrystite() + totalItemsToBuy[3] - totalItemsToSell[3]);
-        //TODO: Set number of mules
+    }
+
+    private void updatePlayerBuyMule(int[] itemPriceTotals, Player player) {
+        if (itemPriceTotals[4] == 125) {
+            player.setFoodMule(player.getFoodMule() + 1);
+        } else if (itemPriceTotals[4] == 150) {
+            player.setEnergyMule(player.getEneryMule() + 1);
+        } else if (itemPriceTotals[4] == 175) {
+            player.setSmithoreMule(player.getSmithoreMule() + 1);
+        } else if (itemPriceTotals[4] == 200) {
+            player.setCrystiteMule(player.getCrystiteMule() + 1);
+        }
     }
 
     private void populateStore(Store store) {
@@ -445,7 +483,6 @@ public class StoreController {
         playerEnergy.setText(current.getEnergy() + " Energy");
         playerSmithore.setText(current.getSmithore() + " Smithore");
         playerCrystite.setText(current.getCrystite() + " Crystite");
-        //need a get num mule function
         playerMule.setText(getPlayerMuleTotal(current) + " Mule");
 
         playerMoney.setText("$" + current.getMoney());
@@ -461,7 +498,7 @@ public class StoreController {
         return totalItemsToBuy[4] == 1;
     }
 
-    private void equipMule(int[] totalItemsToBuy) {
+    private void equipMule(int[] totalItemsToBuy, int[] itemPriceTotals) {
         if (totalItemsToBuy[4] == 1) {
             //create dialog box
             final Stage dialogStage = new Stage();
@@ -472,6 +509,7 @@ public class StoreController {
 
             Text info = new Text("Choose which type of mule you would like:");
 
+            //select mule type using radio buttons
             final ToggleGroup muleType = new ToggleGroup();
 
             RadioButton foodMule = new RadioButton("Food: +$25");
@@ -480,7 +518,7 @@ public class StoreController {
             RadioButton energyMule = new RadioButton("Energy: +$50");
             energyMule.setToggleGroup(muleType);
 
-            RadioButton smithoreMule = new RadioButton("Smithore: +$50");
+            RadioButton smithoreMule = new RadioButton("Smithore: +$75");
             smithoreMule.setToggleGroup(muleType);
 
             RadioButton crystiteMule = new RadioButton("Crystite: +$100");
@@ -488,7 +526,35 @@ public class StoreController {
 
             Button selectMuleType = new Button("Next");
             selectMuleType.setOnAction(arg0 -> {
+
+                //increases the price based on what type of mule the player
+                //decides to buy
+                muleType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                        if (muleType.getSelectedToggle() == foodMule) {
+                            //add $25 to mule total
+                            itemPriceTotals[4] += 25;
+
+                        } else if (muleType.getSelectedToggle() == energyMule) {
+                            //add $50 to mule total
+                            itemPriceTotals[4] += 50;
+
+                        } else if (muleType.getSelectedToggle() == smithoreMule) {
+                            //add $75 to mule total
+                            itemPriceTotals[4] += 75;
+
+                        } else if (muleType.getSelectedToggle() == crystiteMule) {
+                            //add $100 to mule total
+                            itemPriceTotals[4] += 100;
+
+                        }
+                    }
+                });
+
                 dialogStage.close();
+
+                playerCheckout();
             });
 
             HBox hbox = createHBox(selectMuleType);
