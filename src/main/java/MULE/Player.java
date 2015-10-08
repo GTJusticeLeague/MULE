@@ -306,7 +306,7 @@ public class Player implements Comparable<Player> {
      *
      * @return player crystite mule
      */
-    public int getCrystiteMuleMule() {
+    public int getCrystiteMule() {
         return crystiteMule;
     }
 

@@ -9,9 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -91,6 +89,9 @@ public class StoreController {
     private TextField crystiteSell;
 
     @FXML
+    private TextField muleSell;
+
+    @FXML
     private Label mule;
 
     @FXML
@@ -153,7 +154,7 @@ public class StoreController {
                 //get selling data
                 int[] totalItemsToSell = totalItemsToSell();
                 int[] itemSellPriceTotals = itemPriceTotals(totalItemsToSell);
-                int[] itemsAvailableToSell = itemsAvailbleToSell(current);
+                int[] itemsAvailableToSell = itemsAvailableToSell(current);
                 int finalSellTotal = overallBuyTotal(itemSellPriceTotals);
                 boolean sellAllowed = checkAmountsAreAvailable(totalItemsToSell, itemsAvailableToSell);
 
@@ -195,6 +196,10 @@ public class StoreController {
                 else if (checkoutAllowed && sellAllowed) {
                     Text buyMessage = generateBuyReceipt(totalItemsToBuy, itemPriceTotals, finalBuyTotal);
                     Text sellMessage = generateSellReceipt(totalItemsToSell, itemSellPriceTotals, finalSellTotal);
+
+                    if (wantToBuyMule(totalItemsToBuy)) {
+                        equipMule(totalItemsToBuy);
+                    }
 
                     Button submit = new Button("Submit");
                     submit.setOnAction(arg0 -> {
@@ -257,51 +262,56 @@ public class StoreController {
 
     //NUM ITEMS ARRAY
     private int[] totalItemsToBuy() {
-        int[] itemsToBuy = new int[4];
+        int[] itemsToBuy = new int[5];
         itemsToBuy[0] = Integer.parseInt(foodBuy.getText());
         itemsToBuy[1] = Integer.parseInt(energyBuy.getText());
         itemsToBuy[2] = Integer.parseInt(smithoreBuy.getText());
         itemsToBuy[3] = Integer.parseInt(crystiteBuy.getText());
+        itemsToBuy[4] = Integer.parseInt(muleBuy.getText());
         return itemsToBuy;
     }
 
     private int[] totalItemsToSell() {
-        int[] itemsToSell = new int[4];
+        int[] itemsToSell = new int[5];
         itemsToSell[0] = Integer.parseInt(foodSell.getText());
         itemsToSell[1] = Integer.parseInt(energySell.getText());
         itemsToSell[2] = Integer.parseInt(smithoreSell.getText());
         itemsToSell[3] = Integer.parseInt(crystiteSell.getText());
+        itemsToSell[4] = Integer.parseInt(muleSell.getText());
         return itemsToSell;
     }
 
     //NUM AVAILABLE ARRAY
     private int[] itemsAvailableToBuy(Store store) {
-        int[] itemsAvailable = new int[4];
+        int[] itemsAvailable = new int[5];
         itemsAvailable[0] = store.getNumFood();
         itemsAvailable[1] = store.getNumEnergy();
         itemsAvailable[2] = store.getNumSmithore();
         itemsAvailable[3] = store.getNumCrystite();
+        itemsAvailable[4] = store.getNumMule();
         return itemsAvailable;
     }
 
-    private int[] itemsAvailbleToSell(Player player) {
-        int[] itemsAvailable = new int[4];
+    private int[] itemsAvailableToSell(Player player) {
+        int[] itemsAvailable = new int[5];
         itemsAvailable[0] = player.getFood();
         itemsAvailable[1] = player.getEnergy();
         itemsAvailable[2] = player.getSmithore();
         itemsAvailable[3] = player.getCrystite();
+        itemsAvailable[4] = getPlayerMuleTotal(player);
         return itemsAvailable;
     }
 
     //total for items to buy
     private int[] itemPriceTotals(int[] totalItemsToBuy) {
 
-        int[] totals = new int[4];
+        int[] totals = new int[5];
 
         totals[0] = totalItemsToBuy[0] * 30; //food
         totals[1] = totalItemsToBuy[1] * 25; //energy
         totals[2] = totalItemsToBuy[2] * 50; //smithore
         totals[3] = totalItemsToBuy[3] * 100; //crystite
+        totals[4] = totalItemsToBuy[4] * 100; //mule
 
         return totals;
     }
@@ -340,6 +350,7 @@ public class StoreController {
             if (i == 1) current = " energy";
             if (i == 2) current = " smithore";
             if (i == 3) current = " crystite";
+            if (i == 4) current = " mule";
 
             if (totalItemsToBuy[i] > itemsAvailbleToBuy[i]) {
                 memo.append("You have too many" + current + " items. \n");
@@ -348,12 +359,17 @@ public class StoreController {
             }
         }
 
+        if (totalItemsToBuy[4] > 0) {
+            memo.append("You may only purchase one mule per store visit. \n");
+        }
+
         for (int i = 0; i < totalItemsToSell.length; i++) {
             String current = "";
             if (i == 0) current = " food";
             if (i == 1) current = " energy";
             if (i == 2) current = " smithore";
             if (i == 3) current = " crystite";
+            if (i == 4) current = " mule";
 
             if (totalItemsToSell[i] > itemsAvailableToSell[i]) {
                 memo.append("You do not have that many" + current + " items to sell. \n");
@@ -362,16 +378,17 @@ public class StoreController {
             }
         }
 
+
         return new Text(memo.toString());
     }
 
     private Text generateBuyReceipt(int[] totalItemsToBuy, int[] itemPriceTotals, int overallTotal) {
-        //TODO: Add sell items to receipt
         Text receipt = new Text("Your Bought Items: \n"
                 + totalItemsToBuy[0] + " Food: " + itemPriceTotals[0] + "\n"
                 + totalItemsToBuy[1] + " Energy: " + itemPriceTotals[1] + "\n"
                 + totalItemsToBuy[2] + " Smithore: " + itemPriceTotals[2] + "\n"
                 + totalItemsToBuy[3] + " Crystite: " + itemPriceTotals[3] + "\n"
+                + totalItemsToBuy[4] + " Mule: " + itemPriceTotals[4] + "\n"
                 + "Total: " + overallTotal);
         return receipt;
     }
@@ -382,6 +399,7 @@ public class StoreController {
                                 + totalItemsToSell[1] + " Energy: " + itemSellPriceTotals[1] + "\n"
                                 + totalItemsToSell[2] + " Smithore: " + itemSellPriceTotals[2] + "\n"
                                 + totalItemsToSell[3] + " Crystite: " + itemSellPriceTotals[3] + "\n"
+                                + totalItemsToSell[4] + " Mule: " + itemSellPriceTotals[4] + "\n"
                                 + "Total: " + finalSellTotal);
         return receipt;
     }
@@ -391,6 +409,7 @@ public class StoreController {
         player.setEnergy(player.getEnergy() + totalItemsToBuy[1] - totalItemsToSell[1]);
         player.setSmithore(player.getSmithore() + totalItemsToBuy[2] - totalItemsToSell[2]);
         player.setCrystite(player.getCrystite() + totalItemsToBuy[3] - totalItemsToSell[3]);
+        //TODO: Set number of mules
     }
 
     private void populateStore(Store store) {
@@ -410,6 +429,7 @@ public class StoreController {
         energySell.setText("0");
         smithoreSell.setText("0");
         crystiteSell.setText("0");
+        muleSell.setText("0");
 
         //showCostPerItem
         foodTotal.setText("$30");
@@ -426,9 +446,67 @@ public class StoreController {
         playerSmithore.setText(current.getSmithore() + " Smithore");
         playerCrystite.setText(current.getCrystite() + " Crystite");
         //need a get num mule function
-        playerMule.setText("0 Mule");
+        playerMule.setText(getPlayerMuleTotal(current) + " Mule");
 
         playerMoney.setText("$" + current.getMoney());
+    }
+
+    private int getPlayerMuleTotal(Player player) {
+        int muleTotal = player.getFoodMule() + player.getEnergyMule() + player.getSmithoreMule()
+                + player.getCrystiteMule();
+        return muleTotal;
+    }
+
+    private boolean wantToBuyMule(int[] totalItemsToBuy) {
+        return totalItemsToBuy[4] == 1;
+    }
+
+    private void equipMule(int[] totalItemsToBuy) {
+        if (totalItemsToBuy[4] == 1) {
+            //create dialog box
+            final Stage dialogStage = new Stage();
+            dialogStage.setTitle("Equip Mule");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+
+            Label equip = new Label("Equip Your Mule");
+
+            Text info = new Text("Choose which type of mule you would like:");
+
+            final ToggleGroup muleType = new ToggleGroup();
+
+            RadioButton foodMule = new RadioButton("Food: +$25");
+            foodMule.setToggleGroup(muleType);
+
+            RadioButton energyMule = new RadioButton("Energy: +$50");
+            energyMule.setToggleGroup(muleType);
+
+            RadioButton smithoreMule = new RadioButton("Smithore: +$50");
+            smithoreMule.setToggleGroup(muleType);
+
+            RadioButton crystiteMule = new RadioButton("Crystite: +$100");
+            crystiteMule.setToggleGroup(muleType);
+
+            Button selectMuleType = new Button("Next");
+            selectMuleType.setOnAction(arg0 -> {
+                dialogStage.close();
+            });
+
+            HBox hbox = createHBox(selectMuleType);
+            VBox vBox = createVBox(equip, info, foodMule, energyMule, smithoreMule, crystiteMule, hbox);
+
+            dialogStage.setScene(new Scene(vBox));
+
+            dialogStage.show();
+        }
+    }
+
+    private void handleBuyMule() {
+        //check if they're purchasing mule
+        //make sure it's not negative
+        //make sure it's not more than one
+        //make sure that number is available
+        //ask what type of mule they would like (pop up?)
+
     }
 
     private void returnToTown() throws IOException {

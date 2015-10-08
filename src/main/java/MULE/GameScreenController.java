@@ -27,6 +27,9 @@ import javafx.util.Duration;
 import java.util.HashSet;
 import java.util.Random;
 
+import static MULE.Mule.MULETYPE.FOOD;
+import static MULE.Mule.MULETYPE.NONE;
+
 public class GameScreenController {
 
     @FXML
@@ -161,25 +164,25 @@ public class GameScreenController {
         Button crystBtn = new Button("Crystite");
 
         foodBtn.setOnAction(arg0 -> {
-            placeMule("FOOD", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(FOOD, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         energyBtn.setOnAction(arg0 -> {
-            placeMule("ENERGY", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(Mule.MULETYPE.ENERGY, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         smithBtn.setOnAction(arg0 -> {
-            placeMule("SMITHORE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(Mule.MULETYPE.ORE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         crystBtn.setOnAction(arg0 -> {
-            placeMule("CRYSTITE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(Mule.MULETYPE.CRYSTITE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
@@ -452,7 +455,7 @@ public class GameScreenController {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
-            updateTile(x, y, "none");
+            updateTile(x, y, NONE);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
@@ -460,19 +463,19 @@ public class GameScreenController {
         } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
-            updateTile(x, y, "none");
+            updateTile(x, y, NONE);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         }
     }
-    private void placeMule(String MULE, Integer x, Integer y) {
+    private void placeMule(Mule.MULETYPE MULE, Integer x, Integer y) {
         Tile curTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         Player curPlayer = GamePlay.currentPlayer;
 
         switch (MULE) {
-            case "FOOD":
+            case FOOD:
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
@@ -486,14 +489,14 @@ public class GameScreenController {
                     //if (curPlayer.getFood() > 0 && curPlayer.getMule > 0)
                     if (curPlayer.getFoodMule() > 0) {
                         curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.FOOD, curPlayer, curTile.getTerrain()));
+                        curTile.setMule(new Mule(FOOD, curPlayer, curTile.getTerrain()));
                         //TODO: update UI to draw mule
                         updateTile(x, y, MULE);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case "ENERGY":
+            case ENERGY:
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
@@ -507,12 +510,12 @@ public class GameScreenController {
                     if (curPlayer.getEnergyMule() > 0) {
                         curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
                         curTile.setMule(new Mule(Mule.MULETYPE.ENERGY, curPlayer, curTile.getTerrain()));
-                        //UPDATE UI?
+                        updateTile(x, y, MULE);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case "SMITHORE":
+            case ORE:
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
@@ -524,24 +527,24 @@ public class GameScreenController {
                     if (curPlayer.getSmithoreMule() > 0) {
                         curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
                         curTile.setMule(new Mule(Mule.MULETYPE.ORE, curPlayer, curTile.getTerrain()));
-                        //UPDATE UI?
+                        updateTile(x, y, MULE);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case "CRYSTITE":
+            case CRYSTITE:
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
-                    if (curPlayer.getCrystiteMuleMule() > 0) {
-                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMuleMule() - 1);
+                    if (curPlayer.getCrystiteMule() > 0) {
+                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
                     }
                 } else {
                     //Place corresponding MULE else do nothing
-                    if (curPlayer.getCrystiteMuleMule() > 0) {
-                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMuleMule() - 1);
+                    if (curPlayer.getCrystiteMule() > 0) {
+                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
                         curTile.setMule(new Mule(Mule.MULETYPE.CRYSTITE, curPlayer, curTile.getTerrain()));
-                        //UPDATE UI?
+                        updateTile(x, y, MULE);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
@@ -561,7 +564,7 @@ public class GameScreenController {
      * @param x The X position of the tile
      * @param y The Y position of the tile
      */
-    private void updateTile(int x, int y, String mule) {
+    private void updateTile(int x, int y, Mule.MULETYPE MULE) {
         // Get current tile, check what border color should be
         Tile currentTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         if (currentTile.getOwner() == null) {
@@ -582,9 +585,8 @@ public class GameScreenController {
         String styles = "-fx-border-color: " + color + ";\n" +
                 "-fx-border-width: 5;\n" +
                 "-fx-border-style: solid;\n";
-        ImageView image;
-        switch (mule) {
-            case "FOOD":
+        switch (MULE) {
+            case FOOD:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -597,7 +599,7 @@ public class GameScreenController {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_food_tile.png")), y, x);
                 }
                 break;
-            case "ENERGY":
+            case ENERGY:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/plain_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -610,7 +612,7 @@ public class GameScreenController {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
                 }
                 break;
-            case "SMITHORE":
+            case ORE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -623,7 +625,7 @@ public class GameScreenController {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_smithore_tile.png")), y, x);
                 }
                 break;
-            case "CRYSTITE":
+            case CRYSTITE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/plain_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -645,7 +647,7 @@ public class GameScreenController {
         }
     }
 
-    private HBox hBoxMaker(String styles, Node... nodes) {
+    public static HBox hBoxMaker(String styles, Node... nodes) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(20.0);
@@ -659,7 +661,7 @@ public class GameScreenController {
 
     }
 
-    private VBox vBoxMaker(Node... nodes) {
+    public static VBox vBoxMaker(Node... nodes) {
         VBox vBox = new VBox();
         vBox.setSpacing(20.0);
         vBox.setPadding(new Insets(10, 10, 10, 10));
@@ -668,7 +670,7 @@ public class GameScreenController {
         return vBox;
     }
 
-    private ImageView imageMaker(String path) {
+    public ImageView imageMaker(String path) {
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream(path)));
         image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
         image.setFitHeight(80);

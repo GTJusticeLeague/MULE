@@ -189,7 +189,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin>
             </TextField>
-            <TextField alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <TextField fx:id="muleSell" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin>
@@ -264,7 +264,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="5">
+            <Label fx:id="muleReceive" alignment="CENTER" prefHeight="15.0" prefWidth="150.0" text="\$00.00" textFill="#276b1b" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
