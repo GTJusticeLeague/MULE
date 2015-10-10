@@ -64,7 +64,11 @@ public class GameConfig {
         this.numPlayers = numPlayers;
         int MAX_NUM_PLAYERS = 4;
         this.players = new Player[MAX_NUM_PLAYERS];
-        this.GAMEBOARD = new Board();
+        if (mapType == MapType.RANDOM) {
+            this.GAMEBOARD = new Board();
+        } else {
+            this.GAMEBOARD = new Board("defaultMap.csv");
+        }
         this.store = new Store(difficulty);
     }
 

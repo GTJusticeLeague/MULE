@@ -1,7 +1,8 @@
 package MULE;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -12,11 +13,42 @@ public class Board {
     private Tile[][] tiles;
 
     /**
-     * Default constructor for a board (build the default map)
-     * @throws java.io.FileNotFoundException
+     * Default constructor for a board (build a random map)
      */
-    public Board() throws java.io.FileNotFoundException {
-        this("defaultMap.csv");
+    public Board() {
+        tiles = new Tile[5][9];
+        Random rand = new Random();
+
+        // Place the town
+        int town_row = rand.nextInt(5);
+        int town_col = rand.nextInt(9);
+        tiles[town_row][town_col] = new Tile(Tile.Terrain.TOWN);
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                if (tiles[i][j] != null) {
+                    continue; // We have already placed the town here
+                }
+                Tile.Terrain curTerrain = null;
+
+                // Select a random terrain for the tile
+                int rand_terrain = rand.nextInt(5);
+                if (rand_terrain == 0) {
+                    curTerrain = Tile.Terrain.RIVER;
+                } else if (rand_terrain == 1) {
+                    curTerrain = Tile.Terrain.PLAIN;
+                } else if (rand_terrain == 2) {
+                    curTerrain = Tile.Terrain.ONEMOUNTAIN;
+                } else if (rand_terrain == 3) {
+                    curTerrain = Tile.Terrain.TWOMOUNTAIN;
+                } else {
+                    curTerrain = Tile.Terrain.THREEMOUNTAIN;
+                }
+
+                // Create the tile
+                tiles[i][j] = new Tile(curTerrain);
+            }
+        }
     }
 
     /**
