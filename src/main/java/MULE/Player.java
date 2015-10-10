@@ -319,6 +319,10 @@ public class Player implements Comparable<Player> {
         this.crystiteMule = mule;
     }
 
+    public int getMuleTotal() {
+        return getFoodMule() + getEnergyMule() + getSmithoreMule() + getCrystiteMule();
+    }
+
     /**
      * String representtion of player
      * @return string representation of player

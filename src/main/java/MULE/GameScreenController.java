@@ -361,7 +361,7 @@ public class GameScreenController {
 
         mule = (Label) playerStatGridPane.getChildren().get(7);
         // TODO: Show all mule types?
-        //mule.setText(GamePlay.GAMECONFIG.players[playerNum].getMule() + " Mule");
+        mule.setText(GamePlay.GAMECONFIG.players[playerNum].getMuleTotal() + " Mule");
     }
 
     /**
