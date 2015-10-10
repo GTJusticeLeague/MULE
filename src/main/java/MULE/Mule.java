@@ -7,7 +7,7 @@ public class Mule {
     public enum MULETYPE {
         FOOD,
         ENERGY,
-        ORE,
+        SMITHORE,
         CRYSTITE,
         NONE
     }
@@ -20,6 +20,10 @@ public class Mule {
         this.type = type;
         this.owner = owner;
         this.terrain = terrain;
+    }
+
+    public MULETYPE getType() {
+        return type;
     }
 
     public void calculateProduction() {
@@ -65,7 +69,7 @@ public class Mule {
                     break;
             }
             owner.setEnergy(owner.getEnergy() + production);
-        } else if (this.type == MULETYPE.ORE) {
+        } else if (this.type == MULETYPE.SMITHORE) {
             switch (this.terrain) {
                 case RIVER:
                     production = 0;

@@ -71,9 +71,6 @@ public class GameScreenController {
     @FXML
     private Label currentPlayer;
 
-    // Images to use for the tiles
-    private final Image town = new Image(getClass().getResourceAsStream("/img/town_tile.png"));
-
     // Keep track of which players have passed during the land selection phase
     private final HashSet<Player> passedPlayers = new HashSet<>();
 
@@ -127,6 +124,10 @@ public class GameScreenController {
         }
     };
 
+    /**
+     * Event fires when a tile is clicked in the land selection phase, or a
+     * user decides to buy land later in the game
+     */
     private final EventHandler<MouseEvent> purchaseHandler = event -> {
         // Setup dialog box to purchase a property
         final Stage dialogStage = new Stage();
@@ -176,7 +177,7 @@ public class GameScreenController {
         });
 
         smithBtn.setOnAction(arg0 -> {
-            placeMule(Mule.MULETYPE.ORE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(Mule.MULETYPE.SMITHORE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
@@ -265,7 +266,8 @@ public class GameScreenController {
     }
 
     /**
-     * Displays the entire map on the screen. Adds the images to the GameScreen's GridPane
+     * Displays the entire map on the screen by calling the updateTile() method
+     * on each tile.
      */
     private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
@@ -273,48 +275,7 @@ public class GameScreenController {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-//                HBox box = new HBox();
-                ImageView image = null;
-                switch (board[i][j].getTerrain()) {
-                    case ONEMOUNTAIN:
-                        image = imageMaker("/img/mountain1_tile.png");
-                        break;
-                    case TWOMOUNTAIN:
-                        image = imageMaker("/img/mountain2_tile.png");
-                        break;
-                    case THREEMOUNTAIN:
-                        image = imageMaker("/img/mountain3_tile.png");
-                        break;
-                    case PLAIN:
-                        image = imageMaker("/img/plain_tile.png");
-                        break;
-                    case RIVER:
-                        image = imageMaker("/img/river_tile.png");
-                        break;
-                    case TOWN:
-                        image = new ImageView(town);
-                        //TODO: add handlers to imageMaker
-                        image.addEventHandler(MouseEvent.MOUSE_CLICKED, townClickHandler);
-                        image.setFitHeight(80);
-                        image.setFitWidth(80);
-                        break;
-                    default:
-                        System.err.println("ERROR: Invalid Terrain when displaying map!");
-                        System.exit(1);
-                }
-
-                HBox box;
-                if (board[i][j].getOwner() != null) {
-                    String color = board[i][j].getOwner().getColor().toString();
-                    String styles = "-fx-border-color: " + color + ";\n" +
-                            "-fx-border-width: 5;\n" +
-                            "-fx-border-style: solid;\n";
-                    box = hBoxMaker(styles, image);
-
-                } else {
-                    box = hBoxMaker(null, image);
-                }
-                Pane.add(box, j, i);
+                updateTile(i, j);
             }
         }
     }
@@ -455,7 +416,7 @@ public class GameScreenController {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
-            updateTile(x, y, NONE);
+            updateTile(x, y);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
@@ -463,13 +424,14 @@ public class GameScreenController {
         } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.incrementLand();
-            updateTile(x, y, NONE);
+            updateTile(x, y);
             if (GamePlay.round == 0) {
                 GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.GAMECONFIG.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         }
     }
+
     private void placeMule(Mule.MULETYPE MULE, Integer x, Integer y) {
         Tile curTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         Player curPlayer = GamePlay.currentPlayer;
@@ -490,8 +452,7 @@ public class GameScreenController {
                     if (curPlayer.getFoodMule() > 0) {
                         curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
                         curTile.setMule(new Mule(FOOD, curPlayer, curTile.getTerrain()));
-                        //TODO: update UI to draw mule
-                        updateTile(x, y, MULE);
+                        updateTile(x, y);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
@@ -510,12 +471,12 @@ public class GameScreenController {
                     if (curPlayer.getEnergyMule() > 0) {
                         curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
                         curTile.setMule(new Mule(Mule.MULETYPE.ENERGY, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y, MULE);
+                        updateTile(x, y);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case ORE:
+            case SMITHORE:
                 //Checks if player has lost MULE
                 if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
@@ -526,8 +487,8 @@ public class GameScreenController {
                     //Place corresponding MULE else do nothing
                     if (curPlayer.getSmithoreMule() > 0) {
                         curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.ORE, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y, MULE);
+                        curTile.setMule(new Mule(Mule.MULETYPE.SMITHORE, curPlayer, curTile.getTerrain()));
+                        updateTile(x, y);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
@@ -544,7 +505,7 @@ public class GameScreenController {
                     if (curPlayer.getCrystiteMule() > 0) {
                         curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
                         curTile.setMule(new Mule(Mule.MULETYPE.CRYSTITE, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y, MULE);
+                        updateTile(x, y);
                     }
                 }
                 updatePlayer(curPlayer.getNumber());
@@ -557,19 +518,30 @@ public class GameScreenController {
 
 
     /**
-     * Updates a tile displayed on the screen (adds a colored border based on the owner)
+     * Updates or first draws a tile on the screen. Takes into consideration
+     * if there is a mule on the tile or not.
      * <p>
-     * If the tile does not have an owner, this method does nothing
      *
      * @param x The X position of the tile
      * @param y The Y position of the tile
      */
-    private void updateTile(int x, int y, Mule.MULETYPE MULE) {
-        // Get current tile, check what border color should be
+    private void updateTile(int x, int y) {
+        // Get current tile, check if there is a mule on the tile
         Tile currentTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
-        if (currentTile.getOwner() == null) {
-            System.err.println("Tile has no owner. Likely due to land purchase failing");
-            return; // No need to update border color of tile with no owner
+        Mule.MULETYPE MULE;
+        if (currentTile.getMule() != null) {
+            MULE = currentTile.getMule().getType();
+        } else {
+            MULE = NONE;
+        }
+
+        // Set the color styles for the border if there is an owner of the tile
+        String styles = "";
+        if (currentTile.getOwner() != null) {
+            String color = currentTile.getOwner().getColor().toString();
+            styles = "-fx-border-color: " + color + ";\n" +
+                    "-fx-border-width: 5;\n" +
+                    "-fx-border-style: solid;\n";
         }
 
         // Get the Node that contains this tile
@@ -581,10 +553,6 @@ public class GameScreenController {
                 break;
             }
         }
-        String color = currentTile.getOwner().getColor().toString();
-        String styles = "-fx-border-color: " + color + ";\n" +
-                "-fx-border-width: 5;\n" +
-                "-fx-border-style: solid;\n";
         switch (MULE) {
             case FOOD:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
@@ -612,7 +580,7 @@ public class GameScreenController {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
                 }
                 break;
-            case ORE:
+            case SMITHORE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -638,12 +606,21 @@ public class GameScreenController {
                     Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_crystite_tile.png")), y, x);
                 }
                 break;
-            default:
-                if (result instanceof HBox) {
-                    result.setStyle("-fx-border-color: " + color + ";\n" +
-                            "-fx-border-width: 5;\n" +
-                            "-fx-border-style: solid;\n");
+            case NONE:
+                if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
+                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_tile.png")), y, x);
+                } else if (currentTile.getTerrain() == Tile.Terrain.TOWN) {
+                    Pane.add(hBoxMaker(null, imageMaker("/img/town_tile.png")), y, x);
                 }
+                break;
         }
     }
 
@@ -658,7 +635,6 @@ public class GameScreenController {
         }
 
         return hBox;
-
     }
 
     public static VBox vBoxMaker(Node... nodes) {
@@ -672,7 +648,11 @@ public class GameScreenController {
 
     public ImageView imageMaker(String path) {
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream(path)));
-        image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+        if (path.equals("/img/town_tile.png")) {
+            image.addEventHandler(MouseEvent.MOUSE_CLICKED, townClickHandler);
+        } else {
+            image.addEventHandler(MouseEvent.MOUSE_CLICKED, tileClickHandler);
+        }
         image.setFitHeight(80);
         image.setFitWidth(80);
 
