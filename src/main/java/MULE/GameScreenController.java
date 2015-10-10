@@ -478,7 +478,7 @@ public class GameScreenController {
                 break;
             case SMITHORE:
                 //Checks if player has lost MULE
-                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
                     if (curPlayer.getSmithoreMule() > 0) {
                         curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
@@ -495,7 +495,7 @@ public class GameScreenController {
                 break;
             case CRYSTITE:
                 //Checks if player has lost MULE
-                if (curTile.hasMule() || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
+                if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
                     //Decrement if MULE count is above 0
                     if (curPlayer.getCrystiteMule() > 0) {
                         curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);

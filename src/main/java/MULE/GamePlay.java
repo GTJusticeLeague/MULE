@@ -13,8 +13,11 @@ public class GamePlay {
     private static Queue<Player> playerOrder = new PriorityQueue<>();
     public static int turnSeconds = 0;
 
+    /**
+     * Start the regular gameplay. Should be called at the end of land selection phase
+     */
     public static void startGame() {
-        nextPlayer(); // increments round number and initializes stack if nothing on stack
+        nextPlayer(); // increments round number and initializes queue if empty
     }
 
     /**
@@ -23,13 +26,35 @@ public class GamePlay {
     public static void nextPlayer() {
         Player nextPlayer = playerOrder.peek();
         if (nextPlayer == null) {
-            // We have gone through all players in the stack, round is over
-            round++;
-            initializePlayerOrder();
+            // We have gone through all players in the queue, round is over
+            nextRound();
         }
         currentPlayer = playerOrder.poll();
         currentPlayer.initTimer();
         currentPlayer.startTime();
+    }
+
+    /**
+     * Do all actions that should occur at the start of each round
+     */
+    private static void nextRound() {
+        round++;
+        calculateProduction();
+        initializePlayerOrder();
+    }
+
+    /**
+     * Calculate production for all tiles in the GAMEBOARD
+     */
+    private static void calculateProduction() {
+        Tile[][] tiles = GAMECONFIG.getGAMEBOARD().getTiles();
+
+        // Loop through all tiles, calculate their production
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                tiles[i][j].calculateProduction();
+            }
+        }
     }
 
     /**
