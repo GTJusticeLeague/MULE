@@ -1,7 +1,7 @@
 package MULE;
 
 /**
- * A tile must have a particular terrain associated. It may or may not have an owner.
+ * A tile must have a particular terrain associated. It may or may not have an owner or mule.
  */
 public class Tile {
 
@@ -16,15 +16,26 @@ public class Tile {
 
     private Terrain terrain;
     private Player owner;
-    private boolean hasMule = false;
     private Mule mule;
 
-    // Tile constructor (every tile needs a terrain)
+    /**
+     * Tile constructor. When a gameboard tile is created it must have a terrain
+     *
+     * @param terrain The terrain type of the Tile
+     */
     public Tile(Terrain terrain) {
         this.terrain = terrain;
         this.owner = null;
-        this.hasMule = false;
         this.mule = null;
+    }
+
+    /**
+     * Calculate the production of this Tile's mule, if it has one
+     */
+    public void calculateProduction() {
+        if (mule != null) {
+            mule.calculateProduction();
+        }
     }
 
     public Terrain getTerrain() {
@@ -37,14 +48,6 @@ public class Tile {
 
     public void setOwner(Player owner) {
         this.owner = owner;
-    }
-
-    public boolean hasMule() {
-        return hasMule;
-    }
-
-    public void setHasMule(boolean hasMule) {
-        this.hasMule = hasMule;
     }
 
     public Mule getMule() {
