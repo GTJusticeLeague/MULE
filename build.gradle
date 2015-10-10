@@ -2,6 +2,7 @@ defaultTasks 'jar'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
+apply plugin: 'checkstyle'
 
 //sourceCompatibility = 1.8
 version = '1.0'
@@ -15,10 +16,18 @@ jar {
     }
 }
 
-idea{
-    module{
+idea {
+    module {
         inheritOutputDirs = false
         outputDir = compileJava.destinationDir
         testOutputDir = compileTestJava.destinationDir
     }
+}
+
+dependencies {
+    checkstyle 'com.puppycrawl.tools:checkstyle:5.9'
+}
+
+repositories {
+    mavenCentral()
 }
