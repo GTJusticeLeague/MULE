@@ -1,9 +1,5 @@
 package MULE;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -12,8 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Toggle;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,9 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.Override;
 
-/**
+/**This is important
  * Created by danielansher on 10/4/15.
  */
 public class StoreController {
@@ -145,58 +138,52 @@ public class StoreController {
         //popular available player quantities
         populatePlayerItems();
 
-        checkout.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                //get buying data
-                int[] totalItemsToBuy = totalItemsToBuy();
-                int[] itemPriceTotals = itemPriceTotals(totalItemsToBuy);
-                int[] itemsAvailableToBuy = itemsAvailableToBuy(store);
-                int finalBuyTotal = overallBuyTotal(itemPriceTotals);
-                boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailableToBuy);
+        checkout.setOnAction(e -> {
+            //get buying data
+            int[] totalItemsToBuy = totalItemsToBuy();
+            int[] itemPriceTotals = itemPriceTotals(totalItemsToBuy);
+            int[] itemsAvailableToBuy = itemsAvailableToBuy(store);
+            int finalBuyTotal = overallBuyTotal(itemPriceTotals);
+            boolean checkoutAllowed = checkAmountsAreAvailable(totalItemsToBuy, itemsAvailableToBuy);
 
-                //get selling data
-                int[] totalItemsToSell = totalItemsToSell();
-                int[] itemSellPriceTotals = itemPriceTotals(totalItemsToSell);
-                int[] itemsAvailableToSell = itemsAvailableToSell(current);
-                int finalSellTotal = overallBuyTotal(itemSellPriceTotals);
-                boolean sellAllowed = checkAmountsAreAvailable(totalItemsToSell, itemsAvailableToSell);
+            //get selling data
+            int[] totalItemsToSell = totalItemsToSell();
+            int[] itemSellPriceTotals = itemPriceTotals(totalItemsToSell);
+            int[] itemsAvailableToSell = itemsAvailableToSell(current);
+            int finalSellTotal = overallBuyTotal(itemSellPriceTotals);
+            boolean sellAllowed = checkAmountsAreAvailable(totalItemsToSell, itemsAvailableToSell);
 
-                //if player doesn't have enough money
-                if (current.getMoney() < finalBuyTotal) {
-                    notEnoughMoney();
+            //if player doesn't have enough money
+            if (current.getMoney() < finalBuyTotal) {
+                notEnoughMoney();
+            }
+
+            //if player checks out unavailable number of items
+            //if player sells unavailable number of items
+            else if (!checkoutAllowed || !sellAllowed) {
+                unavailableNumberOfItems(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
+            }
+
+            //if everything is fine
+            else {
+
+                if (wantToBuyMule(totalItemsToBuy)) {
+                    equipMule(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals,
+                    itemSellPriceTotals, finalSellTotal);
+                    System.out.println("checkoutAllowed: Mule total: " + itemPriceTotals[4]);
+                } else if (!wantToBuyMule(totalItemsToBuy)) {
+                    playerCheckout(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals, itemSellPriceTotals,
+                    finalBuyTotal, finalSellTotal);
                 }
 
-                //if player checks out unavailable number of items
-                //if player sells unavailable number of items
-                else if (!checkoutAllowed || !sellAllowed) {
-                    unavailableNumberOfItems(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
-                }
-
-                //if everything is fine
-                else if (checkoutAllowed && sellAllowed) {
-
-                    if (wantToBuyMule(totalItemsToBuy)) {
-                        equipMule(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals,
-                        itemSellPriceTotals, finalSellTotal);
-                        System.out.println("checkoutAllowed: Mule total: " + itemPriceTotals[4]);
-                    } else if (!wantToBuyMule(totalItemsToBuy)) {
-                        playerCheckout(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals, itemSellPriceTotals,
-                        finalBuyTotal, finalSellTotal);
-                    }
-
-                }
             }
         });
 
-        returnToTown.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    returnToTown();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        returnToTown.setOnAction(event -> {
+            try {
+                returnToTown();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -230,9 +217,7 @@ public class StoreController {
         Text message = new Text("You do not have enough money.");
 
         Button okay = new Button("Okay");
-        okay.setOnAction(arg0 -> {
-            dialogStage.close();
-        });
+        okay.setOnAction(arg0 -> dialogStage.close());
 
         HBox hBox = createHBox(okay);
         VBox vBox = createVBox(message, hBox);
@@ -252,9 +237,7 @@ public class StoreController {
         Text message = cannotCheckoutMemo(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
 
         Button okay = new Button("Okay");
-        okay.setOnAction(arg0 -> {
-            dialogStage.close();
-        });
+        okay.setOnAction(arg0 -> dialogStage.close());
 
         HBox hBox = createHBox(okay);
         VBox vBox = createVBox(message, hBox);
@@ -299,9 +282,7 @@ public class StoreController {
         });
 
         Button returnToStore = new Button("Edit Cart");
-        returnToStore.setOnAction(arg0 -> {
-            dialogStage.close();
-        });
+        returnToStore.setOnAction(arg0 -> dialogStage.close());
 
         HBox hbox = createHBox(returnToStore, submit);
         VBox vBox = createVBox(buyMessage, sellMessage, hbox);
@@ -403,9 +384,13 @@ public class StoreController {
             if (i == 4) current = " mule";
 
             if (totalItemsToBuy[i] > itemsAvailbleToBuy[i]) {
-                memo.append("You have too many" + current + " items. \n");
+                memo.append("You have too many");
+                memo.append(current);
+                memo.append(" items. \n");
             } else if (totalItemsToBuy[i] < 0) {
-                memo.append("You cannot purchase negative" + current + " items. \n");
+                memo.append("You cannot purchase negative");
+                memo.append(current);
+                memo.append(" items. \n");
             }
         }
 
@@ -422,9 +407,13 @@ public class StoreController {
             if (i == 4) current = " mule";
 
             if (totalItemsToSell[i] > itemsAvailableToSell[i]) {
-                memo.append("You do not have that many" + current + " items to sell. \n");
+                memo.append("You do not have that many");
+                memo.append(current);
+                memo.append( " items to sell. \n");
             } else if (totalItemsToSell[i] < 0) {
-                memo.append("You cannot sell negative" + current + " items. \n");
+                memo.append("You cannot sell negative");
+                memo.append(current);
+                memo.append( " items to sell. \n");
             }
         }
 
@@ -433,25 +422,23 @@ public class StoreController {
     }
 
     private Text generateBuyReceipt(int[] totalItemsToBuy, int[] itemPriceTotals, int overallTotal) {
-        Text receipt = new Text("Your Bought Items: \n"
+        return new Text("Your Bought Items: \n"
                 + totalItemsToBuy[0] + " Food: " + itemPriceTotals[0] + "\n"
                 + totalItemsToBuy[1] + " Energy: " + itemPriceTotals[1] + "\n"
                 + totalItemsToBuy[2] + " Smithore: " + itemPriceTotals[2] + "\n"
                 + totalItemsToBuy[3] + " Crystite: " + itemPriceTotals[3] + "\n"
                 + totalItemsToBuy[4] + " Mule: " + itemPriceTotals[4] + "\n"
                 + "Total: " + overallTotal);
-        return receipt;
     }
 
     private Text generateSellReceipt(int[] totalItemsToSell, int[] itemSellPriceTotals, int finalSellTotal) {
-        Text receipt = new Text("Your Sold Items: \n"
+        return new Text("Your Sold Items: \n"
                                 + totalItemsToSell[0] + " Food: " + itemSellPriceTotals[0] + "\n"
                                 + totalItemsToSell[1] + " Energy: " + itemSellPriceTotals[1] + "\n"
                                 + totalItemsToSell[2] + " Smithore: " + itemSellPriceTotals[2] + "\n"
                                 + totalItemsToSell[3] + " Crystite: " + itemSellPriceTotals[3] + "\n"
                                 + totalItemsToSell[4] + " Mule: " + itemSellPriceTotals[4] + "\n"
                                 + "Total: " + finalSellTotal);
-        return receipt;
     }
 
     private void updatePlayerResources(int[] totalItemsToBuy, int[] totalItemsToSell, Player player) {
@@ -512,9 +499,8 @@ public class StoreController {
     }
 
     private int getPlayerMuleTotal(Player player) {
-        int muleTotal = player.getFoodMule() + player.getEnergyMule() + player.getSmithoreMule()
+        return player.getFoodMule() + player.getEnergyMule() + player.getSmithoreMule()
                 + player.getCrystiteMule();
-        return muleTotal;
     }
 
     private boolean wantToBuyMule(int[] totalItemsToBuy) {
