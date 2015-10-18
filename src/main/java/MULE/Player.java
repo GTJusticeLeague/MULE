@@ -319,6 +319,12 @@ public class Player implements Comparable<Player> {
         this.crystiteMule = mule;
     }
 
+
+    /**
+     * Gets the total number of mules a player has.
+     *
+     * @return total number of mules
+     */
     public int getMuleTotal() {
         return getFoodMule() + getEnergyMule() + getSmithoreMule() + getCrystiteMule();
     }

@@ -188,7 +188,11 @@ public class StoreController {
         });
     }
 
-    //HBOX
+    /**
+     * Creates an hbox
+     * @param elements elements to put in hbox
+     * @return hbox with elements
+     */
     private HBox createHBox(Node... elements) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
@@ -197,7 +201,11 @@ public class StoreController {
         return hbox;
     }
 
-    //VBOX
+    /**
+     * Creates a vbox
+     * @param elements elements to put in vbox
+     * @return vbox with elements
+     */
     private VBox createVBox(Node... elements) {
         VBox vbox = new VBox();
         vbox.setSpacing(20.0);
@@ -206,7 +214,10 @@ public class StoreController {
         return vbox;
     }
 
-    //THIS METHOD CANNOT GET THE NECESSARY ARGUMENTS
+    /**
+     * Creates and displays pop up box for when player
+     * does not have enough money.
+     */
     private void notEnoughMoney() {
 
         //create dialog box
@@ -226,7 +237,14 @@ public class StoreController {
         dialogStage.show();
     }
 
-    //THIS METHOD CANNOT GET THE NECESSARY ARGUMENTS
+    /**
+     * Creates a displays pop up box for when the player
+     * attempts to buy or sell an unavailable number of items
+     * @param totalItemsToBuy array of number of each item to buy
+     * @param itemsAvailableToBuy array of number of items available to buy
+     * @param totalItemsToSell array of number of each item to sell
+     * @param itemsAvailableToSell array of number of items available to sell
+     */
     private void unavailableNumberOfItems(int[] totalItemsToBuy, int[] itemsAvailableToBuy, int[] totalItemsToSell, int[] itemsAvailableToSell) {
 
         //create dialog box
@@ -246,6 +264,16 @@ public class StoreController {
         dialogStage.show();
     }
 
+    /**
+     * Handles logic for then the player submits their purchase/sell
+     * @param current current player
+     * @param totalItemsToBuy array of number of each item the player wishes to buy
+     * @param totalItemsToSell array of number of each item the player wishes to sell
+     * @param itemPriceTotals array of price of items the player wishes to buy
+     * @param itemSellPriceTotals array of price of items the player wishes to sell
+     * @param finalBuyTotal total cost of players items
+     * @param finalSellTotal money player will recieve from selling items to store
+     */
     private void playerCheckout(Player current, int[] totalItemsToBuy, int[] totalItemsToSell, int[] itemPriceTotals,
                                 int[] itemSellPriceTotals, int finalBuyTotal, int finalSellTotal) {
 
@@ -291,7 +319,10 @@ public class StoreController {
         dialogStage.show();
     }
 
-    //NUM ITEMS ARRAY
+    /**
+     * Creates the array of number of each item to buy
+     * @return array of items to buy
+     */
     private int[] totalItemsToBuy() {
         int[] itemsToBuy = new int[5];
         itemsToBuy[0] = Integer.parseInt(foodBuy.getText());
