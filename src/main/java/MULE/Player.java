@@ -1,7 +1,5 @@
 package MULE;
 
-import com.sun.istack.internal.NotNull;
-
 /**
  * Created by Donald on 9/13/2015.
  * 9/13/2015 - Made Race/Color enums, created getters, made variables private
@@ -375,7 +373,7 @@ public class Player implements Comparable<Player> {
         return this.score = money + 500*numLand + energy + food + smithore + crystite;
     }
 
-    @Override @NotNull
+    @Override
     public int compareTo(Player other) {
         return this.getScore() - other.getScore();
     }
