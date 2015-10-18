@@ -49,7 +49,7 @@ public class GamePlay {
 
     private static void randomEvent() {
         Random r = new Random();
-        int event = r.nextInt(6) + 1;
+        int event = r.nextInt(7) + 1;
         Label eventLabel= null;
         switch(event) {
             case 1:
