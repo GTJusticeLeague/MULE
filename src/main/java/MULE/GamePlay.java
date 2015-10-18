@@ -1,7 +1,14 @@
 package MULE;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Random;
+
 
 /**
  * Contains the main game logic
@@ -30,8 +37,100 @@ public class GamePlay {
             nextRound();
         }
         currentPlayer = playerOrder.poll();
+
+        //27% chance of random event occurring
+        if (Math.random() * 100 > 73) {
+            randomEvent();
+        }
+
         currentPlayer.initTimer();
         currentPlayer.startTime();
+    }
+
+    private static void randomEvent() {
+        Random r = new Random();
+        int event = r.nextInt(6) + 1;
+        Label eventLabel= null;
+        switch(event) {
+            case 1:
+                currentPlayer.setFood(currentPlayer.getFood() + 3);
+                currentPlayer.setEnergy(currentPlayer.getFood() + 2);
+                eventLabel = new Label("YOU JUST  RECEIVED A PACKAGE FROM THE GT ALUMNI " +
+                        "CONTAINING 3 FOOD AND 2 ENERGY UNITS");
+                break;
+            case 2:
+                currentPlayer.setSmithore(currentPlayer.getSmithore() + 2);
+                eventLabel = new Label("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
+                break;
+            case 3:
+                currentPlayer.setMoney(currentPlayer.getMoney() + 8 * moneyFactor());
+                eventLabel = new Label("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
+                break;
+            case 4:
+                currentPlayer.setMoney(currentPlayer.getMoney() + 2 * moneyFactor());
+                eventLabel = new Label("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m");
+                break;
+            case 5:
+                if (!curPlayerHasLowScore()) {
+                    currentPlayer.setMoney(currentPlayer.getMoney() - 4 * moneyFactor());
+                    eventLabel = new Label("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $4*m.");
+                }
+                break;
+            case 6:
+                if (!curPlayerHasLowScore()) {
+                    currentPlayer.setFood(currentPlayer.getFood() / 2);
+                    eventLabel = new Label("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE " +
+                            "SHED AND STOLE HALF YOUR FOOD.");
+                }
+                break;
+            case 7:
+                if (!curPlayerHasLowScore()) {
+                    currentPlayer.setMoney(currentPlayer.getMoney() - 6 * moneyFactor());
+                    eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. " +
+                            "IT COST YOU $6*m TO CLEAN IT UP.");
+                }
+            break;
+            default:
+                System.out.println("shit");
+        }
+        if (eventLabel != null) {
+            Button okBtn = new Button("OK");
+            final Stage dialogStage = GameScreenController.stageMaker("Random Event",
+                    GameScreenController.vBoxMaker(eventLabel, GameScreenController.hBoxMaker(null, okBtn)));
+            okBtn.setOnAction(arg0 -> dialogStage.close());
+            dialogStage.show();
+        }
+
+    }
+
+    /**
+     * Determines if the current Player has the lowest score
+     *
+     * @return if the current Player has the lowest score
+     */
+    private static boolean curPlayerHasLowScore() {
+        //Assume the curPlayer's score is the lowest
+        int lowScore = currentPlayer.getScore();
+
+        //Determine which player has the lowest score
+        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
+            if (GamePlay.GAMECONFIG.players[i].getScore() < lowScore) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static int moneyFactor() {
+        if (round < 4) {
+            return 25;
+        } else if (round < 8) {
+            return 50;
+        } else if (round < 12) {
+            return 75;
+        } else {
+            return 100;
+        }
     }
 
     /**
@@ -50,9 +149,9 @@ public class GamePlay {
         Tile[][] tiles = GAMECONFIG.getGAMEBOARD().getTiles();
 
         // Loop through all tiles, calculate their production
-        for (int i = 0; i < tiles.length; i++) {
+        for (Tile[] tile : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
-                tiles[i][j].calculateProduction();
+                tile[j].calculateProduction();
             }
         }
     }
@@ -61,9 +160,6 @@ public class GamePlay {
      * Sets up the stack of players in the correct order (based on score)
      */
     private static void initializePlayerOrder() {
-        for (int i = 0; i < GAMECONFIG.getNumPlayers(); i++) {
-            Player temp = GAMECONFIG.getPlayers()[i];
-            playerOrder.add(temp);
-        }
+        playerOrder.addAll(Arrays.asList(GAMECONFIG.getPlayers()).subList(0, GAMECONFIG.getNumPlayers()));
     }
 }

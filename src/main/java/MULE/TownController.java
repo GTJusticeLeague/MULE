@@ -23,7 +23,7 @@ import java.util.Random;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
+/**Import file
  * Created by Emeke on 9/19/2015.
  */
 public class TownController {
@@ -101,20 +101,17 @@ public class TownController {
         purchaseLandLabel.setAlignment(Pos.CENTER);
 
         Button okBtn = new Button("OK");
-        okBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent arg0) {
-                dialogStage.close();
-                try {
-                    GamePlay.nextPlayer();
-                    exitTown();
-                } catch (IOException e) {
-                    System.out.println("An IO Exception has occurred in the pub's handler.");
-                    System.out.println(Arrays.toString(e.getStackTrace()));
-                }
-
-
+        okBtn.setOnAction(arg0 -> {
+            dialogStage.close();
+            try {
+                GamePlay.nextPlayer();
+                exitTown();
+            } catch (IOException e) {
+                System.out.println("An IO Exception has occurred in the pub's handler.");
+                System.out.println(Arrays.toString(e.getStackTrace()));
             }
+
+
         });
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);

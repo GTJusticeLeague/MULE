@@ -1,5 +1,7 @@
 package MULE;
 
+import com.sun.istack.internal.NotNull;
+
 /**
  * Created by Donald on 9/13/2015.
  * 9/13/2015 - Made Race/Color enums, created getters, made variables private
@@ -179,7 +181,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set money
-     * @param money
+     * @param money money for a player
      */
     public void setMoney(int money) {
         this.money = money;
@@ -195,7 +197,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set number of food resource
-     * @param food
+     * @param food food for a player
      */
     public void setFood(int food) {
         this.food = food;
@@ -211,7 +213,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set number of energy resource
-     * @param energy
+     * @param energy for a player
      */
     public void setEnergy(int energy) {
         this.energy = energy;
@@ -227,7 +229,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set number of smithore resource
-     * @param smithore
+     * @param smithore for a player
      */
     public void setSmithore(int smithore) {
         this.smithore = smithore;
@@ -243,7 +245,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set number of crystite resource
-     * @param crystite
+     * @param crystite yes
      */
     public void setCrystite(int crystite) {
         this.crystite = crystite;
@@ -259,7 +261,7 @@ public class Player implements Comparable<Player> {
 
     /**
      * Set number of mule resource for food
-     * @param mule
+     * @param mule mule total
      */
     public void setFoodMule(int mule) {
         this.foodMule = mule;
@@ -277,7 +279,7 @@ public class Player implements Comparable<Player> {
     /**
      * Set number of mule resource for energy
      *
-     * @param mule
+     * @param mule number to be set
      */
     public void setEnergyMule(int mule) {
         this.energyMule = mule;
@@ -295,7 +297,7 @@ public class Player implements Comparable<Player> {
     /**
      * Set number of smithore mule resource
      *
-     * @param mule
+     * @param mule number for mule
      */
     public void setSmithoreMule(int mule) {
         this.smithoreMule = mule;
@@ -313,7 +315,7 @@ public class Player implements Comparable<Player> {
     /**
      * Set number of crystite mule resource
      *
-     * @param mule
+     * @param mule number for crystite mule
      */
     public void setCrystiteMule(int mule) {
         this.crystiteMule = mule;
@@ -370,28 +372,17 @@ public class Player implements Comparable<Player> {
     }
 
     public int getScore() {
-        return score;
+        return this.score = money + 500*numLand + energy + food + smithore + crystite;
     }
 
-    /**
-     * Calculates and returns a player's score
-     * @return
-     */
-    public void calcScore() {
-        this.score = money + 500*numLand + energy + food + smithore + crystite;
-    }
-
-    @Override
+    @Override @NotNull
     public int compareTo(Player other) {
-        this.calcScore();
-        other.calcScore();
-        return this.score - other.getScore();
+        return this.getScore() - other.getScore();
     }
 
     @Override
     public int hashCode() {
-        this.calcScore();
-        return this.score*17 + this.crystite + this.food + this.energy + this.smithore;
+        return this.getScore()*17 + this.crystite + this.food + this.energy + this.smithore;
     }
 
     @Override
@@ -402,7 +393,6 @@ public class Player implements Comparable<Player> {
             return true;
 
         Player other = (Player) obj;
-
-        return this.number == other.getNumber();
+        return this.getNumber() == other.getNumber();
     }
 }

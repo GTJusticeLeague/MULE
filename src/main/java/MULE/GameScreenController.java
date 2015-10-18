@@ -3,7 +3,6 @@ package MULE;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -93,9 +92,6 @@ public class GameScreenController {
                 purchaseHandler.handle(event);
                 return;
             }
-            final Stage dialogStage = new Stage();
-            dialogStage.setTitle("Property Options");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
 
             Label purchaseLandLabel = new Label("Would you like to Purchase Property, or Place a Mule?");
             purchaseLandLabel.setAlignment(Pos.CENTER);
@@ -106,6 +102,8 @@ public class GameScreenController {
             //Hook up event handler for purchase land and place mule
             purchaseBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, purchaseHandler);
             muleBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, placeMuleHandler);
+
+            final Stage dialogStage = stageMaker("Property Options", vBoxMaker(purchaseLandLabel, hBoxMaker(null, purchaseBtn, muleBtn)));
 
             //Purchase handler needs to fire when button is clicked with event args
             purchaseBtn.setOnAction(arg0 -> {
@@ -119,7 +117,6 @@ public class GameScreenController {
                 dialogStage.close();
             });
 
-            dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, purchaseBtn, muleBtn))));
             dialogStage.show();
         }
     };
@@ -130,15 +127,15 @@ public class GameScreenController {
      */
     private final EventHandler<MouseEvent> purchaseHandler = event -> {
         // Setup dialog box to purchase a property
-        final Stage dialogStage = new Stage();
-        dialogStage.setTitle("Property Options");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
+
 
         Label purchaseLandLabel = new Label("Purchase this Property?");
         purchaseLandLabel.setAlignment(Pos.CENTER);
 
         Button yesBtn = new Button("Yes");
         Button noBtn = new Button("No");
+        final Stage dialogStage = stageMaker("Property Options", vBoxMaker(purchaseLandLabel, hBoxMaker(null, yesBtn, noBtn)));
+
         yesBtn.setOnAction(arg0 -> {
             buyLand((GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
@@ -146,15 +143,10 @@ public class GameScreenController {
         });
         noBtn.setOnAction(arg0 -> dialogStage.close());
 
-        dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, yesBtn, noBtn))));
         dialogStage.show();
     };
 
     private final EventHandler<MouseEvent> placeMuleHandler = event -> {
-        // Setup dialog box to purchase a property
-        final Stage dialogStage = new Stage();
-        dialogStage.setTitle("Property Options");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
 
         Label purchaseLandLabel = new Label("\t\tSelect a Mule");
         purchaseLandLabel.setAlignment(Pos.CENTER);
@@ -163,6 +155,10 @@ public class GameScreenController {
         Button energyBtn = new Button("Energy");
         Button smithBtn = new Button("Smithore");
         Button crystBtn = new Button("Crystite");
+
+        final Stage dialogStage = stageMaker("Property Options", vBoxMaker(purchaseLandLabel,
+                hBoxMaker(null, foodBtn, energyBtn, smithBtn, crystBtn)));
+
 
         foodBtn.setOnAction(arg0 -> {
             placeMule(FOOD, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
@@ -188,7 +184,6 @@ public class GameScreenController {
             dialogStage.close();
         });
 
-        dialogStage.setScene(new Scene(vBoxMaker(purchaseLandLabel, hBoxMaker(null, foodBtn, energyBtn, smithBtn, crystBtn))));
         dialogStage.show();
     };
 
@@ -383,30 +378,22 @@ public class GameScreenController {
 
         //Notify user if current tile is taken or cannot afford the property
         if (GamePlay.currentPlayer.getMoney() < price) {
-            final Stage dialogStage = new Stage();
-            dialogStage.setTitle("Sorry");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+
 
             Label errorLabel = new Label("You cannot afford this property.");
             errorLabel.setAlignment(Pos.CENTER);
-
             Button okBtn = new Button("OK");
+            final Stage dialogStage = stageMaker("Sorry", vBoxMaker(errorLabel, hBoxMaker(null, okBtn)));
             okBtn.setOnAction(arg0 -> dialogStage.close());
-
-            dialogStage.setScene(new Scene(vBoxMaker(errorLabel, hBoxMaker(null, okBtn))));
             dialogStage.show();
+
         } else if (current.getOwner() != null) {
-            final Stage dialogStage = new Stage();
-            dialogStage.setTitle("Sorry");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
 
             Label errorLabel = new Label("This property already has an owner!");
             errorLabel.setAlignment(Pos.CENTER);
-
             Button okBtn = new Button("OK");
+            final Stage dialogStage = stageMaker("Sorry", vBoxMaker(errorLabel, hBoxMaker(null, okBtn)));
             okBtn.setOnAction(arg0 -> dialogStage.close());
-
-            dialogStage.setScene(new Scene(vBoxMaker(errorLabel, hBoxMaker(null, okBtn))));
             dialogStage.show();
         }
 
@@ -544,15 +531,6 @@ public class GameScreenController {
                     "-fx-border-style: solid;\n";
         }
 
-        // Get the Node that contains this tile
-        Node result = null;
-        ObservableList<Node> children = Pane.getChildren();
-        for (Node node : children) {
-            if (GridPane.getRowIndex(node) == x && GridPane.getColumnIndex(node) == y) {
-                result = node;
-                break;
-            }
-        }
         switch (MULE) {
             case FOOD:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
@@ -644,6 +622,16 @@ public class GameScreenController {
         vBox.getChildren().addAll(nodes);
 
         return vBox;
+    }
+
+    public static Stage stageMaker(String title, VBox vbox) {
+        final Stage dialogStage = new Stage();
+        dialogStage.setTitle(title);
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.setScene(new Scene(vbox));
+
+        return dialogStage;
+
     }
 
     public ImageView imageMaker(String path) {
