@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

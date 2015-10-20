@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
 /**
  * Created by Donald on 9/13/2015.

@@ -1,5 +1,8 @@
-package MULE;
+package edu.gatech.justiceleague.mule.controller;
 
+import edu.gatech.justiceleague.mule.model.GamePlay;
+import edu.gatech.justiceleague.mule.model.Player;
+import edu.gatech.justiceleague.mule.model.Store;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;

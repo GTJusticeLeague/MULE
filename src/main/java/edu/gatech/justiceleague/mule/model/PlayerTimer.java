@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

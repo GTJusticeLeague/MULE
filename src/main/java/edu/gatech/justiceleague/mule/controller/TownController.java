@@ -1,5 +1,6 @@
-package MULE;
+package edu.gatech.justiceleague.mule.controller;
 
+import edu.gatech.justiceleague.mule.model.GamePlay;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,10 +19,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Random;
 
 /**Import file
  * Created by Emeke on 9/19/2015.

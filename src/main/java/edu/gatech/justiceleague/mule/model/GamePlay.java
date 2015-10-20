@@ -1,5 +1,6 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
+import edu.gatech.justiceleague.mule.controller.GameScreenController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;

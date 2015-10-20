@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
 /**
  * Store class keeps track of the store's inventory

@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
 /**
  * A tile must have a particular terrain associated. It may or may not have an owner or mule.

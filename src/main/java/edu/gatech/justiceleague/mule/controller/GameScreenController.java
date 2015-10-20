@@ -1,5 +1,9 @@
-package MULE;
+package edu.gatech.justiceleague.mule.controller;
 
+import edu.gatech.justiceleague.mule.model.GamePlay;
+import edu.gatech.justiceleague.mule.model.Mule;
+import edu.gatech.justiceleague.mule.model.Player;
+import edu.gatech.justiceleague.mule.model.Tile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,13 +30,10 @@ import javafx.util.Duration;
 import java.util.HashSet;
 import java.util.Random;
 
-import static MULE.Mule.MULETYPE.FOOD;
-import static MULE.Mule.MULETYPE.NONE;
-
 public class GameScreenController {
 
     @FXML
-    private GridPane Pane;
+    private GridPane pane;
 
     @FXML
     private AnchorPane anchorPane;
@@ -161,7 +162,7 @@ public class GameScreenController {
 
 
         foodBtn.setOnAction(arg0 -> {
-            placeMule(FOOD, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule(Mule.MULETYPE.FOOD, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
@@ -192,7 +193,7 @@ public class GameScreenController {
         public void handle(MouseEvent event) {
             // Don't let player enter town until after land selection phase has been finished
             if (GamePlay.round != 0) {
-                Stage stage = (Stage) Pane.getScene().getWindow();
+                Stage stage = (Stage) pane.getScene().getWindow();
                 Parent root = null;
                 try {
                     // Load the town when the town is clicked
@@ -341,7 +342,7 @@ public class GameScreenController {
         } else {
             playerTimer.setText("Timer");
         }
-        
+
         food = (Label) playerStatGridPane.getChildren().get(3);
         food.setText(GamePlay.GAMECONFIG.players[playerNum].getFood() + " Food");
 
@@ -438,7 +439,7 @@ public class GameScreenController {
                     //if (curPlayer.getFood() > 0 && curPlayer.getMule > 0)
                     if (curPlayer.getFoodMule() > 0) {
                         curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
-                        curTile.setMule(new Mule(FOOD, curPlayer, curTile.getTerrain()));
+                        curTile.setMule(new Mule(Mule.MULETYPE.FOOD, curPlayer, curTile.getTerrain()));
                         updateTile(x, y);
                     }
                 }
@@ -519,7 +520,7 @@ public class GameScreenController {
         if (currentTile.getMule() != null) {
             MULE = currentTile.getMule().getType();
         } else {
-            MULE = NONE;
+            MULE = Mule.MULETYPE.NONE;
         }
 
         // Set the color styles for the border if there is an owner of the tile
@@ -534,69 +535,69 @@ public class GameScreenController {
         switch (MULE) {
             case FOOD:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_food_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/river_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_food_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_food_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_food_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_food_tile.png")), y, x);
                 }
                 break;
             case ENERGY:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_energy_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/plain_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_energy_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/river_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_energy_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_energy_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
                 }
                 break;
             case SMITHORE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_smithore_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/river_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_smithore_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_smithore_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_smithore_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_smithore_tile.png")), y, x);
                 }
                 break;
             case CRYSTITE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_crystite_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/plain_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_crystite_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/river_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_crystite_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_crystite_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_crystite_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_crystite_tile.png")), y, x);
                 }
                 break;
             case NONE:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/plain_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/plain_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/river_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/river_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.ONEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain1_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TWOMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain2_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.THREEMOUNTAIN) {
-                    Pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_tile.png")), y, x);
+                    pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.TOWN) {
-                    Pane.add(hBoxMaker(null, imageMaker("/img/town_tile.png")), y, x);
+                    pane.add(hBoxMaker(null, imageMaker("/img/town_tile.png")), y, x);
                 }
                 break;
         }

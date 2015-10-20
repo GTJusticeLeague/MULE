@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
 import java.util.Arrays;
 import java.util.List;

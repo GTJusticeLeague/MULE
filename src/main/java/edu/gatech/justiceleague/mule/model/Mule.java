@@ -1,4 +1,4 @@
-package MULE;
+package edu.gatech.justiceleague.mule.model;
 
 /**
  * Created by thomas on 10/6/15.
@@ -16,7 +16,7 @@ public class Mule {
     private Tile.Terrain terrain;
     private Player owner;
 
-    Mule(MULETYPE type, Player owner, Tile.Terrain terrain) {
+    public Mule(MULETYPE type, Player owner, Tile.Terrain terrain) {
         this.type = type;
         this.owner = owner;
         this.terrain = terrain;

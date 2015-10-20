@@ -1,5 +1,7 @@
-package MULE;
+package edu.gatech.justiceleague.mule.controller;
 
+import edu.gatech.justiceleague.mule.model.GamePlay;
+import edu.gatech.justiceleague.mule.model.Player;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlayerController {
+public class PlayerConfigController {
 
     @FXML
     private TextField player1Name;
@@ -63,7 +65,7 @@ public class PlayerController {
     @FXML
     private Label errorMsg;
 
-    public PlayerController() {
+    public PlayerConfigController() {
 
     }
 
