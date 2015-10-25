@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -67,6 +68,9 @@ public class GameScreenController {
 
     @FXML
     private Button endButton;
+
+    @FXML
+    private Button saveButton;
 
     @FXML
     private Label currentPlayer;
@@ -259,6 +263,52 @@ public class GameScreenController {
         }
         GamePlay.currentPlayer = GamePlay.GAMECONFIG.players[GamePlay.currentPlayer.getNumber() + 1];
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+    }
+
+    @FXML
+    private void handleSaveGame(ActionEvent event) {
+        Label saveGame = new Label("Would you like to save your game?");
+        saveGame.setAlignment(Pos.CENTER);
+
+        Button yes = new Button("Save");
+        Button no = new Button("Return to Game");
+        Button maybe = new Button ("Exit Without Saving");
+
+        final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, yes, no, maybe)));
+
+        yes.setOnAction(arg0 -> {
+            dialogStage.close();
+
+            Label saveInfo = new Label("What would you like to name your game?");
+
+            TextField gameName = new TextField();
+
+            Button save = new Button("Save");
+            Button saveAndQuit = new Button("Save & Quit");
+
+            final Stage saveStage = stageMaker("Save Game", vBoxMaker(saveInfo, gameName, hBoxMaker(null, save, saveAndQuit)));
+
+            save.setOnAction(arg1 -> {
+                //TODO: SAVE ACTION
+                saveStage.close();
+            });
+
+            saveAndQuit.setOnAction(arg1 -> {
+                //TODO: SAVE ACTION
+                saveStage.close();
+            });
+        });
+
+        no.setOnAction(arg0 -> {
+            dialogStage.close();
+        });
+
+        maybe.setOnAction(arg0 -> {
+            //TODO: EXIT APPLICATION
+            dialogStage.close();
+        });
+
+        dialogStage.show();
     }
 
     /**
