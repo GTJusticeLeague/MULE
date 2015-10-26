@@ -147,17 +147,29 @@ public class TownController {
         }
     };
 
+    /**
+     * Initializes town
+     */
     @FXML
     public void initialize() {
         pubPane.addEventHandler(MouseEvent.MOUSE_CLICKED, pubHandler);
         storePane.addEventHandler(MouseEvent.MOUSE_CLICKED, storeHandler);
     }
 
+    /**
+     * Exits the town
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void handleExitTown(ActionEvent event) throws IOException {
         exitTown();
     }
 
+    /**
+     * REALLY exits the town
+     * @throws IOException
+     */
     private void exitTown() throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));
