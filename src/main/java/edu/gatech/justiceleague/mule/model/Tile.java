@@ -38,22 +38,39 @@ public class Tile {
         }
     }
 
+    /**
+     * @return terrain of tile
+     */
     public Terrain getTerrain() {
         return terrain;
     }
 
+    /**
+     * @return owner of tile
+     */
     public Player getOwner() {
         return owner;
     }
 
+    /**
+     * Set owner of tile
+     * @param owner of tile
+     */
     public void setOwner(Player owner) {
         this.owner = owner;
     }
 
+    /**
+     * @return mule on tile
+     */
     public Mule getMule() {
         return mule;
     }
 
+    /**
+     * Sets mule on tile
+     * @param mule on tile
+     */
     public void setMule(Mule mule) {
         this.mule = mule;
     }

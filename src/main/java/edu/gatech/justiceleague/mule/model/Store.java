@@ -36,42 +36,73 @@ public class Store {
         }
     }
 
+    /**
+     * @return amount of food
+     */
     public int getNumFood() {
         return numFood;
     }
 
+    /**
+     * Set amount of food
+     * @param numFood
+     */
     public void setNumFood(int numFood) {
         this.numFood = numFood;
     }
-
+    /**
+     * @return amount of energy
+     */
     public int getNumEnergy() {
         return numEnergy;
     }
 
+    /**
+     * Set amount of energy
+     * @param numEnergy
+     */
     public void setNumEnergy(int numEnergy) {
         this.numEnergy = numEnergy;
     }
-
+    /**
+     * @return amount of smithore
+     */
     public int getNumSmithore() {
         return numSmithore;
     }
 
+    /**
+     * set amount of smithore
+     * @param numSmithore
+     */
     public void setNumSmithore(int numSmithore) {
         this.numSmithore = numSmithore;
     }
-
+    /**
+     * @return amount of crystite
+     */
     public int getNumCrystite() {
         return numCrystite;
     }
 
+    /**
+     * Set amount of crystite
+     * @param numCrystite
+     */
     public void setNumCrystite(int numCrystite) {
         this.numCrystite = numCrystite;
     }
-
+    /**
+     * @return number of mules
+     */
     public int getNumMule() {
         return numMule;
     }
 
+    /**
+     * set number of mules
+     * @param numMule
+     */
     public void setNumMule(int numMule) {
         this.numMule = numMule;
     }

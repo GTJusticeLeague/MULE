@@ -16,16 +16,29 @@ public class Mule {
     private Tile.Terrain terrain;
     private Player owner;
 
+    /**
+     * Constructor for Mules
+     * @param type of mule
+     * @param owner of mule
+     * @param terrain of tile that mule boogies on
+     */
     public Mule(MULETYPE type, Player owner, Tile.Terrain terrain) {
         this.type = type;
         this.owner = owner;
         this.terrain = terrain;
     }
 
+    /**
+     * @return type of mule
+     */
     public MULETYPE getType() {
         return type;
     }
 
+    /**
+     * Calculates and sets production for mule
+     * depending on terrain and mule type
+     */
     public void calculateProduction() {
         if (owner.getEnergy() == 0) {
             return; // Not enough energy to produce

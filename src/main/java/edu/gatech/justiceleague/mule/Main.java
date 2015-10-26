@@ -10,7 +10,11 @@ import javafx.stage.Stage;
  * Loads the stage with the initial scene
  */
 public class Main extends Application {
-
+    /**
+     * Starts the game
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Main.class.getResource("/fxml/gameConfiguration.fxml"));
@@ -20,6 +24,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * REALLY launches the stage
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
