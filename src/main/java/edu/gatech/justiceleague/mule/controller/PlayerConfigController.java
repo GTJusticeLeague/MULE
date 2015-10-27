@@ -81,12 +81,12 @@ public class PlayerConfigController {
         loadRaceColorValues();
 
         // Shows player config based on number of players chosen.
-        if (GamePlay.GAMECONFIG.getNumPlayers() == 2) {
+        if (GamePlay.gameConfig.getNumPlayers() == 2) {
 
             playerGrid.getChildren().remove(2);
             playerGrid.getChildren().remove(2);
 
-        } else if (GamePlay.GAMECONFIG.getNumPlayers() == 3) {
+        } else if (GamePlay.gameConfig.getNumPlayers() == 3) {
             playerGrid.getChildren().remove(3);
 
         }
@@ -145,25 +145,25 @@ public class PlayerConfigController {
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player1Color.getSelectionModel().getSelectedIndex()], 0);
-        GamePlay.GAMECONFIG.players[0] = firstPlayer;
+        GamePlay.gameConfig.players[0] = firstPlayer;
 
         Player secondPlayer = new Player(player2Name.getText(),
                 Player.Race.values()[player2Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()], 1);
-        GamePlay.GAMECONFIG.players[1] = secondPlayer;
+        GamePlay.gameConfig.players[1] = secondPlayer;
 
 
-        if (GamePlay.GAMECONFIG.getNumPlayers() > 2) {
+        if (GamePlay.gameConfig.getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
                     Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()], 2);
-            GamePlay.GAMECONFIG.players[2] = thirdPlayer;
+            GamePlay.gameConfig.players[2] = thirdPlayer;
 
-            if (GamePlay.GAMECONFIG.getNumPlayers() > 3) {
+            if (GamePlay.gameConfig.getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
                         Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()], 3);
-                GamePlay.GAMECONFIG.players[3] = fourthPlayer;
+                GamePlay.gameConfig.players[3] = fourthPlayer;
 
             }
         }
@@ -174,8 +174,8 @@ public class PlayerConfigController {
         colors.add(Player.Color.BLUE);
         colors.add(Player.Color.YELLOW);
         colors.add(Player.Color.PURPLE);
-        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
-            Player[] players = GamePlay.GAMECONFIG.players;
+        for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
+            Player[] players = GamePlay.gameConfig.players;
             if (colors.contains(players[i].getColor())) {
                 colors.remove(players[i].getColor());
             } else {
@@ -186,7 +186,7 @@ public class PlayerConfigController {
 
         if (!inputMismatch) {
             // Set initial player (for land selection)
-            GamePlay.currentPlayer = GamePlay.GAMECONFIG.getPlayers()[0];
+            GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[0];
             // Move to the next scene (player configuration)
             Stage stage = (Stage) startGameButton.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));

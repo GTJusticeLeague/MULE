@@ -106,7 +106,7 @@ public class Player implements Comparable<Player> {
         }
 
         //initial resources amounts
-        if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.BEGINNER) {
+        if (GamePlay.gameConfig.getDifficulty() == GameConfig.Difficulty.BEGINNER) {
             this.food = 8;
             this.energy = 4;
             this.smithore = 0;
@@ -115,7 +115,7 @@ public class Player implements Comparable<Player> {
             this.energyMule = 0;
             this.smithoreMule = 0;
             this.crystiteMule = 0;
-        } else if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
+        } else if (GamePlay.gameConfig.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
             this.food = 4;
             this.energy = 2;
             this.smithore = 0;

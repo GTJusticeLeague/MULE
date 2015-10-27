@@ -10,11 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -137,7 +133,7 @@ public class StoreController {
     @FXML
     private void initialize() {
         //store instance
-        Store store = GamePlay.GAMECONFIG.getStore();
+        Store store = GamePlay.gameConfig.getStore();
 
         //current player
         Player current = GamePlay.currentPlayer;

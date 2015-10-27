@@ -44,7 +44,7 @@ public class GameConfig {
     }
 
     private final Difficulty difficulty;
-    private final Board GAMEBOARD;
+    private final Board gameboard;
     private final MapType mapType;
     private final Store store;
     public Player[] players;
@@ -62,12 +62,12 @@ public class GameConfig {
         this.difficulty = difficulty;
         this.mapType = mapType;
         this.numPlayers = numPlayers;
-        int MAX_NUM_PLAYERS = 4;
-        this.players = new Player[MAX_NUM_PLAYERS];
+        int maxNumPlayers = 4;
+        this.players = new Player[maxNumPlayers];
         if (mapType == MapType.RANDOM) {
-            this.GAMEBOARD = new Board();
+            this.gameboard = new Board();
         } else {
-            this.GAMEBOARD = new Board("defaultMap.csv");
+            this.gameboard = new Board("defaultMap.csv");
         }
         this.store = new Store(difficulty);
     }
@@ -108,7 +108,9 @@ public class GameConfig {
      * Get the game board
      * @return game board
      */
-    public Board getGAMEBOARD() { return GAMEBOARD; }
+    public Board getGameboard() {
+        return gameboard;
+    }
 
     /**
      * @return Store for this game
