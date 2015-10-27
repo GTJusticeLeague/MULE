@@ -22,7 +22,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -272,7 +276,7 @@ public class GameScreenController {
 
         Button yes = new Button("Save");
         Button no = new Button("Return to Game");
-        Button maybe = new Button ("Exit Without Saving");
+        Button maybe = new Button("Exit Without Saving");
 
         final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, yes, no, maybe)));
 
@@ -452,8 +456,8 @@ public class GameScreenController {
         }
 
         //When the player already owns 2 land tiles, buying land costs money
-        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null &&
-                GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
+        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null
+                && GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
             current.setOwner(GamePlay.currentPlayer);
             GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
             updatePlayer(GamePlay.currentPlayer.getNumber());
@@ -476,15 +480,15 @@ public class GameScreenController {
     /**
      * Places mule at coordinate
      *
-     * @param MULE to place
+     * @param mule to place
      * @param x coordinate
      * @param y coordinate
      */
-    private void placeMule(Mule.MULETYPE MULE, Integer x, Integer y) {
+    private void placeMule(Mule.MULETYPE mule, Integer x, Integer y) {
         Tile curTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         Player curPlayer = GamePlay.currentPlayer;
 
-        switch (MULE) {
+        switch (mule) {
             case FOOD:
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
@@ -576,23 +580,23 @@ public class GameScreenController {
     private void updateTile(int x, int y) {
         // Get current tile, check if there is a mule on the tile
         Tile currentTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
-        Mule.MULETYPE MULE;
+        Mule.MULETYPE mule;
         if (currentTile.getMule() != null) {
-            MULE = currentTile.getMule().getType();
+            mule = currentTile.getMule().getType();
         } else {
-            MULE = Mule.MULETYPE.NONE;
+            mule = Mule.MULETYPE.NONE;
         }
 
         // Set the color styles for the border if there is an owner of the tile
         String styles = "";
         if (currentTile.getOwner() != null) {
             String color = currentTile.getOwner().getColor().toString();
-            styles = "-fx-border-color: " + color + ";\n" +
-                    "-fx-border-width: 5;\n" +
-                    "-fx-border-style: solid;\n";
+            styles = "-fx-border-color: " + color + ";\n"
+                    + "-fx-border-width: 5;\n"
+                    + "-fx-border-style: solid;\n";
         }
 
-        switch (MULE) {
+        switch (mule) {
             case FOOD:
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
@@ -659,6 +663,8 @@ public class GameScreenController {
                 } else if (currentTile.getTerrain() == Tile.Terrain.TOWN) {
                     pane.add(hBoxMaker(null, imageMaker("/img/town_tile.png")), y, x);
                 }
+                break;
+            default:
                 break;
         }
     }
