@@ -47,8 +47,8 @@ public class GameConfig {
     private final Board gameboard;
     private final MapType mapType;
     private final Store store;
-    public Player[] players;
     private final int numPlayers;
+    private Player[] players;
 
 
     /**
@@ -117,5 +117,9 @@ public class GameConfig {
      */
     public Store getStore() {
         return store;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
     }
 }

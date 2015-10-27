@@ -141,32 +141,34 @@ public class PlayerConfigController {
     @FXML
     private void handleStartGame(ActionEvent event) throws IOException {
         boolean inputMismatch = false;
+        Player players[] = new Player[GamePlay.gameConfig.getNumPlayers()];
 
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player1Color.getSelectionModel().getSelectedIndex()], 0);
-        GamePlay.gameConfig.players[0] = firstPlayer;
+        players[0] = firstPlayer;
 
         Player secondPlayer = new Player(player2Name.getText(),
                 Player.Race.values()[player2Race.getSelectionModel().getSelectedIndex()],
                 Player.Color.values()[player2Color.getSelectionModel().getSelectedIndex()], 1);
-        GamePlay.gameConfig.players[1] = secondPlayer;
+        players[1] = secondPlayer;
 
 
         if (GamePlay.gameConfig.getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
                     Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()], 2);
-            GamePlay.gameConfig.players[2] = thirdPlayer;
+            players[2] = thirdPlayer;
 
             if (GamePlay.gameConfig.getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
                         Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()], 3);
-                GamePlay.gameConfig.players[3] = fourthPlayer;
+                players[3] = fourthPlayer;
 
             }
         }
+        GamePlay.gameConfig.setPlayers(players);
 
         ArrayList<Player.Color> colors = new ArrayList<>(Player.Color.values().length);
         colors.add(Player.Color.RED);
@@ -175,7 +177,6 @@ public class PlayerConfigController {
         colors.add(Player.Color.YELLOW);
         colors.add(Player.Color.PURPLE);
         for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
-            Player[] players = GamePlay.gameConfig.players;
             if (colors.contains(players[i].getColor())) {
                 colors.remove(players[i].getColor());
             } else {

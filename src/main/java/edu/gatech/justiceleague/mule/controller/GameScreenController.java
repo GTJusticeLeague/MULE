@@ -24,9 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -261,11 +261,11 @@ public class GameScreenController {
             return;
         }
         if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.gameConfig.getNumPlayers()) {
-            GamePlay.currentPlayer = GamePlay.gameConfig.players[0];
+            GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[0];
             currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             return;
         }
-        GamePlay.currentPlayer = GamePlay.gameConfig.players[GamePlay.currentPlayer.getNumber() + 1];
+        GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[GamePlay.currentPlayer.getNumber() + 1];
         currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
     }
 
@@ -386,7 +386,7 @@ public class GameScreenController {
      * @param playerNum The index of the Player to update in the player array
      */
     private void updatePlayer(int playerNum) {
-        Player cur = GamePlay.gameConfig.players[playerNum];
+        Player cur = GamePlay.gameConfig.getPlayers()[playerNum];
         String money = "$" + cur.getMoney();
         Pane playerStatGridPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
 
@@ -401,20 +401,20 @@ public class GameScreenController {
         }
 
         food = (Label) playerStatGridPane.getChildren().get(3);
-        food.setText(GamePlay.gameConfig.players[playerNum].getFood() + " Food");
+        food.setText(GamePlay.gameConfig.getPlayers()[playerNum].getFood() + " Food");
 
         energy = (Label) playerStatGridPane.getChildren().get(4);
-        energy.setText(GamePlay.gameConfig.players[playerNum].getEnergy() + " Energy");
+        energy.setText(GamePlay.gameConfig.getPlayers()[playerNum].getEnergy() + " Energy");
 
         smithore = (Label) playerStatGridPane.getChildren().get(5);
-        smithore.setText(GamePlay.gameConfig.players[playerNum].getSmithore() + " Smithore");
+        smithore.setText(GamePlay.gameConfig.getPlayers()[playerNum].getSmithore() + " Smithore");
 
         crystite = (Label) playerStatGridPane.getChildren().get(6);
-        crystite.setText(GamePlay.gameConfig.players[playerNum].getCrystite() + " Crystite");
+        crystite.setText(GamePlay.gameConfig.getPlayers()[playerNum].getCrystite() + " Crystite");
 
         mule = (Label) playerStatGridPane.getChildren().get(7);
         // TODO: Show all mule types?
-        mule.setText(GamePlay.gameConfig.players[playerNum].getMuleTotal() + " Mule");
+        mule.setText(GamePlay.gameConfig.getPlayers()[playerNum].getMuleTotal() + " Mule");
     }
 
     /**
@@ -463,7 +463,7 @@ public class GameScreenController {
             updatePlayer(GamePlay.currentPlayer.getNumber());
             updateTile(x, y);
             if (GamePlay.round == 0) {
-                GamePlay.currentPlayer = GamePlay.gameConfig.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
+                GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
@@ -471,7 +471,7 @@ public class GameScreenController {
             GamePlay.currentPlayer.incrementLand();
             updateTile(x, y);
             if (GamePlay.round == 0) {
-                GamePlay.currentPlayer = GamePlay.gameConfig.players[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
+                GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
                 currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
             }
         }
