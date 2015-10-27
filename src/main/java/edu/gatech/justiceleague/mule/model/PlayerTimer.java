@@ -12,6 +12,10 @@ public class PlayerTimer {
     private Player current;
     private Timeline ticker;
 
+    /**
+     * Constructor for Player Timer
+     * @param current player
+     */
     public PlayerTimer (Player current) {
         this.current = current;
         int food = current.getFood();
@@ -46,6 +50,10 @@ public class PlayerTimer {
         ticker = new Timeline(new KeyFrame(Duration.seconds(1), ae -> increment()));
         ticker.setCycleCount(Animation.INDEFINITE);
     }
+
+    /**
+     * Increases elapsed time and stops player turn if time is over
+     */
     private void increment() {
         elapsedTime++;
         System.err.println("Time remaining: " + (GamePlay.turnSeconds - elapsedTime));
@@ -57,14 +65,24 @@ public class PlayerTimer {
         }
     }
 
+    /**
+     * @return time remaining in turn
+     */
     public int getRemainingTime() {
         return GamePlay.turnSeconds - elapsedTime;
     }
 
+    /**
+     * start the timer
+     */
     public void startTime() {
         ticker.play();
     }
 
+    /**
+     * Stop timer and
+     * @return time remaining
+     */
     public int stopTime() {
         ticker.stop();
         return GamePlay.turnSeconds - elapsedTime;

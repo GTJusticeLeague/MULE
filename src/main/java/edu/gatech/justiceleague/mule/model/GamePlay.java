@@ -48,6 +48,9 @@ public class GamePlay {
         currentPlayer.startTime();
     }
 
+    /**
+     * Initiate random event
+     */
     private static void randomEvent() {
         Random r = new Random();
         int event = r.nextInt(7) + 1;
@@ -122,6 +125,10 @@ public class GamePlay {
         return true;
     }
 
+    /**
+     * Calculate money factor for score
+     * @return money factor
+     */
     private static int moneyFactor() {
         if (round < 4) {
             return 25;

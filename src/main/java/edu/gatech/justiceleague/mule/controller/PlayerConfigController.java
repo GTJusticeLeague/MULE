@@ -65,10 +65,16 @@ public class PlayerConfigController {
     @FXML
     private Label errorMsg;
 
+    /**
+     * Constructor with nothing in it. Spooky.
+     */
     public PlayerConfigController() {
 
     }
 
+    /**
+     * Initializes player configuration screen
+     */
     @FXML
     private void initialize() {
 
@@ -88,6 +94,9 @@ public class PlayerConfigController {
 
     }
 
+    /**
+     * Load up race and color menus for player config screen
+     */
     private void loadRaceColorValues() {
 
         errorMsg.setText("");
@@ -122,6 +131,13 @@ public class PlayerConfigController {
         player4Color.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Sets player configurations, determines if configurations are valid,
+     * loads game screen.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void handleStartGame(ActionEvent event) throws IOException {
         boolean inputMismatch = false;

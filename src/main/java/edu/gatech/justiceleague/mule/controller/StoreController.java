@@ -127,6 +127,9 @@ public class StoreController {
     @FXML
     private Button checkout;
 
+    /**
+     * Initializes store
+     */
     @FXML
     private void initialize() {
         //store instance
@@ -336,6 +339,9 @@ public class StoreController {
         return itemsToBuy;
     }
 
+    /**
+     * @return array of total items to sell
+     */
     private int[] totalItemsToSell() {
         int[] itemsToSell = new int[5];
         itemsToSell[0] = Integer.parseInt(foodSell.getText());
@@ -346,7 +352,10 @@ public class StoreController {
         return itemsToSell;
     }
 
-    //NUM AVAILABLE ARRAY
+    /**
+     * @param store inventory to check
+     * @return array of items available to buy
+     */
     private int[] itemsAvailableToBuy(Store store) {
         int[] itemsAvailable = new int[5];
         itemsAvailable[0] = store.getNumFood();
@@ -357,6 +366,10 @@ public class StoreController {
         return itemsAvailable;
     }
 
+    /**
+     * @param player inventory to check
+     * @return array of items available to sell
+     */
     private int[] itemsAvailableToSell(Player player) {
         int[] itemsAvailable = new int[5];
         itemsAvailable[0] = player.getFood();
@@ -367,7 +380,10 @@ public class StoreController {
         return itemsAvailable;
     }
 
-    //total for items to buy
+    /**
+     * @param totalItemsToBuy
+     * @return array of total prices for each item
+     */
     private int[] itemPriceTotals(int[] totalItemsToBuy) {
 
         int[] totals = new int[5];
@@ -381,6 +397,10 @@ public class StoreController {
         return totals;
     }
 
+    /**
+     * @param itemPriceTotals
+     * @return total bill
+     */
     private int overallBuyTotal(int[] itemPriceTotals) {
 
         int total = 0;
@@ -392,6 +412,11 @@ public class StoreController {
         return total;
     }
 
+    /**
+     * @param totalItemsToBuy
+     * @param itemsAvailable
+     * @return whether amounts available are greater than amounts to buy
+     */
     private boolean checkAmountsAreAvailable(int[] totalItemsToBuy, int[] itemsAvailable) {
 
         for (int i = 0; i < totalItemsToBuy.length; i++) {
@@ -405,6 +430,13 @@ public class StoreController {
         return true;
     }
 
+    /**
+     * @param totalItemsToBuy
+     * @param itemsAvailbleToBuy
+     * @param totalItemsToSell
+     * @param itemsAvailableToSell
+     * @return Text detailing why you can't check out
+     */
     private Text cannotCheckoutMemo(int[] totalItemsToBuy, int[] itemsAvailbleToBuy, int[] totalItemsToSell, int[] itemsAvailableToSell) {
 
         StringBuilder memo = new StringBuilder();
@@ -455,6 +487,12 @@ public class StoreController {
         return new Text(memo.toString());
     }
 
+    /**
+     * @param totalItemsToBuy
+     * @param itemPriceTotals
+     * @param overallTotal
+     * @return receipt for purchase
+     */
     private Text generateBuyReceipt(int[] totalItemsToBuy, int[] itemPriceTotals, int overallTotal) {
         return new Text("Your Bought Items: \n"
                 + totalItemsToBuy[0] + " Food: " + itemPriceTotals[0] + "\n"
@@ -465,6 +503,12 @@ public class StoreController {
                 + "Total: " + overallTotal);
     }
 
+    /**
+     * @param totalItemsToSell
+     * @param itemSellPriceTotals
+     * @param finalSellTotal
+     * @return receipt for sale
+     */
     private Text generateSellReceipt(int[] totalItemsToSell, int[] itemSellPriceTotals, int finalSellTotal) {
         return new Text("Your Sold Items: \n"
                                 + totalItemsToSell[0] + " Food: " + itemSellPriceTotals[0] + "\n"
@@ -475,6 +519,13 @@ public class StoreController {
                                 + "Total: " + finalSellTotal);
     }
 
+    /**
+     * Updates player resources.
+     *
+     * @param totalItemsToBuy
+     * @param totalItemsToSell
+     * @param player
+     */
     private void updatePlayerResources(int[] totalItemsToBuy, int[] totalItemsToSell, Player player) {
         player.setFood(player.getFood() + totalItemsToBuy[0]  - totalItemsToSell[0]);
         player.setEnergy(player.getEnergy() + totalItemsToBuy[1] - totalItemsToSell[1]);
@@ -482,6 +533,12 @@ public class StoreController {
         player.setCrystite(player.getCrystite() + totalItemsToBuy[3] - totalItemsToSell[3]);
     }
 
+    /**
+     * Update player's mule inventory
+     *
+     * @param itemPriceTotals
+     * @param player
+     */
     private void updatePlayerBuyMule(int[] itemPriceTotals, Player player) {
         if (itemPriceTotals[4] == 125) {
             player.setFoodMule(player.getFoodMule() + 1);
@@ -494,6 +551,10 @@ public class StoreController {
         }
     }
 
+    /**
+     * Sets up store screen
+     * @param store to get inventory from
+     */
     private void populateStore(Store store) {
         foodInStore.setText(store.getNumFood() + " Food");
         energyInStore.setText(store.getNumEnergy() + " Energy");
@@ -521,6 +582,9 @@ public class StoreController {
         muleTotal.setText("$100");
     }
 
+    /**
+     * Show player inventory
+     */
     private void populatePlayerItems() {
         Player current = GamePlay.currentPlayer;
         playerFood.setText(current.getFood() + " Food");
@@ -532,15 +596,33 @@ public class StoreController {
         playerMoney.setText("$" + current.getMoney());
     }
 
+    /**
+     * @param player
+     * @return total number of mules in player inventory
+     */
     private int getPlayerMuleTotal(Player player) {
         return player.getFoodMule() + player.getEnergyMule() + player.getSmithoreMule()
                 + player.getCrystiteMule();
     }
 
+    /**
+     * @param totalItemsToBuy
+     * @return updated array with one mule to buy
+     */
     private boolean wantToBuyMule(int[] totalItemsToBuy) {
         return totalItemsToBuy[4] == 1;
     }
 
+    /**
+     * Equips the mule
+     *
+     * @param current player
+     * @param totalItemsToBuy
+     * @param totalItemsToSell
+     * @param itemPriceTotals
+     * @param itemSellPriceTotals
+     * @param finalSellTotal
+     */
     private void equipMule(Player current, int[] totalItemsToBuy, int[] totalItemsToSell, int[] itemPriceTotals,
                            int[] itemSellPriceTotals, int finalSellTotal) {
         if (totalItemsToBuy[4] == 1) {
@@ -618,6 +700,10 @@ public class StoreController {
 
     }
 
+    /**
+     * Returns player to town
+     * @throws IOException
+     */
     private void returnToTown() throws IOException {
         Stage stage = (Stage) returnToTown.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));

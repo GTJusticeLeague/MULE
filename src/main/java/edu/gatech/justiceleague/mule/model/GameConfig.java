@@ -110,6 +110,9 @@ public class GameConfig {
      */
     public Board getGAMEBOARD() { return GAMEBOARD; }
 
+    /**
+     * @return Store for this game
+     */
     public Store getStore() {
         return store;
     }

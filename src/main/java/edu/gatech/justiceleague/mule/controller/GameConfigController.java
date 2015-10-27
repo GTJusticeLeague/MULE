@@ -28,6 +28,13 @@ public class GameConfigController {
     @FXML
     private ToggleGroup difficulty;
 
+    /**
+     * Configures the game based on selections on
+     * game config screen.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void handleGameConfigButton(ActionEvent event) throws IOException {
         GameConfig.Difficulty gameDifficulty;

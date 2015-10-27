@@ -326,6 +326,9 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Sets player stat boxes
+     */
     private void setPlayerStats() {
         //show player stat boxes based on number of players
         if (GamePlay.GAMECONFIG.getNumPlayers() == 2) {
@@ -470,6 +473,13 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Places mule at coordinate
+     *
+     * @param MULE to place
+     * @param x coordinate
+     * @param y coordinate
+     */
     private void placeMule(Mule.MULETYPE MULE, Integer x, Integer y) {
         Tile curTile = GamePlay.GAMECONFIG.getGAMEBOARD().getTiles()[x][y];
         Player curPlayer = GamePlay.currentPlayer;
@@ -653,6 +663,12 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Makes HBox for game screen
+     * @param styles of HBox
+     * @param nodes of HBox
+     * @return HBox
+     */
     public static HBox hBoxMaker(String styles, Node... nodes) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
@@ -666,6 +682,11 @@ public class GameScreenController {
         return hBox;
     }
 
+    /**
+     * Makes VBox for game screen
+     * @param nodes of VBox
+     * @return VBox
+     */
     public static VBox vBoxMaker(Node... nodes) {
         VBox vBox = new VBox();
         vBox.setSpacing(20.0);
@@ -675,6 +696,12 @@ public class GameScreenController {
         return vBox;
     }
 
+    /**
+     * Makes stage for game screen from VBox
+     * @param title of stage
+     * @param vbox of stage
+     * @return Stage
+     */
     public static Stage stageMaker(String title, VBox vbox) {
         final Stage dialogStage = new Stage();
         dialogStage.setTitle(title);
@@ -685,6 +712,11 @@ public class GameScreenController {
 
     }
 
+    /**
+     * Creates ImageView objects from file paths for use in game screen
+     * @param path of image
+     * @return ImageView object
+     */
     public ImageView imageMaker(String path) {
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream(path)));
         if (path.equals("/img/town_tile.png")) {

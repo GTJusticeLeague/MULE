@@ -375,20 +375,36 @@ public class Player implements Comparable<Player> {
         return timer.stopTime();
     }
 
+    /**
+     * Calculates and sets score
+     * @return score
+     */
     public int getScore() {
         return this.score = money + 500*numLand + energy + food + smithore + crystite;
     }
 
+    /**
+     * Compares one player to another
+     * @param other player to compare
+     * @return whether player is greater than or less than other
+     */
     @Override
     public int compareTo(Player other) {
         return this.getScore() - other.getScore();
     }
 
+    /**
+     * @return hashcode for player
+     */
     @Override
     public int hashCode() {
         return this.getScore()*17 + this.crystite + this.food + this.energy + this.smithore;
     }
 
+    /**
+     * @param obj to compare
+     * @return true if equal, false if not
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Player))
