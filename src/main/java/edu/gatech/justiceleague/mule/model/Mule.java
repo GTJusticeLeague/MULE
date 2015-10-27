@@ -61,6 +61,8 @@ public class Mule {
                 case THREEMOUNTAIN:
                     production = 1;
                     break;
+                default:
+                    break;
             }
             owner.setFood(owner.getFood() + production);
         } else if (this.type == MULETYPE.ENERGY) {
@@ -79,6 +81,8 @@ public class Mule {
                     break;
                 case THREEMOUNTAIN:
                     production = 1;
+                    break;
+                default:
                     break;
             }
             owner.setEnergy(owner.getEnergy() + production);
@@ -99,6 +103,8 @@ public class Mule {
                 case THREEMOUNTAIN:
                     production = 4;
                     break;
+                default:
+                    break;
             }
             owner.setSmithore(owner.getSmithore() + production);
         } else if (this.type == MULETYPE.CRYSTITE) {
@@ -117,6 +123,8 @@ public class Mule {
                     break;
                 case THREEMOUNTAIN:
                     production = 0;
+                    break;
+                default:
                     break;
             }
             owner.setCrystite(owner.getCrystite() + production);
