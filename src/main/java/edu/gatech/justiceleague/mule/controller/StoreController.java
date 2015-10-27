@@ -166,17 +166,12 @@ public class StoreController {
             //if player doesn't have enough money
             if (current.getMoney() < finalBuyTotal) {
                 notEnoughMoney();
-            }
-
-            //if player checks out unavailable number of items
-            //if player sells unavailable number of items
-            else if (!checkoutAllowed || !sellAllowed) {
+            } else if (!checkoutAllowed || !sellAllowed) {
+                //if player checks out unavailable number of items
+                //if player sells unavailable number of items
                 unavailableNumberOfItems(totalItemsToBuy, itemsAvailableToBuy, totalItemsToSell, itemsAvailableToSell);
-            }
-
-            //if everything is fine
-            else {
-
+            } else {
+                //if everything is fine
                 if (wantToBuyMule(totalItemsToBuy)) {
                     equipMule(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals,
                     itemSellPriceTotals, finalSellTotal);
