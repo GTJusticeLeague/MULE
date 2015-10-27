@@ -16,7 +16,7 @@ public class PlayerTimer {
      * Constructor for Player Timer
      * @param current player
      */
-    public PlayerTimer (Player current) {
+    public PlayerTimer(Player current) {
         this.current = current;
         int food = current.getFood();
         int round = GamePlay.round;

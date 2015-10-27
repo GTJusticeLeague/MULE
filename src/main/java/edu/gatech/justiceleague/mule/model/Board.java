@@ -20,9 +20,9 @@ public class Board {
         Random rand = new Random();
 
         // Place the town
-        int town_row = rand.nextInt(5);
-        int town_col = rand.nextInt(9);
-        tiles[town_row][town_col] = new Tile(Tile.Terrain.TOWN);
+        int townRow = rand.nextInt(5);
+        int townCol = rand.nextInt(9);
+        tiles[townRow][townCol] = new Tile(Tile.Terrain.TOWN);
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
@@ -32,14 +32,14 @@ public class Board {
                 Tile.Terrain curTerrain = null;
 
                 // Select a random terrain for the tile
-                int rand_terrain = rand.nextInt(5);
-                if (rand_terrain == 0) {
+                int randTerrain = rand.nextInt(5);
+                if (randTerrain == 0) {
                     curTerrain = Tile.Terrain.RIVER;
-                } else if (rand_terrain == 1) {
+                } else if (randTerrain == 1) {
                     curTerrain = Tile.Terrain.PLAIN;
-                } else if (rand_terrain == 2) {
+                } else if (randTerrain == 2) {
                     curTerrain = Tile.Terrain.ONEMOUNTAIN;
-                } else if (rand_terrain == 3) {
+                } else if (randTerrain == 3) {
                     curTerrain = Tile.Terrain.TWOMOUNTAIN;
                 } else {
                     curTerrain = Tile.Terrain.THREEMOUNTAIN;
