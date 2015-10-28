@@ -15,11 +15,11 @@ import java.util.Random;
  * Contains the main game logic
  */
 public class GamePlay {
-    public static GameConfig gameConfig;
-    public static int round = 0;
-    public static Player currentPlayer;
+    private static GameConfig gameConfig;
+    private static int round = 0;
+    private static Player currentPlayer;
     private static Queue<Player> playerOrder = new PriorityQueue<>();
-    public static int turnSeconds = 0;
+    private static int turnSeconds = 0;
 
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
@@ -117,8 +117,8 @@ public class GamePlay {
         int lowScore = currentPlayer.getScore();
 
         //Determine which player has the lowest score
-        for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
-            if (GamePlay.gameConfig.players[i].getScore() < lowScore) {
+        for (int i = 0; i < gameConfig.getNumPlayers(); i++) {
+            if (gameConfig.getPlayers()[i].getScore() < lowScore) {
                 return false;
             }
         }
@@ -169,5 +169,33 @@ public class GamePlay {
      */
     private static void initializePlayerOrder() {
         playerOrder.addAll(Arrays.asList(gameConfig.getPlayers()).subList(0, gameConfig.getNumPlayers()));
+    }
+
+    public static GameConfig getGameConfig() {
+        return gameConfig;
+    }
+
+    public static void setGameConfig(GameConfig game) {
+        gameConfig = game;
+    }
+
+    public static int getRound() {
+        return round;
+    }
+
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static void setCurrentPlayer(Player current) {
+        currentPlayer = current;
+    }
+
+    public static int getTurnSeconds() {
+        return turnSeconds;
+    }
+
+    public static void setTurnSeconds(int seconds) {
+        turnSeconds = seconds;
     }
 }

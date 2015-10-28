@@ -97,7 +97,7 @@ public class GameScreenController {
 
             //Defaults to purchaseHandler when in
             // land selection phase
-            if (GamePlay.round < 1) {
+            if (GamePlay.getRound() < 1) {
                 purchaseHandler.handle(event);
                 return;
             }
@@ -200,7 +200,7 @@ public class GameScreenController {
         @Override
         public void handle(MouseEvent event) {
             // Don't let player enter town until after land selection phase has been finished
-            if (GamePlay.round != 0) {
+            if (GamePlay.getRound() != 0) {
                 Stage stage = (Stage) pane.getScene().getWindow();
                 Parent root = null;
                 try {
@@ -226,10 +226,10 @@ public class GameScreenController {
     private void initialize() {
         displayMap();
         setPlayerStats();
-        if (GamePlay.round != 0) {
+        if (GamePlay.getRound() != 0) {
             endButton.setDisable(true);
         }
-        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+        currentPlayer.setText(GamePlay.getCurrentPlayer().getName() + ", it's your turn.");
 
         ticker = new Timeline(new KeyFrame(Duration.millis(100), ae -> updateScreen()));
         ticker.setCycleCount(Animation.INDEFINITE);
@@ -240,7 +240,7 @@ public class GameScreenController {
      * Method to be called by the Timeline every so often, so that things on the screen get updated
      */
     private void updateScreen() {
-        for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
+        for (int i = 0; i < GamePlay.getGameConfig().getNumPlayers(); i++) {
             updatePlayer(i);
         }
     }
@@ -252,21 +252,21 @@ public class GameScreenController {
      */
     @FXML
     private void handleEndTurn(ActionEvent event) {
-        passedPlayers.add(GamePlay.currentPlayer);
-        if (passedPlayers.size() == GamePlay.gameConfig.getNumPlayers()) {
+        passedPlayers.add(GamePlay.getCurrentPlayer());
+        if (passedPlayers.size() == GamePlay.getGameConfig().getNumPlayers()) {
             // Remove pass button from screen
             endButton.setDisable(true);
             // All players have passed, begin actual game
             GamePlay.startGame();
             return;
         }
-        if ((GamePlay.currentPlayer.getNumber() + 1) == GamePlay.gameConfig.getNumPlayers()) {
-            GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[0];
-            currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+        if ((GamePlay.getCurrentPlayer().getNumber() + 1) == GamePlay.getGameConfig().getNumPlayers()) {
+            GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[0]);
+            currentPlayer.setText(GamePlay.getCurrentPlayer().getName() + ", it's your turn.");
             return;
         }
-        GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[GamePlay.currentPlayer.getNumber() + 1];
-        currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+        GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[GamePlay.getCurrentPlayer().getNumber() + 1]);
+        currentPlayer.setText(GamePlay.getCurrentPlayer().getName() + ", it's your turn.");
     }
 
     @FXML
@@ -321,7 +321,7 @@ public class GameScreenController {
      */
     private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
-        Tile[][] board = GamePlay.gameConfig.getGameboard().getTiles();
+        Tile[][] board = GamePlay.getGameConfig().getGameboard().getTiles();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -335,16 +335,16 @@ public class GameScreenController {
      */
     private void setPlayerStats() {
         //show player stat boxes based on number of players
-        if (GamePlay.gameConfig.getNumPlayers() == 2) {
+        if (GamePlay.getGameConfig().getNumPlayers() == 2) {
             playerStatsGrid.getChildren().remove(2);
             playerStatsGrid.getChildren().remove(2);
-        } else if (GamePlay.gameConfig.getNumPlayers() == 3) {
+        } else if (GamePlay.getGameConfig().getNumPlayers() == 3) {
             playerStatsGrid.getChildren().remove(3);
         }
 
-        Player[] players = GamePlay.gameConfig.getPlayers();
+        Player[] players = GamePlay.getGameConfig().getPlayers();
 
-        for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
+        for (int i = 0; i < GamePlay.getGameConfig().getNumPlayers(); i++) {
 
             //get the pane
             Pane playerStatGridPane = (Pane) playerStatsGrid.getChildren().get(i);
@@ -386,7 +386,7 @@ public class GameScreenController {
      * @param playerNum The index of the Player to update in the player array
      */
     private void updatePlayer(int playerNum) {
-        Player cur = GamePlay.gameConfig.getPlayers()[playerNum];
+        Player cur = GamePlay.getGameConfig().getPlayers()[playerNum];
         String money = "$" + cur.getMoney();
         Pane playerStatGridPane = ((Pane) playerStatsGrid.getChildren().get(playerNum));
 
@@ -394,27 +394,27 @@ public class GameScreenController {
         playerMoney.setText(money);
 
         playerTimer = (Text) playerStatGridPane.getChildren().get(2);
-        if (cur.timer != null && cur == GamePlay.currentPlayer) {
+        if (cur.timer != null && cur == GamePlay.getCurrentPlayer()) {
             playerTimer.setText(cur.timer.getRemainingTime() + " secs");
         } else {
             playerTimer.setText("Timer");
         }
 
         food = (Label) playerStatGridPane.getChildren().get(3);
-        food.setText(GamePlay.gameConfig.getPlayers()[playerNum].getFood() + " Food");
+        food.setText(GamePlay.getGameConfig().getPlayers()[playerNum].getFood() + " Food");
 
         energy = (Label) playerStatGridPane.getChildren().get(4);
-        energy.setText(GamePlay.gameConfig.getPlayers()[playerNum].getEnergy() + " Energy");
+        energy.setText(GamePlay.getGameConfig().getPlayers()[playerNum].getEnergy() + " Energy");
 
         smithore = (Label) playerStatGridPane.getChildren().get(5);
-        smithore.setText(GamePlay.gameConfig.getPlayers()[playerNum].getSmithore() + " Smithore");
+        smithore.setText(GamePlay.getGameConfig().getPlayers()[playerNum].getSmithore() + " Smithore");
 
         crystite = (Label) playerStatGridPane.getChildren().get(6);
-        crystite.setText(GamePlay.gameConfig.getPlayers()[playerNum].getCrystite() + " Crystite");
+        crystite.setText(GamePlay.getGameConfig().getPlayers()[playerNum].getCrystite() + " Crystite");
 
         mule = (Label) playerStatGridPane.getChildren().get(7);
         // TODO: Show all mule types?
-        mule.setText(GamePlay.gameConfig.getPlayers()[playerNum].getMuleTotal() + " Mule");
+        mule.setText(GamePlay.getGameConfig().getPlayers()[playerNum].getMuleTotal() + " Mule");
     }
 
     /**
@@ -425,17 +425,17 @@ public class GameScreenController {
      * @param y The Y coordinate of the tile
      */
     private void buyLand(int x, int y) {
-        Tile current = GamePlay.gameConfig.getGameboard().getTiles()[x][y];
+        Tile current = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
         Random rand = new Random();
-        int price = 300 + GamePlay.round * rand.nextInt(101);
+        int price = 300 + GamePlay.getRound() * rand.nextInt(101);
 
-        if (GamePlay.currentPlayer == null) {
+        if (GamePlay.getCurrentPlayer() == null) {
             System.err.println("ERROR: Current player null!");
             return;
         }
 
         //Notify user if current tile is taken or cannot afford the property
-        if (GamePlay.currentPlayer.getMoney() < price) {
+        if (GamePlay.getCurrentPlayer().getMoney() < price) {
 
 
             Label errorLabel = new Label("You cannot afford this property.");
@@ -456,23 +456,23 @@ public class GameScreenController {
         }
 
         //When the player already owns 2 land tiles, buying land costs money
-        if (GamePlay.currentPlayer.getMoney() >= price && current.getOwner() == null
-                && GamePlay.currentPlayer.getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
-            current.setOwner(GamePlay.currentPlayer);
-            GamePlay.currentPlayer.setMoney(GamePlay.currentPlayer.getMoney() - price);
-            updatePlayer(GamePlay.currentPlayer.getNumber());
+        if (GamePlay.getCurrentPlayer().getMoney() >= price && current.getOwner() == null
+                && GamePlay.getCurrentPlayer().getNumLand() >= 2 && current.getTerrain() != Tile.Terrain.TOWN) {
+            current.setOwner(GamePlay.getCurrentPlayer());
+            GamePlay.getCurrentPlayer().setMoney(GamePlay.getCurrentPlayer().getMoney() - price);
+            updatePlayer(GamePlay.getCurrentPlayer().getNumber());
             updateTile(x, y);
-            if (GamePlay.round == 0) {
-                GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
-                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+            if (GamePlay.getRound() == 0) {
+                GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[(GamePlay.getCurrentPlayer().getNumber() + 1) % GamePlay.getGameConfig().getNumPlayers()]);
+                currentPlayer.setText(GamePlay.getCurrentPlayer().getName() + ", it's your turn.");
             }
-        } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.currentPlayer.getNumLand() < 2) {
-            current.setOwner(GamePlay.currentPlayer);
-            GamePlay.currentPlayer.incrementLand();
+        } else if (current.getOwner() == null && current.getTerrain() != Tile.Terrain.TOWN && GamePlay.getCurrentPlayer().getNumLand() < 2) {
+            current.setOwner(GamePlay.getCurrentPlayer());
+            GamePlay.getCurrentPlayer().incrementLand();
             updateTile(x, y);
-            if (GamePlay.round == 0) {
-                GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[(GamePlay.currentPlayer.getNumber() + 1) % GamePlay.gameConfig.getNumPlayers()];
-                currentPlayer.setText(GamePlay.currentPlayer.getName() + ", it's your turn.");
+            if (GamePlay.getRound() == 0) {
+                GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[(GamePlay.getCurrentPlayer().getNumber() + 1) % GamePlay.getGameConfig().getNumPlayers()]);
+                currentPlayer.setText(GamePlay.getCurrentPlayer().getName() + ", it's your turn.");
             }
         }
     }
@@ -485,8 +485,8 @@ public class GameScreenController {
      * @param y coordinate
      */
     private void placeMule(Mule.MULETYPE mule, Integer x, Integer y) {
-        Tile curTile = GamePlay.gameConfig.getGameboard().getTiles()[x][y];
-        Player curPlayer = GamePlay.currentPlayer;
+        Tile curTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Player curPlayer = GamePlay.getCurrentPlayer();
 
         switch (mule) {
             case FOOD:
@@ -579,7 +579,7 @@ public class GameScreenController {
      */
     private void updateTile(int x, int y) {
         // Get current tile, check if there is a mule on the tile
-        Tile currentTile = GamePlay.gameConfig.getGameboard().getTiles()[x][y];
+        Tile currentTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
         Mule.MULETYPE mule;
         if (currentTile.getMule() != null) {
             mule = currentTile.getMule().getType();

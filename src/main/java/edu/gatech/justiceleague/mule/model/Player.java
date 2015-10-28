@@ -80,7 +80,7 @@ public class Player implements Comparable<Player> {
     private int smithoreMule;
     private int crystiteMule;
     private int numLand;
-    public PlayerTimer timer;
+    private PlayerTimer timer;
     private int score;
     /**
      * Initialization of players. Sets race, color (which cannot
@@ -106,7 +106,7 @@ public class Player implements Comparable<Player> {
         }
 
         //initial resources amounts
-        if (GamePlay.gameConfig.getDifficulty() == GameConfig.Difficulty.BEGINNER) {
+        if (GamePlay.getGameConfig().getDifficulty() == GameConfig.Difficulty.BEGINNER) {
             this.food = 8;
             this.energy = 4;
             this.smithore = 0;
@@ -115,7 +115,7 @@ public class Player implements Comparable<Player> {
             this.energyMule = 0;
             this.smithoreMule = 0;
             this.crystiteMule = 0;
-        } else if (GamePlay.gameConfig.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
+        } else if (GamePlay.getGameConfig().getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
             this.food = 4;
             this.energy = 2;
             this.smithore = 0;
@@ -381,6 +381,10 @@ public class Player implements Comparable<Player> {
      */
     public int getScore() {
         return this.score = money + 500*numLand + energy + food + smithore + crystite;
+    }
+
+    public PlayerTimer getTimer() {
+        return timer;
     }
 
     /**

@@ -81,12 +81,12 @@ public class PlayerConfigController {
         loadRaceColorValues();
 
         // Shows player config based on number of players chosen.
-        if (GamePlay.gameConfig.getNumPlayers() == 2) {
+        if (GamePlay.getGameConfig().getNumPlayers() == 2) {
 
             playerGrid.getChildren().remove(2);
             playerGrid.getChildren().remove(2);
 
-        } else if (GamePlay.gameConfig.getNumPlayers() == 3) {
+        } else if (GamePlay.getGameConfig().getNumPlayers() == 3) {
             playerGrid.getChildren().remove(3);
 
         }
@@ -141,7 +141,7 @@ public class PlayerConfigController {
     @FXML
     private void handleStartGame(ActionEvent event) throws IOException {
         boolean inputMismatch = false;
-        Player players[] = new Player[GamePlay.gameConfig.getNumPlayers()];
+        Player[] players = new Player[GamePlay.getGameConfig().getNumPlayers()];
 
         Player firstPlayer = new Player(player1Name.getText(),
                 Player.Race.values()[player1Race.getSelectionModel().getSelectedIndex()],
@@ -154,13 +154,13 @@ public class PlayerConfigController {
         players[1] = secondPlayer;
 
 
-        if (GamePlay.gameConfig.getNumPlayers() > 2) {
+        if (GamePlay.getGameConfig().getNumPlayers() > 2) {
             Player thirdPlayer = new Player(player3Name.getText(),
                     Player.Race.values()[player3Race.getSelectionModel().getSelectedIndex()],
                     Player.Color.values()[player3Color.getSelectionModel().getSelectedIndex()], 2);
             players[2] = thirdPlayer;
 
-            if (GamePlay.gameConfig.getNumPlayers() > 3) {
+            if (GamePlay.getGameConfig().getNumPlayers() > 3) {
                 Player fourthPlayer = new Player(player4Name.getText(),
                         Player.Race.values()[player4Race.getSelectionModel().getSelectedIndex()],
                         Player.Color.values()[player4Color.getSelectionModel().getSelectedIndex()], 3);
@@ -168,7 +168,7 @@ public class PlayerConfigController {
 
             }
         }
-        GamePlay.gameConfig.setPlayers(players);
+        GamePlay.getGameConfig().setPlayers(players);
 
         ArrayList<Player.Color> colors = new ArrayList<>(Player.Color.values().length);
         colors.add(Player.Color.RED);
@@ -176,7 +176,7 @@ public class PlayerConfigController {
         colors.add(Player.Color.BLUE);
         colors.add(Player.Color.YELLOW);
         colors.add(Player.Color.PURPLE);
-        for (int i = 0; i < GamePlay.gameConfig.getNumPlayers(); i++) {
+        for (int i = 0; i < GamePlay.getGameConfig().getNumPlayers(); i++) {
             if (colors.contains(players[i].getColor())) {
                 colors.remove(players[i].getColor());
             } else {
@@ -187,7 +187,7 @@ public class PlayerConfigController {
 
         if (!inputMismatch) {
             // Set initial player (for land selection)
-            GamePlay.currentPlayer = GamePlay.gameConfig.getPlayers()[0];
+            GamePlay.setCurrentPlayer((GamePlay.getGameConfig().getPlayers()[0]));
             // Move to the next scene (player configuration)
             Stage stage = (Stage) startGameButton.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));

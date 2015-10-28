@@ -19,7 +19,7 @@ public class PlayerTimer {
     public PlayerTimer(Player current) {
         this.current = current;
         int food = current.getFood();
-        int round = GamePlay.round;
+        int round = GamePlay.getRound();
         int time;
         if (round > 0 && round < 5) {
             if (food > 3) {
@@ -46,7 +46,7 @@ public class PlayerTimer {
                 time = 30;
             }
         }
-        GamePlay.turnSeconds = time;
+        GamePlay.setTurnSeconds(time);
         ticker = new Timeline(new KeyFrame(Duration.seconds(1), ae -> increment()));
         ticker.setCycleCount(Animation.INDEFINITE);
     }
@@ -56,9 +56,9 @@ public class PlayerTimer {
      */
     private void increment() {
         elapsedTime++;
-        System.err.println("Time remaining: " + (GamePlay.turnSeconds - elapsedTime));
+        System.err.println("Time remaining: " + (GamePlay.getTurnSeconds() - elapsedTime));
         // TODO: show remaining time on the game screen
-        if (elapsedTime >= GamePlay.turnSeconds) {
+        if (elapsedTime >= GamePlay.getTurnSeconds()) {
             // TODO: Alert that player change is happening
             ticker.stop();
             GamePlay.nextPlayer();
@@ -69,7 +69,7 @@ public class PlayerTimer {
      * @return time remaining in turn
      */
     public int getRemainingTime() {
-        return GamePlay.turnSeconds - elapsedTime;
+        return GamePlay.getTurnSeconds() - elapsedTime;
     }
 
     /**
@@ -85,6 +85,6 @@ public class PlayerTimer {
      */
     public int stopTime() {
         ticker.stop();
-        return GamePlay.turnSeconds - elapsedTime;
+        return GamePlay.getTurnSeconds() - elapsedTime;
     }
 }

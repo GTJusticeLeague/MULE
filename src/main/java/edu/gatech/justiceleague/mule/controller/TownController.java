@@ -49,11 +49,11 @@ public class TownController {
         // max is 250 points
 
         // TODO: Remove print lines once tested
-        int playerMoney = GamePlay.currentPlayer.getMoney();
+        int playerMoney = GamePlay.getCurrentPlayer().getMoney();
 
         System.out.println("playerMoney: " + playerMoney);
         //Normal Bonus Calculation
-        int timeRemaining = GamePlay.currentPlayer.stopTime();
+        int timeRemaining = GamePlay.getCurrentPlayer().stopTime();
         int timerBonus;
         if (timeRemaining >= 37) {
             timerBonus = 200;
@@ -69,7 +69,7 @@ public class TownController {
         System.out.println("TimeRemaining: " + timeRemaining + " randomBonus: " + randomBonus);
 
         //Round Bonus Calculation
-        int currentRound = GamePlay.round;
+        int currentRound = GamePlay.getRound();
         int roundBonus = 0;
         if (currentRound >= 1 && currentRound <= 3) {
             roundBonus = 50;
@@ -89,7 +89,7 @@ public class TownController {
             totalBonus = 250;
         }
         int newPlayerMoney = playerMoney + totalBonus;
-        GamePlay.currentPlayer.setMoney(newPlayerMoney);
+        GamePlay.getCurrentPlayer().setMoney(newPlayerMoney);
 
         System.out.println("totalBonus: " + totalBonus);
         System.out.println("newPlayerMoney: " + newPlayerMoney);

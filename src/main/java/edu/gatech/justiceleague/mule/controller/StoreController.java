@@ -137,10 +137,10 @@ public class StoreController {
     @FXML
     private void initialize() {
         //store instance
-        Store store = GamePlay.gameConfig.getStore();
+        Store store = GamePlay.getGameConfig().getStore();
 
         //current player
-        Player current = GamePlay.currentPlayer;
+        Player current = GamePlay.getCurrentPlayer();
 
         //populate store quantities
         populateStore(store);
@@ -605,7 +605,7 @@ public class StoreController {
      * Show player inventory
      */
     private void populatePlayerItems() {
-        Player current = GamePlay.currentPlayer;
+        Player current = GamePlay.getCurrentPlayer();
         playerFood.setText(current.getFood() + " Food");
         playerEnergy.setText(current.getEnergy() + " Energy");
         playerSmithore.setText(current.getSmithore() + " Smithore");
