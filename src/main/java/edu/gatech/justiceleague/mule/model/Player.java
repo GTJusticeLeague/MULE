@@ -380,7 +380,8 @@ public class Player implements Comparable<Player> {
      * @return score
      */
     public int getScore() {
-        return this.score = money + 500*numLand + energy + food + smithore + crystite;
+        this.score = money + 500 * numLand + energy + food + smithore + crystite;
+        return this.score;
     }
 
     public PlayerTimer getTimer() {
@@ -402,7 +403,7 @@ public class Player implements Comparable<Player> {
      */
     @Override
     public int hashCode() {
-        return this.getScore()*17 + this.crystite + this.food + this.energy + this.smithore;
+        return this.getScore() * 17 + this.crystite + this.food + this.energy + this.smithore;
     }
 
     /**
@@ -411,10 +412,12 @@ public class Player implements Comparable<Player> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Player))
+        if (!(obj instanceof Player)) {
             return false;
-        if (obj == this)
+        }
+        if (obj == this) {
             return true;
+        }
 
         Player other = (Player) obj;
         return this.getNumber() == other.getNumber();

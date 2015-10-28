@@ -394,8 +394,8 @@ public class GameScreenController {
         playerMoney.setText(money);
 
         playerTimer = (Text) playerStatGridPane.getChildren().get(2);
-        if (cur.timer != null && cur == GamePlay.getCurrentPlayer()) {
-            playerTimer.setText(cur.timer.getRemainingTime() + " secs");
+        if (cur.getTimer() != null && cur == GamePlay.getCurrentPlayer()) {
+            playerTimer.setText(cur.getTimer().getRemainingTime() + " secs");
         } else {
             playerTimer.setText("Timer");
         }
