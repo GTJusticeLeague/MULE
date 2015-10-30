@@ -321,7 +321,7 @@ public class GameScreenController {
      */
     private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
-        Tile[][] board = GamePlay.getGameConfig().getGameboard().getTiles();
+        Tile[][] board = GamePlay.getGameConfig().getGameBoard().getTiles();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -425,7 +425,7 @@ public class GameScreenController {
      * @param y The Y coordinate of the tile
      */
     private void buyLand(int x, int y) {
-        Tile current = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile current = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Random rand = new Random();
         int price = 300 + GamePlay.getRound() * rand.nextInt(101);
 
@@ -485,7 +485,7 @@ public class GameScreenController {
      * @param y coordinate
      */
     private void placeMule(Mule.MULETYPE mule, Integer x, Integer y) {
-        Tile curTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile curTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Player curPlayer = GamePlay.getCurrentPlayer();
 
         switch (mule) {
@@ -579,7 +579,7 @@ public class GameScreenController {
      */
     private void updateTile(int x, int y) {
         // Get current tile, check if there is a mule on the tile
-        Tile currentTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile currentTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Mule.MULETYPE mule;
         if (currentTile.getMule() != null) {
             mule = currentTile.getMule().getType();

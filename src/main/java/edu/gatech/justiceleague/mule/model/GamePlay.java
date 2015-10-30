@@ -154,7 +154,7 @@ public class GamePlay {
      * Calculate production for all tiles in the GAMEBOARD
      */
     private static void calculateProduction() {
-        Tile[][] tiles = gameConfig.getGameboard().getTiles();
+        Tile[][] tiles = gameConfig.getGameBoard().getTiles();
 
         // Loop through all tiles, calculate their production
         for (Tile[] tile : tiles) {
