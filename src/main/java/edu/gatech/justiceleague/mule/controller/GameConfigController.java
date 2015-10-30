@@ -62,8 +62,8 @@ public class GameConfigController {
             gameMapType = GameConfig.MapType.RANDOM;
         }
 
-        GamePlay.GAMECONFIG = new GameConfig(gameDifficulty, gameMapType,
-                Integer.parseInt(((RadioButton) numPlayers.getSelectedToggle()).getText()));
+        GamePlay.setGameConfig(new GameConfig(gameDifficulty, gameMapType,
+                Integer.parseInt(((RadioButton) numPlayers.getSelectedToggle()).getText())));
 
         // Move to the next scene (player configuration)
         Stage stage = (Stage) gameConfigButton.getScene().getWindow();

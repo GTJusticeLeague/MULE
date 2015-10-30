@@ -15,11 +15,11 @@ import java.util.Random;
  * Contains the main game logic
  */
 public class GamePlay {
-    public static GameConfig GAMECONFIG;
-    public static int round = 0;
-    public static Player currentPlayer;
+    private static GameConfig gameConfig;
+    private static int round = 0;
+    private static Player currentPlayer;
     private static Queue<Player> playerOrder = new PriorityQueue<>();
-    public static int turnSeconds = 0;
+    private static int turnSeconds = 0;
 
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
@@ -54,13 +54,13 @@ public class GamePlay {
     private static void randomEvent() {
         Random r = new Random();
         int event = r.nextInt(7) + 1;
-        Label eventLabel= null;
-        switch(event) {
+        Label eventLabel = null;
+        switch (event) {
             case 1:
                 currentPlayer.setFood(currentPlayer.getFood() + 3);
                 currentPlayer.setEnergy(currentPlayer.getFood() + 2);
-                eventLabel = new Label("YOU JUST  RECEIVED A PACKAGE FROM THE GT ALUMNI " +
-                        "CONTAINING 3 FOOD AND 2 ENERGY UNITS");
+                eventLabel = new Label("YOU JUST  RECEIVED A PACKAGE FROM THE GT ALUMNI "
+                        + "CONTAINING 3 FOOD AND 2 ENERGY UNITS");
                 break;
             case 2:
                 currentPlayer.setSmithore(currentPlayer.getSmithore() + 2);
@@ -83,15 +83,15 @@ public class GamePlay {
             case 6:
                 if (!curPlayerHasLowScore()) {
                     currentPlayer.setFood(currentPlayer.getFood() / 2);
-                    eventLabel = new Label("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE " +
-                            "SHED AND STOLE HALF YOUR FOOD.");
+                    eventLabel = new Label("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE "
+                            + "SHED AND STOLE HALF YOUR FOOD.");
                 }
                 break;
             case 7:
                 if (!curPlayerHasLowScore()) {
                     currentPlayer.setMoney(currentPlayer.getMoney() - 6 * moneyFactor());
-                    eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. " +
-                            "IT COST YOU $6*m TO CLEAN IT UP.");
+                    eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. "
+                            + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
             break;
             default:
@@ -117,8 +117,8 @@ public class GamePlay {
         int lowScore = currentPlayer.getScore();
 
         //Determine which player has the lowest score
-        for (int i = 0; i < GamePlay.GAMECONFIG.getNumPlayers(); i++) {
-            if (GamePlay.GAMECONFIG.players[i].getScore() < lowScore) {
+        for (int i = 0; i < gameConfig.getNumPlayers(); i++) {
+            if (gameConfig.getPlayers()[i].getScore() < lowScore) {
                 return false;
             }
         }
@@ -154,7 +154,7 @@ public class GamePlay {
      * Calculate production for all tiles in the GAMEBOARD
      */
     private static void calculateProduction() {
-        Tile[][] tiles = GAMECONFIG.getGAMEBOARD().getTiles();
+        Tile[][] tiles = gameConfig.getGameboard().getTiles();
 
         // Loop through all tiles, calculate their production
         for (Tile[] tile : tiles) {
@@ -168,6 +168,34 @@ public class GamePlay {
      * Sets up the stack of players in the correct order (based on score)
      */
     private static void initializePlayerOrder() {
-        playerOrder.addAll(Arrays.asList(GAMECONFIG.getPlayers()).subList(0, GAMECONFIG.getNumPlayers()));
+        playerOrder.addAll(Arrays.asList(gameConfig.getPlayers()).subList(0, gameConfig.getNumPlayers()));
+    }
+
+    public static GameConfig getGameConfig() {
+        return gameConfig;
+    }
+
+    public static void setGameConfig(GameConfig game) {
+        gameConfig = game;
+    }
+
+    public static int getRound() {
+        return round;
+    }
+
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static void setCurrentPlayer(Player current) {
+        currentPlayer = current;
+    }
+
+    public static int getTurnSeconds() {
+        return turnSeconds;
+    }
+
+    public static void setTurnSeconds(int seconds) {
+        turnSeconds = seconds;
     }
 }

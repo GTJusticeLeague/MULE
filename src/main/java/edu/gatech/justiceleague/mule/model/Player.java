@@ -80,7 +80,7 @@ public class Player implements Comparable<Player> {
     private int smithoreMule;
     private int crystiteMule;
     private int numLand;
-    public PlayerTimer timer;
+    private PlayerTimer timer;
     private int score;
     /**
      * Initialization of players. Sets race, color (which cannot
@@ -106,7 +106,7 @@ public class Player implements Comparable<Player> {
         }
 
         //initial resources amounts
-        if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.BEGINNER) {
+        if (GamePlay.getGameConfig().getDifficulty() == GameConfig.Difficulty.BEGINNER) {
             this.food = 8;
             this.energy = 4;
             this.smithore = 0;
@@ -115,7 +115,7 @@ public class Player implements Comparable<Player> {
             this.energyMule = 0;
             this.smithoreMule = 0;
             this.crystiteMule = 0;
-        } else if (GamePlay.GAMECONFIG.getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
+        } else if (GamePlay.getGameConfig().getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
             this.food = 4;
             this.energy = 2;
             this.smithore = 0;
@@ -380,7 +380,12 @@ public class Player implements Comparable<Player> {
      * @return score
      */
     public int getScore() {
-        return this.score = money + 500*numLand + energy + food + smithore + crystite;
+        this.score = money + 500 * numLand + energy + food + smithore + crystite;
+        return this.score;
+    }
+
+    public PlayerTimer getTimer() {
+        return timer;
     }
 
     /**
@@ -398,7 +403,7 @@ public class Player implements Comparable<Player> {
      */
     @Override
     public int hashCode() {
-        return this.getScore()*17 + this.crystite + this.food + this.energy + this.smithore;
+        return this.getScore() * 17 + this.crystite + this.food + this.energy + this.smithore;
     }
 
     /**
@@ -407,10 +412,12 @@ public class Player implements Comparable<Player> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Player))
+        if (!(obj instanceof Player)) {
             return false;
-        if (obj == this)
+        }
+        if (obj == this) {
             return true;
+        }
 
         Player other = (Player) obj;
         return this.getNumber() == other.getNumber();

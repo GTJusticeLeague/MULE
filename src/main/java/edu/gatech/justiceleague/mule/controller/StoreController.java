@@ -13,8 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -137,10 +137,10 @@ public class StoreController {
     @FXML
     private void initialize() {
         //store instance
-        Store store = GamePlay.GAMECONFIG.getStore();
+        Store store = GamePlay.getGameConfig().getStore();
 
         //current player
-        Player current = GamePlay.currentPlayer;
+        Player current = GamePlay.getCurrentPlayer();
 
         //populate store quantities
         populateStore(store);
@@ -174,11 +174,11 @@ public class StoreController {
                 //if everything is fine
                 if (wantToBuyMule(totalItemsToBuy)) {
                     equipMule(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals,
-                    itemSellPriceTotals, finalSellTotal);
+                            itemSellPriceTotals, finalSellTotal);
                     System.out.println("checkoutAllowed: Mule total: " + itemPriceTotals[4]);
                 } else if (!wantToBuyMule(totalItemsToBuy)) {
                     playerCheckout(current, totalItemsToBuy, totalItemsToSell, itemPriceTotals, itemSellPriceTotals,
-                    finalBuyTotal, finalSellTotal);
+                            finalBuyTotal, finalSellTotal);
                 }
 
             }
@@ -300,7 +300,7 @@ public class StoreController {
             updatePlayerResources(totalItemsToBuy, totalItemsToSell, current);
 
             //update player mule if mule is bought
-            if(wantToBuyMule(totalItemsToBuy)) {
+            if (wantToBuyMule(totalItemsToBuy)) {
                 updatePlayerBuyMule(itemPriceTotals, current);
             }
 
@@ -404,7 +404,7 @@ public class StoreController {
 
         int total = 0;
 
-        for(int i : itemPriceTotals) {
+        for (int i : itemPriceTotals) {
             total += i;
         }
 
@@ -442,11 +442,21 @@ public class StoreController {
 
         for (int i = 0; i < totalItemsToBuy.length; i++) {
             String current = "";
-            if (i == 0) current = " food";
-            if (i == 1) current = " energy";
-            if (i == 2) current = " smithore";
-            if (i == 3) current = " crystite";
-            if (i == 4) current = " mule";
+            if (i == 0) {
+                current = " food";
+            }
+            if (i == 1) {
+                current = " energy";
+            }
+            if (i == 2) {
+                current = " smithore";
+            }
+            if (i == 3) {
+                current = " crystite";
+            }
+            if (i == 4) {
+                current = " mule";
+            }
 
             if (totalItemsToBuy[i] > itemsAvailbleToBuy[i]) {
                 memo.append("You have too many");
@@ -465,20 +475,30 @@ public class StoreController {
 
         for (int i = 0; i < totalItemsToSell.length; i++) {
             String current = "";
-            if (i == 0) current = " food";
-            if (i == 1) current = " energy";
-            if (i == 2) current = " smithore";
-            if (i == 3) current = " crystite";
-            if (i == 4) current = " mule";
+            if (i == 0) {
+                current = " food";
+            }
+            if (i == 1) {
+                current = " energy";
+            }
+            if (i == 2) {
+                current = " smithore";
+            }
+            if (i == 3) {
+                current = " crystite";
+            }
+            if (i == 4) {
+                current = " mule";
+            }
 
             if (totalItemsToSell[i] > itemsAvailableToSell[i]) {
                 memo.append("You do not have that many");
                 memo.append(current);
-                memo.append( " items to sell. \n");
+                memo.append(" items to sell. \n");
             } else if (totalItemsToSell[i] < 0) {
                 memo.append("You cannot sell negative");
                 memo.append(current);
-                memo.append( " items to sell. \n");
+                memo.append(" items to sell. \n");
             }
         }
 
@@ -585,7 +605,7 @@ public class StoreController {
      * Show player inventory
      */
     private void populatePlayerItems() {
-        Player current = GamePlay.currentPlayer;
+        Player current = GamePlay.getCurrentPlayer();
         playerFood.setText(current.getFood() + " Food");
         playerEnergy.setText(current.getEnergy() + " Energy");
         playerSmithore.setText(current.getSmithore() + " Smithore");
@@ -654,7 +674,7 @@ public class StoreController {
             selectMuleType.setOnAction(arg0 -> {
 
                 String selectedMuleType = ((RadioButton) muleType.getSelectedToggle()).getText();
-                switch(selectedMuleType) {
+                switch (selectedMuleType) {
                     case "Food: +$25":
                         itemPriceTotals[4] = itemPriceTotals[4] + 25;
                         System.out.println("equipMule: Mule Total: " + itemPriceTotals[4]);
@@ -670,6 +690,8 @@ public class StoreController {
                     case "Crystite: +$100":
                         itemPriceTotals[4] = itemPriceTotals[4] + 100;
                         System.out.println("equipMule: Mule Total: " + itemPriceTotals[4]);
+                        break;
+                    default:
                         break;
                 }
 
