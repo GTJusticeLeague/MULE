@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -14,13 +15,28 @@ import java.util.Random;
 /**
  * Contains the main game logic
  */
-public class GamePlay {
-    private static GameConfig gameConfig;
-    private static int round = 0;
-    private static Player currentPlayer;
-    private static Queue<Player> playerOrder = new PriorityQueue<>();
-    private static int turnSeconds = 0;
+public class GamePlay implements Serializable {
+    public static GameConfig gameConfig;
+    public static int round = 0;
+    public static Player currentPlayer;
+    public static Queue<Player> playerOrder = new PriorityQueue<>();
+    public static int turnSeconds = 0;
 
+    /**
+     * This contrustructor is only in order to serialize
+     * @param gameConfig game configuration options
+     * @param round current round number
+     * @param currentPlayer current player in the game
+     * @param playerOrder queue determining player order
+     * @param turnSeconds number of seconds left in turn
+     */
+    public GamePlay(GameConfig gameConfig, int round, Player currentPlayer, Queue<Player> playerOrder, int turnSeconds) {
+        GamePlay.gameConfig = gameConfig;
+        GamePlay.round = round;
+        GamePlay.currentPlayer = currentPlayer;
+        GamePlay.playerOrder = playerOrder;
+        GamePlay.turnSeconds = turnSeconds;
+    }
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
      */
@@ -50,6 +66,7 @@ public class GamePlay {
 
     /**
      * Initiate random event
+     * //todo: show the actual amount of $$ not m
      */
     private static void randomEvent() {
         Random r = new Random();
@@ -198,4 +215,71 @@ public class GamePlay {
     public static void setTurnSeconds(int seconds) {
         turnSeconds = seconds;
     }
+
+    /**
+     * Serializes the GamePlay object and writes the contents to the database
+     */
+    public void saveGame() {
+        String fileName = "SavedGameData.bin";
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+            out.writeObject(this);
+            out.close();
+            //serializeJavaObjectToDB(getConnection());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Done writing");
+        }
+    }
+
+
+//    public static long serializeJavaObjectToDB(Connection connection) throws SQLException {
+//        //todo: USE
+//        String SQL_SERIALIZE_OBJECT = "INSERT INTO serialized_java_objects(id, object_name, serialized_object) VALUES (?, ?, ?)";
+//        PreparedStatement pstmt = connection
+//                .prepareStatement(SQL_SERIALIZE_OBJECT);
+//
+//        // just pass the text file in!
+//        pstmt.setObject(1, gamePlayID());
+//        pstmt.setString(2, objectToSerialize.getClass().getName());
+//        pstmt.setObject(3, objectToSerialize);
+//        pstmt.executeUpdate();
+//        ResultSet rs = pstmt.getGeneratedKeys();
+//        int serialized_id = -1;
+//        if (rs.next()) {
+//            serialized_id = rs.getInt(1);
+//        }
+//        rs.close();
+//        pstmt.close();
+//        System.out.println("Java object serialized to database. Object: "
+//                + objectToSerialize);
+//        return serialized_id;
+//    }
+
+    /**
+     * Loads the GamePlay serializable from the database
+     */
+    public static GamePlay loadGame() {
+        String fileName = "SavedGameData.bin";
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            return (GamePlay) in.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Done loading");
+        }
+        return null;
+    }
+
+    /**
+     * Generates a uniqueID associated with a game
+     * @return String
+     */
+    public static String gamePlayID() {
+        return String.valueOf(currentPlayer.getName().charAt(0)) + turnSeconds + "-" + round + moneyFactor();
+    }
+
+    //TODO: database functions should be in attached jre to obscure server and password
 }

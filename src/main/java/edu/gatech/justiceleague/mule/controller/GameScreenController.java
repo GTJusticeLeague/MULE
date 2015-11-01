@@ -18,15 +18,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -271,47 +266,26 @@ public class GameScreenController {
 
     @FXML
     private void handleSaveGame(ActionEvent event) {
-        Label saveGame = new Label("Would you like to save your game?");
+        Label saveGame = new Label("Would you like to save your game?\nNOTE: Saving will end your game.");
         saveGame.setAlignment(Pos.CENTER);
 
-        Button yes = new Button("Save");
-        Button no = new Button("Return to Game");
-        Button maybe = new Button("Exit Without Saving");
+        Button save = new Button("Save");
+        Button exit = new Button("Exit Without Saving");
 
-        final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, yes, no, maybe)));
+        final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, save, exit)));
 
-        yes.setOnAction(arg0 -> {
+        save.setOnAction(arg0 -> {
+            //Instatiate a gameplay object in order to save the game.
+            GamePlay gamePlay = new GamePlay(GamePlay.gameConfig, GamePlay.round, GamePlay.currentPlayer,
+                    GamePlay.playerOrder, GamePlay.turnSeconds);
+            gamePlay.saveGame();
+            System.out.println(GamePlay.gamePlayID());
             dialogStage.close();
+            //todo: close game;
 
-            Label saveInfo = new Label("What would you like to name your game?");
-
-            TextField gameName = new TextField();
-
-            Button save = new Button("Save");
-            Button saveAndQuit = new Button("Save & Quit");
-
-            final Stage saveStage = stageMaker("Save Game", vBoxMaker(saveInfo, gameName, hBoxMaker(null, save, saveAndQuit)));
-
-            save.setOnAction(arg1 -> {
-                //TODO: SAVE ACTION
-                saveStage.close();
-            });
-
-            saveAndQuit.setOnAction(arg1 -> {
-                //TODO: SAVE ACTION
-                saveStage.close();
-            });
         });
 
-        no.setOnAction(arg0 -> {
-            dialogStage.close();
-        });
-
-        maybe.setOnAction(arg0 -> {
-            //TODO: EXIT APPLICATION
-            dialogStage.close();
-        });
-
+        exit.setOnAction(arg0 -> dialogStage.close());
         dialogStage.show();
     }
 

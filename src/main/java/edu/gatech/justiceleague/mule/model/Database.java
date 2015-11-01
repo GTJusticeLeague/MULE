@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
- * Created by thomas on 10/25/15.
+ * Handles database logic for the game
  */
 public class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -14,16 +17,21 @@ public class Database {
     /**
      * Initialize the database connection
      */
-    static void makeConnection() {
+    static Connection getConnection() {
         try {
             FileReader fileReader = new FileReader("db_connect.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             System.out.println(bufferedReader.readLine());
             bufferedReader.close();
+            String connect = "";
+            Connection connection = DriverManager.getConnection(connect);
+            System.out.println("CONNECT SUCCESS");
+            return connection;
+
         } catch (FileNotFoundException e) {
             System.out.println("Unable to open file.");
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
         try {
@@ -31,6 +39,6 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
-
 }
