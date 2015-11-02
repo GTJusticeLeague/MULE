@@ -3,7 +3,6 @@ package edu.gatech.justiceleague.mule.controller;
 import edu.gatech.justiceleague.mule.model.GamePlay;
 import edu.gatech.justiceleague.mule.model.Player;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -98,36 +97,47 @@ public class PlayerConfigController {
      * Load up race and color menus for player config screen
      */
     private void loadRaceColorValues() {
+        String humanString = "Human";
+        String flapperString = "Flapper";
+        String bonzoidString = "Bonzoid";
+        String ugaiteString = "Ugaite";
+        String buzziteString = "Buzzite";
+
+        String redString = "Red";
+        String greenString = "Green";
+        String blueString = "Blue";
+        String yellowString = "Yellow";
+        String purpleString = "Purple";
 
         errorMsg.setText("");
 
         player1Race.setItems(FXCollections.observableArrayList(
-                "Human", "Flapper", "Bonzoid", "Ugaite", "Buzzite"));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
         player1Race.getSelectionModel().selectFirst();
         player1Color.setItems(FXCollections.observableArrayList(
-                "Red", "Green", "Blue", "Yellow", "Purple"));
+                redString, greenString, blueString, yellowString, purpleString));
 
         player1Color.getSelectionModel().selectFirst();
 
         player2Race.setItems(FXCollections.observableArrayList(
-                "Human", "Flapper", "Bonzoid", "Ugaite", "Buzzite"));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
         player2Race.getSelectionModel().selectFirst();
         player2Color.setItems(FXCollections.observableArrayList(
-                "Red", "Green", "Blue", "Yellow", "Purple"));
+                redString, greenString, blueString, yellowString, purpleString));
         player2Color.getSelectionModel().selectFirst();
 
         player3Race.setItems(FXCollections.observableArrayList(
-                "Human", "Flapper", "Bonzoid", "Ugaite", "Buzzite"));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
         player3Race.getSelectionModel().selectFirst();
         player3Color.setItems(FXCollections.observableArrayList(
-                "Red", "Green", "Blue", "Yellow", "Purple"));
+                redString, greenString, blueString, yellowString, purpleString));
         player3Color.getSelectionModel().selectFirst();
 
         player4Race.setItems(FXCollections.observableArrayList(
-                "Human", "Flapper", "Bonzoid", "Ugaite", "Buzzite"));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
         player4Race.getSelectionModel().selectFirst();
         player4Color.setItems(FXCollections.observableArrayList(
-                "Red", "Green", "Blue", "Yellow", "Purple"));
+                redString, greenString, blueString, yellowString, purpleString));
         player4Color.getSelectionModel().selectFirst();
     }
 
@@ -135,11 +145,10 @@ public class PlayerConfigController {
      * Sets player configurations, determines if configurations are valid,
      * loads game screen.
      *
-     * @param event
      * @throws IOException
      */
     @FXML
-    private void handleStartGame(ActionEvent event) throws IOException {
+    private void handleStartGame() throws IOException {
         boolean inputMismatch = false;
         Player[] players = new Player[GamePlay.getGameConfig().getNumPlayers()];
 

@@ -21,7 +21,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +33,7 @@ import javafx.util.Duration;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.concurrent.RejectedExecutionException;
 
 public class GameScreenController {
 
@@ -197,13 +202,13 @@ public class GameScreenController {
             // Don't let player enter town until after land selection phase has been finished
             if (GamePlay.getRound() != 0) {
                 Stage stage = (Stage) pane.getScene().getWindow();
-                Parent root = null;
+                Parent root;
                 try {
                     // Load the town when the town is clicked
                     root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
                 } catch (java.io.IOException e) {
                     e.printStackTrace();
-                    System.exit(-1);
+                    throw new RejectedExecutionException();
                 }
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -538,7 +543,7 @@ public class GameScreenController {
                 break;
             default:
                 System.out.println("Error placing MULE");
-                System.exit(1);
+                throw new RuntimeException();
         }
     }
 
