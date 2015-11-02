@@ -275,7 +275,7 @@ public class GameScreenController {
         final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, save, exit)));
 
         save.setOnAction(arg0 -> {
-            //Instatiate a gameplay object in order to save the game.
+            //Instantiate a gameplay object in order to save the game.
             GamePlay gamePlay = new GamePlay(GamePlay.gameConfig, GamePlay.round, GamePlay.currentPlayer,
                     GamePlay.playerOrder, GamePlay.turnSeconds);
             gamePlay.saveGame();

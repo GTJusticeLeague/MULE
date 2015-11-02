@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -111,8 +112,6 @@ public class GamePlay implements Serializable {
                             + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
             break;
-            default:
-                System.out.println("shit");
         }
         if (eventLabel != null) {
             Button okBtn = new Button("OK");
@@ -225,41 +224,18 @@ public class GamePlay implements Serializable {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
             out.writeObject(this);
             out.close();
-            //serializeJavaObjectToDB(getConnection());
-        } catch (IOException e) {
+            Database.saveTxtToDB();
+        } catch (IOException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Done writing");
+            System.out.println("Done serializing gameplay");
         }
     }
-
-
-//    public static long serializeJavaObjectToDB(Connection connection) throws SQLException {
-//        //todo: USE
-//        String SQL_SERIALIZE_OBJECT = "INSERT INTO serialized_java_objects(id, object_name, serialized_object) VALUES (?, ?, ?)";
-//        PreparedStatement pstmt = connection
-//                .prepareStatement(SQL_SERIALIZE_OBJECT);
-//
-//        // just pass the text file in!
-//        pstmt.setObject(1, gamePlayID());
-//        pstmt.setString(2, objectToSerialize.getClass().getName());
-//        pstmt.setObject(3, objectToSerialize);
-//        pstmt.executeUpdate();
-//        ResultSet rs = pstmt.getGeneratedKeys();
-//        int serialized_id = -1;
-//        if (rs.next()) {
-//            serialized_id = rs.getInt(1);
-//        }
-//        rs.close();
-//        pstmt.close();
-//        System.out.println("Java object serialized to database. Object: "
-//                + objectToSerialize);
-//        return serialized_id;
-//    }
 
     /**
      * Loads the GamePlay serializable from the database
      */
+    //Saved game h50-325
     public static GamePlay loadGame() {
         String fileName = "SavedGameData.bin";
         try {
@@ -280,6 +256,4 @@ public class GamePlay implements Serializable {
     public static String gamePlayID() {
         return String.valueOf(currentPlayer.getName().charAt(0)) + turnSeconds + "-" + round + moneyFactor();
     }
-
-    //TODO: database functions should be in attached jre to obscure server and password
 }
