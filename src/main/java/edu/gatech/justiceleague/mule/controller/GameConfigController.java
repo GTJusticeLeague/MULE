@@ -45,6 +45,8 @@ public class GameConfigController {
         SplitMenuButton gameList = new SplitMenuButton();
         gameList.setPrefWidth(500);
         gameList.setText("Select Game");
+        //Todo: Query database for saved games
+
         gameList.getItems().addAll(new MenuItem("Game1"), new MenuItem("Game2"), new MenuItem("Game3"));
 
         final Stage dialogStage = GameScreenController.stageMaker("Load a Game", GameScreenController.vBoxMaker(saveGame, gameList, GameScreenController.hBoxMaker(null, load, cancel)));
