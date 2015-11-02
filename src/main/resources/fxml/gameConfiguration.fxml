@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.gatech.justiceleague.mule.controller.GameConfigController">
@@ -52,21 +54,21 @@
                                  <children>
                                     <RadioButton fx:id="Difficulty_Intermediate" layoutX="71.0" layoutY="78.0" mnemonicParsing="false" text="Intermediate">
                                        <toggleGroup>
-                                          <ToggleGroup fx:id="difficulty"/>
+                                           <ToggleGroup fx:id="difficulty"/>
                                        </toggleGroup>
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="Difficulty_Advanced" layoutX="71.0" layoutY="125.0"
-                                                 mnemonicParsing="false" text="Advanced" toggleGroup="$difficulty">
+                                     <RadioButton fx:id="Difficulty_Advanced" layoutX="71.0" layoutY="125.0"
+                                                  mnemonicParsing="false" text="Advanced" toggleGroup="$difficulty">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="Difficulty_Beginner" contentDisplay="CENTER" layoutX="72.0"
-                                                 layoutY="34.0" mnemonicParsing="false" selected="true" text="Beginner"
-                                                 toggleGroup="$difficulty">
+                                     <RadioButton fx:id="Difficulty_Beginner" contentDisplay="CENTER" layoutX="72.0"
+                                                  layoutY="34.0" mnemonicParsing="false" selected="true" text="Beginner"
+                                                  toggleGroup="$difficulty">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -77,15 +79,15 @@
                                  <children>
                                     <RadioButton fx:id="MapType_Random" layoutX="89.0" layoutY="84.0" mnemonicParsing="false" text="Random">
                                        <toggleGroup>
-                                          <ToggleGroup fx:id="mapType"/>
+                                           <ToggleGroup fx:id="mapType"/>
                                        </toggleGroup>
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="MapType_Standard" layoutX="87.0" layoutY="38.0"
-                                                 mnemonicParsing="false" selected="true" text="Standard"
-                                                 toggleGroup="$mapType">
+                                     <RadioButton fx:id="MapType_Standard" layoutX="87.0" layoutY="38.0"
+                                                  mnemonicParsing="false" selected="true" text="Standard"
+                                                  toggleGroup="$mapType">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -96,21 +98,21 @@
                                  <children>
                                     <RadioButton fx:id="PlayerNum_3" layoutX="81.0" layoutY="80.0" mnemonicParsing="false" text="3">
                                        <toggleGroup>
-                                          <ToggleGroup fx:id="numPlayers"/>
+                                           <ToggleGroup fx:id="numPlayers"/>
                                        </toggleGroup>
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="PlayerNum_2" layoutX="81.0" layoutY="35.0"
-                                                 mnemonicParsing="false" selected="true" text="2"
-                                                 toggleGroup="$numPlayers">
+                                     <RadioButton fx:id="PlayerNum_2" layoutX="81.0" layoutY="35.0"
+                                                  mnemonicParsing="false" selected="true" text="2"
+                                                  toggleGroup="$numPlayers">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="PlayerNum_4" layoutX="82.0" layoutY="127.0"
-                                                 mnemonicParsing="false" text="4" toggleGroup="$numPlayers">
+                                     <RadioButton fx:id="PlayerNum_4" layoutX="82.0" layoutY="127.0"
+                                                  mnemonicParsing="false" text="4" toggleGroup="$numPlayers">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -125,8 +127,14 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Button fx:id="gameConfigButton" layoutX="651.0" layoutY="526.0" mnemonicParsing="false"
-              onAction="#handleGameConfigButton" prefHeight="46.0" prefWidth="135.0" text="OK">
+       <Button fx:id="gameConfigButton" layoutX="651.0" layoutY="526.0" mnemonicParsing="false"
+               onAction="#handleGameConfigButton" prefHeight="46.0" prefWidth="135.0" text="OK">
+           <font>
+               <Font size="16.0"/>
+           </font>
+       </Button>
+       <Button fx:id="loadGameButton" layoutX="505.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleLoadGame"
+               prefHeight="46.0" prefWidth="135.0" text="LOAD GAME">
          <font>
             <Font size="16.0" />
          </font>

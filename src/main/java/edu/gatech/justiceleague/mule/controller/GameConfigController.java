@@ -4,12 +4,17 @@ import edu.gatech.justiceleague.mule.model.GameConfig;
 import edu.gatech.justiceleague.mule.model.GamePlay;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 
@@ -19,6 +24,9 @@ public class GameConfigController {
     private Button gameConfigButton;
 
     @FXML
+    private Button loadGameButton;
+
+    @FXML
     private ToggleGroup numPlayers;
 
     @FXML
@@ -26,6 +34,32 @@ public class GameConfigController {
 
     @FXML
     private ToggleGroup difficulty;
+
+    @FXML
+    private void handleLoadGame() throws IOException {
+        Label saveGame = new Label("Select a game to load.");
+        saveGame.setAlignment(Pos.CENTER);
+
+        Button load = new Button("Load");
+        Button cancel = new Button("Cancel");
+        SplitMenuButton gameList = new SplitMenuButton();
+        gameList.setPrefWidth(500);
+        gameList.setText("Select Game");
+        gameList.getItems().addAll(new MenuItem("Game1"), new MenuItem("Game2"), new MenuItem("Game3"));
+
+        final Stage dialogStage = GameScreenController.stageMaker("Load a Game", GameScreenController.vBoxMaker(saveGame, gameList, GameScreenController.hBoxMaker(null, load, cancel)));
+        dialogStage.setWidth(350);
+        dialogStage.setHeight(150);
+
+        load.setOnAction(arg0 -> {
+            // todo: code for loading a game should be here!
+            dialogStage.close();
+
+        });
+
+        cancel.setOnAction(arg0 -> dialogStage.close());
+        dialogStage.show();
+    }
 
     /**
      * Configures the game based on selections on
