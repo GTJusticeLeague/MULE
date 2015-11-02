@@ -5,12 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -243,19 +237,27 @@ public class GamePlay implements Serializable {
      * Loads the GamePlay serializable from the database
      */
     //Saved game h50-325
-    public static GamePlay loadGame() {
+    //maybe game id is passed in?
+    public static void loadGame() {
         String fileName = "SavedGameData.bin";
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            //todo: get file from database
             GamePlay savedGamePlay = (GamePlay) in.readObject();
+
+            //Is this all needed?
+            GamePlay.setGameConfig(savedGamePlay.getGameConfig());
+            GamePlay.round = savedGamePlay.getRound();
+            GamePlay.setCurrentPlayer(savedGamePlay.getCurrentPlayer());
+            GamePlay.playerOrder = savedGamePlay.playerOrder;
+            GamePlay.setTurnSeconds(savedGamePlay.getTurnSeconds());
+
             in.close();
-            return savedGamePlay;
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {
             System.out.println("Done loading");
         }
-        return null;
     }
 
     /**

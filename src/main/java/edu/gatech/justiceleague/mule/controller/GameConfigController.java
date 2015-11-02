@@ -31,7 +31,6 @@ public class GameConfigController {
      * Configures the game based on selections on
      * game config screen.
      *
-     * @param event event for gameconfig
      * @throws IOException
      */
     @FXML
