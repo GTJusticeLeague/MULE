@@ -1,5 +1,7 @@
 package edu.gatech.justiceleague.mule.model;
 
+import java.util.concurrent.RejectedExecutionException;
+
 /**
  * Store class keeps track of the store's inventory
  */
@@ -31,79 +33,78 @@ public class Store {
             numCrystite = 0;
             numMule = 14;
         } else {
-            System.out.println("Error: Invalid difficulty");
-            System.exit(1);
+            throw new RejectedExecutionException("Error: Invalid difficulty");
         }
     }
 
     /**
      * @return amount of food
      */
-    public int getNumFood() {
+    public final int getNumFood() {
         return numFood;
     }
 
     /**
      * Set amount of food
-     * @param numFood
+     * @param numFood Amount to set
      */
-    public void setNumFood(int numFood) {
+    public final void setNumFood(int numFood) {
         this.numFood = numFood;
     }
     /**
      * @return amount of energy
      */
-    public int getNumEnergy() {
+    public final int getNumEnergy() {
         return numEnergy;
     }
 
     /**
      * Set amount of energy
-     * @param numEnergy
+     * @param numEnergy Amount to set
      */
-    public void setNumEnergy(int numEnergy) {
+    public final void setNumEnergy(int numEnergy) {
         this.numEnergy = numEnergy;
     }
     /**
      * @return amount of smithore
      */
-    public int getNumSmithore() {
+    public final int getNumSmithore() {
         return numSmithore;
     }
 
     /**
      * set amount of smithore
-     * @param numSmithore
+     * @param numSmithore Amount to set
      */
-    public void setNumSmithore(int numSmithore) {
+    public final void setNumSmithore(int numSmithore) {
         this.numSmithore = numSmithore;
     }
     /**
      * @return amount of crystite
      */
-    public int getNumCrystite() {
+    public final int getNumCrystite() {
         return numCrystite;
     }
 
     /**
      * Set amount of crystite
-     * @param numCrystite
+     * @param numCrystite Amount to set
      */
-    public void setNumCrystite(int numCrystite) {
+    public final void setNumCrystite(int numCrystite) {
         this.numCrystite = numCrystite;
     }
     /**
      * @return number of mules
      */
-    public int getNumMule() {
+    public final int getNumMule() {
         return numMule;
     }
 
     /**
      * set number of mules
-     * @param numMule
+     * @param numMule Amount to set
      */
-    public void setNumMule(int numMule) {
+    public final void setNumMule(int numMule) {
         this.numMule = numMule;
     }
 }

@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +33,7 @@ import javafx.util.Duration;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.concurrent.RejectedExecutionException;
 
 public class GameScreenController {
 
@@ -202,13 +202,13 @@ public class GameScreenController {
             // Don't let player enter town until after land selection phase has been finished
             if (GamePlay.getRound() != 0) {
                 Stage stage = (Stage) pane.getScene().getWindow();
-                Parent root = null;
+                Parent root;
                 try {
                     // Load the town when the town is clicked
                     root = FXMLLoader.load(getClass().getResource("/fxml/town.fxml"));
                 } catch (java.io.IOException e) {
                     e.printStackTrace();
-                    System.exit(-1);
+                    throw new RejectedExecutionException();
                 }
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -271,47 +271,26 @@ public class GameScreenController {
 
     @FXML
     private void handleSaveGame(ActionEvent event) {
-        Label saveGame = new Label("Would you like to save your game?");
+        Label saveGame = new Label("Would you like to save your game?\nNOTE: Saving will end your game.");
         saveGame.setAlignment(Pos.CENTER);
 
-        Button yes = new Button("Save");
-        Button no = new Button("Return to Game");
-        Button maybe = new Button("Exit Without Saving");
+        Button save = new Button("Save");
+        Button exit = new Button("Exit Without Saving");
 
-        final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, yes, no, maybe)));
+        final Stage dialogStage = stageMaker("Save", vBoxMaker(saveGame, hBoxMaker(null, save, exit)));
 
-        yes.setOnAction(arg0 -> {
+        save.setOnAction(arg0 -> {
+            //Instantiate a gameplay object in order to save the game.
+            GamePlay gamePlay = new GamePlay(GamePlay.gameConfig, GamePlay.round, GamePlay.currentPlayer,
+                    GamePlay.playerOrder, GamePlay.turnSeconds);
+            gamePlay.saveGame();
+            System.out.println(GamePlay.gamePlayID());
             dialogStage.close();
+            //todo: close game;
 
-            Label saveInfo = new Label("What would you like to name your game?");
-
-            TextField gameName = new TextField();
-
-            Button save = new Button("Save");
-            Button saveAndQuit = new Button("Save & Quit");
-
-            final Stage saveStage = stageMaker("Save Game", vBoxMaker(saveInfo, gameName, hBoxMaker(null, save, saveAndQuit)));
-
-            save.setOnAction(arg1 -> {
-                //TODO: SAVE ACTION
-                saveStage.close();
-            });
-
-            saveAndQuit.setOnAction(arg1 -> {
-                //TODO: SAVE ACTION
-                saveStage.close();
-            });
         });
 
-        no.setOnAction(arg0 -> {
-            dialogStage.close();
-        });
-
-        maybe.setOnAction(arg0 -> {
-            //TODO: EXIT APPLICATION
-            dialogStage.close();
-        });
-
+        exit.setOnAction(arg0 -> dialogStage.close());
         dialogStage.show();
     }
 
@@ -321,7 +300,7 @@ public class GameScreenController {
      */
     private void displayMap() {
         anchorPane.setStyle("-fx-background-color: #83d95e;");
-        Tile[][] board = GamePlay.getGameConfig().getGameboard().getTiles();
+        Tile[][] board = GamePlay.getGameConfig().getGameBoard().getTiles();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -425,7 +404,7 @@ public class GameScreenController {
      * @param y The Y coordinate of the tile
      */
     private void buyLand(int x, int y) {
-        Tile current = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile current = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Random rand = new Random();
         int price = 300 + GamePlay.getRound() * rand.nextInt(101);
 
@@ -485,7 +464,7 @@ public class GameScreenController {
      * @param y coordinate
      */
     private void placeMule(Mule.MULETYPE mule, Integer x, Integer y) {
-        Tile curTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile curTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Player curPlayer = GamePlay.getCurrentPlayer();
 
         switch (mule) {
@@ -564,7 +543,7 @@ public class GameScreenController {
                 break;
             default:
                 System.out.println("Error placing MULE");
-                System.exit(1);
+                throw new RuntimeException();
         }
     }
 
@@ -579,7 +558,7 @@ public class GameScreenController {
      */
     private void updateTile(int x, int y) {
         // Get current tile, check if there is a mule on the tile
-        Tile currentTile = GamePlay.getGameConfig().getGameboard().getTiles()[x][y];
+        Tile currentTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Mule.MULETYPE mule;
         if (currentTile.getMule() != null) {
             mule = currentTile.getMule().getType();

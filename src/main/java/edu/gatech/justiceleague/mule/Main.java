@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
     /**
      * Starts the game
-     * @param primaryStage
-     * @throws Exception
+     * @param primaryStage FXML Start param
+     * @throws java.io.IOException
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public final void start(Stage primaryStage) throws java.io.IOException {
         Parent root = FXMLLoader.load(Main.class.getResource("/fxml/gameConfiguration.fxml"));
         primaryStage.setTitle("M.U.L.E.");
         primaryStage.setScene(new Scene(root, 800, 600));
@@ -26,7 +26,7 @@ public class Main extends Application {
 
     /**
      * REALLY launches the stage
-     * @param args
+     * @param args Unused
      */
     public static void main(String[] args) {
         launch(args);

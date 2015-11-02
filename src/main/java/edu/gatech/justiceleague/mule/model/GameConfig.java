@@ -44,7 +44,7 @@ public class GameConfig {
     }
 
     private final Difficulty difficulty;
-    private final Board gameboard;
+    private final Board gameBoard;
     private final MapType mapType;
     private final Store store;
     private final int numPlayers;
@@ -65,9 +65,9 @@ public class GameConfig {
         int maxNumPlayers = 4;
         this.players = new Player[maxNumPlayers];
         if (mapType == MapType.RANDOM) {
-            this.gameboard = new Board();
+            this.gameBoard = new Board();
         } else {
-            this.gameboard = new Board("defaultMap.csv");
+            this.gameBoard = new Board("defaultMap.csv");
         }
         this.store = new Store(difficulty);
     }
@@ -76,7 +76,7 @@ public class GameConfig {
      * Get the difficulty
      * @return difficulty
      */
-    public Difficulty getDifficulty() {
+    public final Difficulty getDifficulty() {
         return difficulty;
     }
 
@@ -84,7 +84,7 @@ public class GameConfig {
      * Get the map type
      * @return mapType
      */
-    public MapType getMapType() {
+    public final MapType getMapType() {
         return mapType;
     }
 
@@ -92,7 +92,7 @@ public class GameConfig {
      * Get the array of Players
      * @return array of players
      */
-    public Player[] getPlayers() {
+    public final Player[] getPlayers() {
         return players;
     }
 
@@ -100,7 +100,7 @@ public class GameConfig {
      * Get the number of players
      * @return numPlayers
      */
-    public int getNumPlayers() {
+    public final int getNumPlayers() {
         return numPlayers;
     }
 
@@ -108,18 +108,18 @@ public class GameConfig {
      * Get the game board
      * @return game board
      */
-    public Board getGameboard() {
-        return gameboard;
+    public final Board getGameBoard() {
+        return gameBoard;
     }
 
     /**
      * @return Store for this game
      */
-    public Store getStore() {
+    public final Store getStore() {
         return store;
     }
 
-    public void setPlayers(Player[] players) {
+    public final void setPlayers(Player[] players) {
         this.players = players;
     }
 }

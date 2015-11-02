@@ -5,6 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -14,13 +22,29 @@ import java.util.Random;
 /**
  * Contains the main game logic
  */
-public class GamePlay {
-    private static GameConfig gameConfig;
-    private static int round = 0;
-    private static Player currentPlayer;
-    private static Queue<Player> playerOrder = new PriorityQueue<>();
-    private static int turnSeconds = 0;
+public class GamePlay implements Serializable {
+    public static GameConfig gameConfig;
+    public static int round = 0;
+    public static Player currentPlayer;
+    public static Queue<Player> playerOrder = new PriorityQueue<>();
+    public static int turnSeconds = 0;
 
+    /**
+     * This contrustructor is only in order to serialize
+     * @param gameConfig game configuration options
+     * @param round current round number
+     * @param currentPlayer current player in the game
+     * @param playerOrder queue determining player order
+     * @param turnSeconds number of seconds left in turn
+     */
+    public GamePlay(GameConfig gameConfig, int round, Player currentPlayer, Queue<Player> playerOrder, int turnSeconds) {
+        // TODO: Test if we can just have an empty constructor?
+        GamePlay.gameConfig = gameConfig;
+        GamePlay.round = round;
+        GamePlay.currentPlayer = currentPlayer;
+        GamePlay.playerOrder = playerOrder;
+        GamePlay.turnSeconds = turnSeconds;
+    }
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
      */
@@ -50,6 +74,7 @@ public class GamePlay {
 
     /**
      * Initiate random event
+     * //todo: show the actual amount of $$ not m
      */
     private static void randomEvent() {
         Random r = new Random();
@@ -94,8 +119,6 @@ public class GamePlay {
                             + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
             break;
-            default:
-                System.out.println("shit");
         }
         if (eventLabel != null) {
             Button okBtn = new Button("OK");
@@ -154,7 +177,7 @@ public class GamePlay {
      * Calculate production for all tiles in the GAMEBOARD
      */
     private static void calculateProduction() {
-        Tile[][] tiles = gameConfig.getGameboard().getTiles();
+        Tile[][] tiles = gameConfig.getGameBoard().getTiles();
 
         // Loop through all tiles, calculate their production
         for (Tile[] tile : tiles) {
@@ -197,5 +220,49 @@ public class GamePlay {
 
     public static void setTurnSeconds(int seconds) {
         turnSeconds = seconds;
+    }
+
+    /**
+     * Serializes the GamePlay object and writes the contents to the database
+     */
+    public void saveGame() {
+        String fileName = "SavedGameData.bin";
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+            out.writeObject(this);
+            out.close();
+            Database.saveTxtToDB();
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Done serializing gameplay");
+        }
+    }
+
+    /**
+     * Loads the GamePlay serializable from the database
+     */
+    //Saved game h50-325
+    public static GamePlay loadGame() {
+        String fileName = "SavedGameData.bin";
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            GamePlay savedGamePlay = (GamePlay) in.readObject();
+            in.close();
+            return savedGamePlay;
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Done loading");
+        }
+        return null;
+    }
+
+    /**
+     * Generates a uniqueID associated with a game
+     * @return String
+     */
+    public static String gamePlayID() {
+        return String.valueOf(currentPlayer.getName().charAt(0)) + turnSeconds + "-" + round + moneyFactor();
     }
 }
