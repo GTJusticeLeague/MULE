@@ -5,11 +5,10 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 /**
- * Created by Donald on 9/27/2015.
+ * Wrapper to make a timer easier to use
  */
 public class PlayerTimer {
     private int elapsedTime = 0;
-    private Player current;
     private Timeline ticker;
 
     /**
@@ -17,7 +16,6 @@ public class PlayerTimer {
      * @param current player
      */
     public PlayerTimer(Player current) {
-        this.current = current;
         int food = current.getFood();
         int round = GamePlay.getRound();
         int time;
@@ -56,8 +54,6 @@ public class PlayerTimer {
      */
     private void increment() {
         elapsedTime++;
-        System.err.println("Time remaining: " + (GamePlay.getTurnSeconds() - elapsedTime));
-        // TODO: show remaining time on the game screen
         if (elapsedTime >= GamePlay.getTurnSeconds()) {
             // TODO: Alert that player change is happening
             ticker.stop();

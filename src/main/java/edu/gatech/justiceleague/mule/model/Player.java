@@ -81,7 +81,6 @@ public class Player implements Comparable<Player> {
     private int crystiteMule;
     private int numLand;
     private PlayerTimer timer;
-    private int score;
     /**
      * Initialization of players. Sets race, color (which cannot
      * be the same as other players),
@@ -115,15 +114,6 @@ public class Player implements Comparable<Player> {
             this.energyMule = 0;
             this.smithoreMule = 0;
             this.crystiteMule = 0;
-        } else if (GamePlay.getGameConfig().getDifficulty() == GameConfig.Difficulty.INTERMEDIATE) {
-            this.food = 4;
-            this.energy = 2;
-            this.smithore = 0;
-            this.crystite = 0;
-            this.foodMule = 0;
-            this.energyMule = 0;
-            this.smithoreMule = 0;
-            this.crystiteMule = 0;
         } else {
             this.food = 4;
             this.energy = 2;
@@ -141,7 +131,7 @@ public class Player implements Comparable<Player> {
      * Get name
      * @return player name
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
@@ -149,7 +139,7 @@ public class Player implements Comparable<Player> {
      * Get color
      * @return player color
      */
-    public Color getColor() {
+    public final Color getColor() {
         return color;
     }
 
@@ -157,7 +147,7 @@ public class Player implements Comparable<Player> {
      * Get race
      * @return player race
      */
-    public Race getRace() {
+    public final Race getRace() {
         return race;
     }
 
@@ -165,7 +155,7 @@ public class Player implements Comparable<Player> {
      * Get number
      * @return player position in players array
      */
-    public int getNumber() {
+    public final int getNumber() {
         return number;
     }
 
@@ -173,7 +163,7 @@ public class Player implements Comparable<Player> {
      * Get money
      * @return player money
      */
-    public int getMoney() {
+    public final int getMoney() {
         return money;
     }
 
@@ -181,7 +171,7 @@ public class Player implements Comparable<Player> {
      * Set money
      * @param money money for a player
      */
-    public void setMoney(int money) {
+    public final void setMoney(int money) {
         this.money = money;
     }
 
@@ -189,7 +179,7 @@ public class Player implements Comparable<Player> {
      * Get food
      * @return player food
      */
-    public int getFood() {
+    public final int getFood() {
         return food;
     }
 
@@ -197,7 +187,7 @@ public class Player implements Comparable<Player> {
      * Set number of food resource
      * @param food food for a player
      */
-    public void setFood(int food) {
+    public final void setFood(int food) {
         this.food = food;
     }
 
@@ -205,7 +195,7 @@ public class Player implements Comparable<Player> {
      * Get energy
      * @return player energy
      */
-    public int getEnergy() {
+    public final int getEnergy() {
         return energy;
     }
 
@@ -213,7 +203,7 @@ public class Player implements Comparable<Player> {
      * Set number of energy resource
      * @param energy for a player
      */
-    public void setEnergy(int energy) {
+    public final void setEnergy(int energy) {
         this.energy = energy;
     }
 
@@ -221,7 +211,7 @@ public class Player implements Comparable<Player> {
      * Get smithore
      * @return player smithore
      */
-    public int getSmithore() {
+    public final int getSmithore() {
         return smithore;
     }
 
@@ -229,7 +219,7 @@ public class Player implements Comparable<Player> {
      * Set number of smithore resource
      * @param smithore for a player
      */
-    public void setSmithore(int smithore) {
+    public final void setSmithore(int smithore) {
         this.smithore = smithore;
     }
 
@@ -237,7 +227,7 @@ public class Player implements Comparable<Player> {
      * Get crystite
      * @return player crystite
      */
-    public int getCrystite() {
+    public final int getCrystite() {
         return crystite;
     }
 
@@ -245,7 +235,7 @@ public class Player implements Comparable<Player> {
      * Set number of crystite resource
      * @param crystite yes
      */
-    public void setCrystite(int crystite) {
+    public final void setCrystite(int crystite) {
         this.crystite = crystite;
     }
 
@@ -253,7 +243,7 @@ public class Player implements Comparable<Player> {
      * Get food mule
      * @return player food mule
      */
-    public int getFoodMule() {
+    public final int getFoodMule() {
         return foodMule;
     }
 
@@ -261,7 +251,7 @@ public class Player implements Comparable<Player> {
      * Set number of mule resource for food
      * @param mule mule total
      */
-    public void setFoodMule(int mule) {
+    public final void setFoodMule(int mule) {
         this.foodMule = mule;
     }
 
@@ -270,7 +260,7 @@ public class Player implements Comparable<Player> {
      *
      * @return player energy mule
      */
-    public int getEnergyMule() {
+    public final int getEnergyMule() {
         return energyMule;
     }
 
@@ -279,7 +269,7 @@ public class Player implements Comparable<Player> {
      *
      * @param mule number to be set
      */
-    public void setEnergyMule(int mule) {
+    public final void setEnergyMule(int mule) {
         this.energyMule = mule;
     }
 
@@ -288,7 +278,7 @@ public class Player implements Comparable<Player> {
      *
      * @return player mule smithore
      */
-    public int getSmithoreMule() {
+    public final int getSmithoreMule() {
         return smithoreMule;
     }
 
@@ -297,7 +287,7 @@ public class Player implements Comparable<Player> {
      *
      * @param mule number for mule
      */
-    public void setSmithoreMule(int mule) {
+    public final void setSmithoreMule(int mule) {
         this.smithoreMule = mule;
     }
 
@@ -306,7 +296,7 @@ public class Player implements Comparable<Player> {
      *
      * @return player crystite mule
      */
-    public int getCrystiteMule() {
+    public final int getCrystiteMule() {
         return crystiteMule;
     }
 
@@ -315,7 +305,7 @@ public class Player implements Comparable<Player> {
      *
      * @param mule number for crystite mule
      */
-    public void setCrystiteMule(int mule) {
+    public final void setCrystiteMule(int mule) {
         this.crystiteMule = mule;
     }
 
@@ -325,7 +315,7 @@ public class Player implements Comparable<Player> {
      *
      * @return total number of mules
      */
-    public int getMuleTotal() {
+    public final int getMuleTotal() {
         return getFoodMule() + getEnergyMule() + getSmithoreMule() + getCrystiteMule();
     }
 
@@ -333,7 +323,7 @@ public class Player implements Comparable<Player> {
      * String representtion of player
      * @return string representation of player
      */
-    public String toString() {
+    public final String toString() {
         return "name: " + name + ", race: " + race.toString() + ", color: " + color.toString();
     }
 
@@ -341,28 +331,28 @@ public class Player implements Comparable<Player> {
      * Get number of land resource
      * @return player land
      */
-    public int getNumLand() {
+    public final int getNumLand() {
         return numLand;
     }
 
     /**
      * Increase the number of land resources a player owns
      */
-    public void incrementLand() {
+    public final void incrementLand() {
         numLand = numLand + 1;
     }
 
     /**
      * Initialize the player's timer
      */
-    public void initTimer() {
+    public final void initTimer() {
         timer = new PlayerTimer(this);
     }
 
     /**
      * Start the player's timer
      */
-    public void startTime() {
+    public final void startTime() {
         timer.startTime();
     }
 
@@ -371,7 +361,7 @@ public class Player implements Comparable<Player> {
      *
      * @return The number of seconds left on the clock
      */
-    public int stopTime() {
+    public final int stopTime() {
         return timer.stopTime();
     }
 
@@ -379,12 +369,11 @@ public class Player implements Comparable<Player> {
      * Calculates and sets score
      * @return score
      */
-    public int getScore() {
-        this.score = money + 500 * numLand + energy + food + smithore + crystite;
-        return this.score;
+    public final int getScore() {
+        return money + 500 * numLand + energy + food + smithore + crystite;
     }
 
-    public PlayerTimer getTimer() {
+    public final PlayerTimer getTimer() {
         return timer;
     }
 
@@ -394,7 +383,7 @@ public class Player implements Comparable<Player> {
      * @return whether player is greater than or less than other
      */
     @Override
-    public int compareTo(Player other) {
+    public final int compareTo(Player other) {
         return this.getScore() - other.getScore();
     }
 
@@ -402,7 +391,7 @@ public class Player implements Comparable<Player> {
      * @return hashcode for player
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return this.getScore() * 17 + this.crystite + this.food + this.energy + this.smithore;
     }
 
@@ -411,7 +400,7 @@ public class Player implements Comparable<Player> {
      * @return true if equal, false if not
      */
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (!(obj instanceof Player)) {
             return false;
         }

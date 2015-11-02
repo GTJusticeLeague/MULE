@@ -32,7 +32,7 @@ public class Tile {
     /**
      * Calculate the production of this Tile's mule, if it has one
      */
-    public void calculateProduction() {
+    public final void calculateProduction() {
         if (mule != null) {
             mule.calculateProduction();
         }
@@ -41,14 +41,14 @@ public class Tile {
     /**
      * @return terrain of tile
      */
-    public Terrain getTerrain() {
+    public final Terrain getTerrain() {
         return terrain;
     }
 
     /**
      * @return owner of tile
      */
-    public Player getOwner() {
+    public final Player getOwner() {
         return owner;
     }
 
@@ -56,14 +56,14 @@ public class Tile {
      * Set owner of tile
      * @param owner of tile
      */
-    public void setOwner(Player owner) {
+    public final void setOwner(Player owner) {
         this.owner = owner;
     }
 
     /**
      * @return mule on tile
      */
-    public Mule getMule() {
+    public final Mule getMule() {
         return mule;
     }
 
@@ -71,7 +71,7 @@ public class Tile {
      * Sets mule on tile
      * @param mule on tile
      */
-    public void setMule(Mule mule) {
+    public final void setMule(Mule mule) {
         this.mule = mule;
     }
 

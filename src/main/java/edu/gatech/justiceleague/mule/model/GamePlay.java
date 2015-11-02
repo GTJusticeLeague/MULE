@@ -5,7 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -31,6 +36,7 @@ public class GamePlay implements Serializable {
      * @param turnSeconds number of seconds left in turn
      */
     public GamePlay(GameConfig gameConfig, int round, Player currentPlayer, Queue<Player> playerOrder, int turnSeconds) {
+        // TODO: Test if we can just have an empty constructor?
         GamePlay.gameConfig = gameConfig;
         GamePlay.round = round;
         GamePlay.currentPlayer = currentPlayer;
@@ -264,7 +270,9 @@ public class GamePlay implements Serializable {
         String fileName = "SavedGameData.bin";
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            return (GamePlay) in.readObject();
+            GamePlay savedGamePlay = (GamePlay) in.readObject();
+            in.close();
+            return savedGamePlay;
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {

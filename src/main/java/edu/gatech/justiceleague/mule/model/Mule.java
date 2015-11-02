@@ -1,7 +1,7 @@
 package edu.gatech.justiceleague.mule.model;
 
 /**
- * Created by thomas on 10/6/15.
+ * Mule Object has type, terrain its placed on, and owner
  */
 public class Mule {
     public enum MULETYPE {
@@ -31,7 +31,7 @@ public class Mule {
     /**
      * @return type of mule
      */
-    public MULETYPE getType() {
+    public final MULETYPE getType() {
         return type;
     }
 
@@ -39,7 +39,7 @@ public class Mule {
      * Calculates and sets production for mule
      * depending on terrain and mule type
      */
-    public void calculateProduction() {
+    public final void calculateProduction() {
         if (owner.getEnergy() == 0) {
             return; // Not enough energy to produce
         }

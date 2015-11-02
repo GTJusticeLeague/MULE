@@ -2,7 +2,6 @@ package edu.gatech.justiceleague.mule.controller;
 
 import edu.gatech.justiceleague.mule.model.GameConfig;
 import edu.gatech.justiceleague.mule.model.GamePlay;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,11 +31,10 @@ public class GameConfigController {
      * Configures the game based on selections on
      * game config screen.
      *
-     * @param event
      * @throws IOException
      */
     @FXML
-    private void handleGameConfigButton(ActionEvent event) throws IOException {
+    private void handleGameConfigButton() throws IOException {
         GameConfig.Difficulty gameDifficulty;
         GameConfig.MapType gameMapType;
 
