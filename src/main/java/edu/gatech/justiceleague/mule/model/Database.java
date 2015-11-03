@@ -1,6 +1,11 @@
 package edu.gatech.justiceleague.mule.model;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +16,7 @@ import java.sql.SQLException;
  */
  public class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String fileName = "SavedGameData.bin";
+    static final String FILENAME = "SavedGameData.bin";
     /**
      * Initialize the database connection
      * @return Connection
@@ -46,11 +51,11 @@ import java.sql.SQLException;
      * @throws SQLException
      */
      static void saveTxtToDB() throws SQLException, IOException, ClassNotFoundException {
-        String insert = "INSERT INTO serialized_java_objects(serialized_id, object_name, " +
-                "serialized_object) VALUES (?, ?, ?)";
+        String insert = "INSERT INTO serialized_java_objects(serialized_id, object_name, "
+                + "serialized_object) VALUES (?, ?, ?)";
 
          PreparedStatement psmt = null;
-         try (FileInputStream fis = new FileInputStream(new File(fileName)); Connection conn = getConnection()) {
+         try (FileInputStream fis = new FileInputStream(new File(FILENAME)); Connection conn = getConnection()) {
              assert conn != null;
              conn.setAutoCommit(false);
              psmt = conn.prepareStatement(insert);

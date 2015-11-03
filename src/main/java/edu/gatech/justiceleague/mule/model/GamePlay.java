@@ -5,7 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.PriorityQueue;
@@ -17,11 +22,12 @@ import java.util.Random;
  * Contains the main game logic
  */
 public class GamePlay implements Serializable {
-    public static GameConfig gameConfig;
-    public static int round = 0;
-    public static Player currentPlayer;
-    public static Queue<Player> playerOrder = new PriorityQueue<>();
-    public static int turnSeconds = 0;
+
+    private static GameConfig gameConfig;
+    private static int round = 0;
+    private static Player currentPlayer;
+    private static Queue<Player> playerOrder = new PriorityQueue<>();
+    private static int turnSeconds = 0;
 
     /**
      * This contrustructor is only in order to serialize
@@ -112,6 +118,8 @@ public class GamePlay implements Serializable {
                     eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. "
                             + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
+            break;
+            default:
             break;
         }
         if (eventLabel != null) {
@@ -214,6 +222,10 @@ public class GamePlay implements Serializable {
 
     public static void setTurnSeconds(int seconds) {
         turnSeconds = seconds;
+    }
+
+    public static Queue<Player> getPlayerOrder() {
+        return playerOrder;
     }
 
     /**
