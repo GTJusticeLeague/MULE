@@ -196,7 +196,7 @@ public class PlayerConfigController {
 
         if (!inputMismatch) {
             // Set initial player (for land selection)
-            GamePlay.setCurrentPlayer((GamePlay.getGameConfig().getPlayers()[0]));
+            GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[0]);
             // Move to the next scene (player configuration)
             Stage stage = (Stage) startGameButton.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));

@@ -281,8 +281,8 @@ public class GameScreenController {
 
         save.setOnAction(arg0 -> {
             //Instantiate a gameplay object in order to save the game.
-            GamePlay gamePlay = new GamePlay(GamePlay.gameConfig, GamePlay.round, GamePlay.currentPlayer,
-                    GamePlay.playerOrder, GamePlay.turnSeconds);
+            GamePlay gamePlay = new GamePlay(GamePlay.getGameConfig(), GamePlay.getRound(), GamePlay.getCurrentPlayer(),
+                    GamePlay.getPlayerOrder(), GamePlay.getTurnSeconds());
             gamePlay.saveGame();
             System.out.println(GamePlay.gamePlayID());
             dialogStage.close();

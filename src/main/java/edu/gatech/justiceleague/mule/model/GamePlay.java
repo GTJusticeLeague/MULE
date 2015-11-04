@@ -1,18 +1,21 @@
 package edu.gatech.justiceleague.mule.model;
 
-import com.google.gson.Gson;
 import edu.gatech.justiceleague.mule.controller.GameScreenController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
-
-
 
 
 /**
@@ -115,6 +118,8 @@ public class GamePlay implements Serializable {
                             + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
             break;
+            default:
+            break;
         }
         if (eventLabel != null) {
             Button okBtn = new Button("OK");
@@ -216,6 +221,10 @@ public class GamePlay implements Serializable {
 
     public static void setTurnSeconds(int seconds) {
         turnSeconds = seconds;
+    }
+
+    public static Queue<Player> getPlayerOrder() {
+        return playerOrder;
     }
 
     /**
