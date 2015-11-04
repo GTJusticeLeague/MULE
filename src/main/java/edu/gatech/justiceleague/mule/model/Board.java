@@ -71,24 +71,35 @@ public class Board {
             for (int j = 0; j < tiles[0].length; j++) {
                 String col = rowList.get(j);
                 Tile.Terrain curTerrain;
-                if (col.equals("R")) {
-                    curTerrain = Tile.Terrain.RIVER;
-                } else if (col.equals("P")) {
-                    curTerrain = Tile.Terrain.PLAIN;
-                } else if (col.equals("M1")) {
-                    curTerrain = Tile.Terrain.ONEMOUNTAIN;
-                } else if (col.equals("M2")) {
-                    curTerrain = Tile.Terrain.TWOMOUNTAIN;
-                } else if (col.equals("M3")) {
-                    curTerrain = Tile.Terrain.THREEMOUNTAIN;
-                } else if (col.equals("Town")) {
-                    curTerrain = Tile.Terrain.TOWN;
-                } else {
-                    throw new RejectedExecutionException("Error! Type " + col + " is invalid!");
+                switch (col) {
+                    case "R":
+                        curTerrain = Tile.Terrain.RIVER;
+                        break;
+                    case "P":
+                        curTerrain = Tile.Terrain.PLAIN;
+                        break;
+                    case "M1":
+                        curTerrain = Tile.Terrain.ONEMOUNTAIN;
+                        break;
+                    case "M2":
+                        curTerrain = Tile.Terrain.TWOMOUNTAIN;
+                        break;
+                    case "M3":
+                        curTerrain = Tile.Terrain.THREEMOUNTAIN;
+                        break;
+                    case "Town":
+                        curTerrain = Tile.Terrain.TOWN;
+                        break;
+                    default:
+                        throw new RejectedExecutionException("Error! Type " + col + " is invalid!");
                 }
                 tiles[i][j] = new Tile(curTerrain);
             }
         }
+    }
+
+    public Board(Tile[][] tiles) {
+        this.tiles = tiles;
     }
 
     /**
@@ -97,9 +108,9 @@ public class Board {
      */
     public final String toString() {
         StringBuilder temp = new StringBuilder();
-        for (int i = 0; i < tiles.length; i++) {
+        for (Tile[] tile : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
-                temp.append(tiles[i][j].getTerrain());
+                temp.append(tile[j].getTerrain());
                 temp.append(",");
             }
             temp.append("\n");

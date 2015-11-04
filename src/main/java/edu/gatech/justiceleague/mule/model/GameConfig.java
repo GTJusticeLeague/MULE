@@ -1,6 +1,7 @@
 package edu.gatech.justiceleague.mule.model;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 /**
  * Created by Donald on 9/13/2015.
@@ -76,6 +77,15 @@ public class GameConfig {
         this.store = new Store(difficulty);
     }
 
+    public GameConfig(Difficulty difficulty, MapType mapType, int numPlayers, Store store, Board gameBoard, Player[] players) {
+        this.difficulty = difficulty;
+        this.mapType = mapType;
+        this.numPlayers = numPlayers;
+        this.store = store;
+        this.gameBoard = gameBoard;
+        this.players = players;
+    }
+
     /**
      * Get the difficulty
      * @return difficulty
@@ -121,5 +131,17 @@ public class GameConfig {
      */
     public final Store getStore() {
         return store;
+    }
+
+    @Override
+    public String toString() {
+        return "GameConfig{" +
+                "difficulty=" + difficulty +
+                ", gameBoard=" + gameBoard +
+                ", mapType=" + mapType +
+                ", store=" + store +
+                ", numPlayers=" + numPlayers +
+                ", players=" + Arrays.toString(players) +
+                '}';
     }
 }

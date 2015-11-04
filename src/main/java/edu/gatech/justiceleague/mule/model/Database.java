@@ -71,7 +71,7 @@ import java.util.ArrayList;
 
     public static void saveGame(String idJson, String configJson, String roundJson, String playerJson, String turnJson) {
         String insert = "INSERT INTO saved_games(game_id, game_config, game_round, current_player, game_seconds) " +
-                ") VALUES (?, ?, ?, ?, ?)";
+                " VALUES (?, ?, ?, ?, ?)";
         PreparedStatement psmt;
 
         try (Connection conn = getConnection()) {
@@ -94,5 +94,32 @@ import java.util.ArrayList;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<String> getGame(String loadedGameID) {
+        ArrayList<String> list = new ArrayList<>();
+        String query = " SELECT game_config, game_round, current_player, game_seconds FROM saved_games WHERE game_id = '" + loadedGameID + "';";
+
+        Statement stmt;
+        try {
+            Connection conn = getConnection();
+            assert conn != null;
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                list.add(rs.getString("game_config"));
+                list.add(rs.getString("game_round"));
+                list.add(rs.getString("current_player"));
+                list.add(rs.getString("game_seconds"));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+
+
+
     }
 }

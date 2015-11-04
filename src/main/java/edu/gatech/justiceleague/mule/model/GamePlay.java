@@ -1,49 +1,25 @@
 package edu.gatech.justiceleague.mule.model;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import edu.gatech.justiceleague.mule.controller.GameScreenController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 
 /**
  * Contains the main game logic
  */
-public class GamePlay implements Serializable {
+public class GamePlay {
     public static GameConfig gameConfig;
     public static int round = 0;
     public static Player currentPlayer;
     public static transient Queue<Player> playerOrder = new PriorityQueue<>();
     public static int turnSeconds = 0;
 
-    /**
-     * This contrustructor is only in order to serialize
-     * @param gameConfig game configuration options
-     * @param round current round number
-     * @param currentPlayer current player in the game
-     * @param playerOrder queue determining player order
-     * @param turnSeconds number of seconds left in turn
-     */
-    public GamePlay(GameConfig gameConfig, int round, Player currentPlayer, Queue<Player> playerOrder, int turnSeconds) {
-        // TODO: Test if we can just have an empty constructor?
-        GamePlay.gameConfig = gameConfig;
-        GamePlay.round = round;
-        GamePlay.currentPlayer = currentPlayer;
-        GamePlay.playerOrder = playerOrder;
-        GamePlay.turnSeconds = turnSeconds;
-    }
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
      */
@@ -117,9 +93,9 @@ public class GamePlay implements Serializable {
                     eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. "
                             + "IT COST YOU $6*m TO CLEAN IT UP.");
                 }
-            break;
+                break;
             default:
-            break;
+                break;
         }
         if (eventLabel != null) {
             Button okBtn = new Button("OK");
@@ -151,6 +127,7 @@ public class GamePlay implements Serializable {
 
     /**
      * Calculate money factor for score
+     *
      * @return money factor
      */
     private static int moneyFactor() {
@@ -230,15 +207,17 @@ public class GamePlay implements Serializable {
     /**
      * Serializes the GamePlay object and writes the contents to the database
      */
-    public void saveGame() {
+    public static void saveGame() {
         Gson gson = new Gson();
 
+        //Creates JSON for GamePlay field
         String idJson = gson.toJson(gamePlayID());
         String configJson = gson.toJson(gameConfig);
         String roundJson = gson.toJson(round);
         String playerJson = gson.toJson(currentPlayer);
         String turnJson = gson.toJson(turnSeconds);
 
+        //Write to database
         Database.saveGame(idJson, configJson, roundJson, playerJson, turnJson);
 
     }
@@ -248,10 +227,192 @@ public class GamePlay implements Serializable {
      */
     public static void loadGame(String loadedGameID) {
         //todo: complete
+        ArrayList<String> gameInfo = Database.getGame(loadedGameID);
+        Gson gson = new Gson();
+
+        //Creates mapping for JSON objects to be deserialized
+        Map<String, Object> gameConfigRootMapObject = gson.fromJson(gameInfo.get(0), Map.class);
+        Map<String, Object> currentPlayerRootMapObject = gson.fromJson(gameInfo.get(2), Map.class);
+
+        //Uses the map to set value for currentPlayer
+        GamePlay.setGameConfig(gameConfigRootMapObject);
+        GamePlay.round = Integer.parseInt(gameInfo.get(1));
+        GamePlay.setCurrentPlayer(setCurrentPlayer(currentPlayerRootMapObject));
+        GamePlay.turnSeconds = Integer.parseInt(gameInfo.get(3));
+    }
+
+    private static GameConfig setGameConfig(Map<String, Object> gameConfigRootMapObject) {
+        Gson gson = new Gson();
+
+        //Extract Json for Difficulty
+        GameConfig.Difficulty difficulty = null;
+        String objDifficulty = (String) gameConfigRootMapObject.get("difficulty");
+        switch (objDifficulty) {
+            case "BEGINNER":
+                difficulty = GameConfig.Difficulty.BEGINNER;
+                break;
+            case "INTERMEDIATE":
+                difficulty = GameConfig.Difficulty.INTERMEDIATE;
+                break;
+            case "ADVANCED":
+                difficulty = GameConfig.Difficulty.ADVANCED;
+                break;
+            default:
+                break;
+        }
+
+        //Extract JSON for mapType
+        GameConfig.MapType mapType = null;
+        String objMapType = (String) gameConfigRootMapObject.get("mapType");
+        switch (objMapType) {
+            case "STANDARD":
+                mapType = GameConfig.MapType.STANDARD;
+                break;
+            case "RANDOM":
+                mapType = GameConfig.MapType.RANDOM;
+                break;
+            default:
+                break;
+        }
+
+        //Extract numPlayers from JSON
+        int numPlayers = ((Double) gameConfigRootMapObject.get("numPlayers")).intValue();
+
+        //Extract Store from jSON
+        LinkedTreeMap storeMap = (LinkedTreeMap) gameConfigRootMapObject.get("store");
+        Store store = new Store(((Double) storeMap.get("numFood")).intValue(),
+                ((Double) storeMap.get("numEnergy")).intValue(),
+                ((Double) storeMap.get("numSmithore")).intValue(),
+                ((Double) storeMap.get("numMule")).intValue());
+
+
+        //Extract Player[] from JSON
+        ArrayList playerList = (ArrayList) gameConfigRootMapObject.get("players");
+        Player[] players = new Player[playerList.size()];
+        for (int i = 0; i < playerList.size(); i++) {
+            players[i] = setCurrentPlayer((LinkedTreeMap) playerList.get(i));
+        }
+
+        //Extract JSON for Board
+        Board board;
+        LinkedTreeMap boardMap = (LinkedTreeMap) gameConfigRootMapObject.get("gameBoard");
+        ArrayList list = (ArrayList) boardMap.get("tiles");
+        Tile[][] tiles = new Tile[5][9];
+
+        for(int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < ((ArrayList) list.get(i)).size(); j++) {
+                LinkedTreeMap tileMap = (LinkedTreeMap) ((ArrayList) list.get(i)).get(j);
+                Player owner;
+                //TODO: Mule Logic?
+                String objTerrain = (String) tileMap.get("terrain");
+                Tile.Terrain terrain = null;
+                switch (objTerrain) {
+                    case "RIVER":
+                        terrain = Tile.Terrain.RIVER;
+                        break;
+                    case "TOWN":
+                        terrain = Tile.Terrain.TOWN;
+                        break;
+                    case "ONEMOUNTAIN":
+                        terrain = Tile.Terrain.ONEMOUNTAIN;
+                        break;
+                    case "TWOMOUNTAIN":
+                        terrain = Tile.Terrain.TWOMOUNTAIN;
+                        break;
+                    case "THREEMOUTAIN":
+                        terrain = Tile.Terrain.THREEMOUNTAIN;
+                        break;
+                    case "PLAIN":
+                        terrain = Tile.Terrain.PLAIN;
+                        break;
+                    default:
+                        break;
+                }
+                tiles[i][j] = new Tile(terrain);
+                if (tileMap.get("owner") != null) {
+                    LinkedTreeMap ownerMap = (LinkedTreeMap) tileMap.get("owner");
+                    owner = setCurrentPlayer(ownerMap);
+                    tiles[i][j].setOwner(owner);
+                }
+            }
+        }
+        board = new Board(tiles);
+
+        GameConfig gameConfig =  new GameConfig(difficulty,mapType, numPlayers, store, board, players);
+        GamePlay.setGameConfig(gameConfig);
+        return new GameConfig(difficulty,mapType, numPlayers, store, board, players);
     }
 
     /**
+     * Takes in GSON map for player and sets the current player for game
+     *
+     * @param currentPlayerRootMapObject yes
+     * @return
+     */
+    private static Player setCurrentPlayer(Map<String, Object> currentPlayerRootMapObject) {
+        Player.Color color = null;
+        Player.Race race = null;
+        String objColor = (String) currentPlayerRootMapObject.get("color");
+        String objRace = (String) currentPlayerRootMapObject.get("race");
+
+        switch (objColor) {
+            case "RED":
+                color = Player.Color.RED;
+                break;
+            case "GREEN":
+                color = Player.Color.GREEN;
+                break;
+            case "BLUE":
+                color = Player.Color.BLUE;
+                break;
+            case "YELLOW":
+                color = Player.Color.YELLOW;
+                break;
+            case "PURPLE":
+                color = Player.Color.PURPLE;
+                break;
+            default:
+                break;
+        }
+        switch (objRace) {
+            case "HUMAN":
+                race = Player.Race.HUMAN;
+                break;
+            case "FLAPPER":
+                race = Player.Race.FLAPPER;
+                break;
+            case "BONZOID":
+                race = Player.Race.BONZOID;
+                break;
+            case "BUZZITE":
+                race = Player.Race.BUZZITE;
+                break;
+            case "UGAITE":
+                race = Player.Race.UGAITE;
+        }
+
+        Player player = new Player((String) currentPlayerRootMapObject.get("name"),
+                race,
+                color,
+                ((Double) currentPlayerRootMapObject.get("number")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("money")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("food")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("energy")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("smithore")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("crystite")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("foodMule")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("energyMule")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("smithoreMule")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("crystiteMule")).intValue(),
+                ((Double) currentPlayerRootMapObject.get("numLand")).intValue());
+
+        return player;
+    }
+
+
+    /**
      * Generates a uniqueID associated with a game
+     *
      * @return String
      */
     public static String gamePlayID() {

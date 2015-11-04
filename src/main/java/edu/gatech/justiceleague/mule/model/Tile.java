@@ -74,4 +74,13 @@ public class Tile {
     public final void setMule(Mule mule) {
         this.mule = mule;
     }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "terrain=" + terrain +
+                ", owner=" + owner +
+                ", mule=" + mule +
+                '}';
+    }
 }

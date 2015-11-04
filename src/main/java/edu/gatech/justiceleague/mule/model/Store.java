@@ -37,6 +37,13 @@ public class Store {
         }
     }
 
+    public Store(int numFood, int numEnergy, int numSmithore, int numMule) {
+        this.numFood = numFood;
+        this.numEnergy = numEnergy;
+        this.numSmithore = numSmithore;
+        this.numMule = numMule;
+    }
+
     /**
      * @return amount of food
      */
@@ -106,5 +113,16 @@ public class Store {
      */
     public final void setNumMule(int numMule) {
         this.numMule = numMule;
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "numFood=" + numFood +
+                ", numEnergy=" + numEnergy +
+                ", numSmithore=" + numSmithore +
+                ", numCrystite=" + numCrystite +
+                ", numMule=" + numMule +
+                '}';
     }
 }
