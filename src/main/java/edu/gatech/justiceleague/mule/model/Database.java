@@ -1,10 +1,13 @@
 package edu.gatech.justiceleague.mule.model;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Handles database logic for the game
@@ -41,38 +44,55 @@ import java.sql.SQLException;
         return null;
     }
 
-    /**
-     * Saves the text file to the database
-     * @throws SQLException
-     */
-     static void saveTxtToDB() throws SQLException, IOException, ClassNotFoundException {
-        String insert = "INSERT INTO serialized_java_objects(serialized_id, object_name, " +
-                "serialized_object) VALUES (?, ?, ?)";
+    public static ObservableList<String> queryDatabaseForGameIDs() throws SQLException, ClassNotFoundException {
+        String query = "SELECT game_id " +
+                "FROM saved_games";
+        Statement stmt;
+        Connection conn = getConnection();
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            assert conn != null;
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                list.add(rs.getString("game_id"));
+            }
 
-         PreparedStatement psmt = null;
-         try (FileInputStream fis = new FileInputStream(new File(fileName)); Connection conn = getConnection()) {
-             assert conn != null;
-             conn.setAutoCommit(false);
-             psmt = conn.prepareStatement(insert);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
 
-             //Set the values of Prepared String
-             psmt.setString(1, GamePlay.gamePlayID());
-             psmt.setString(2, "GamePlay");
-             psmt.setBlob(3, fis);
-             //or
-             //File file = new File(fileName);
-             //psmt.setAsciiStream(3, fis, (int) file.length());
+        return FXCollections.observableArrayList(list);
+    }
 
-             psmt.executeUpdate();
-             conn.commit();
-             System.out.println("SUCCESSFULLY SAVED FILE TO DB");
-         } catch (FileNotFoundException e) {
-             e.printStackTrace();
-         } finally {
-             assert psmt != null;
-             psmt.close();
+    public static void saveGame(String idJson, String configJson, String roundJson, String playerJson, String turnJson) {
+        String insert = "INSERT INTO saved_games(game_id, game_config, game_round, current_player, game_seconds) " +
+                ") VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement psmt;
 
+        try (Connection conn = getConnection()) {
+            assert conn != null;
+            conn.setAutoCommit(false);
+            psmt = conn.prepareStatement(insert);
 
-         }
-     }
+            //Set the values of Prepared String
+            psmt.setString(1, idJson);
+            psmt.setString(2, configJson);
+            psmt.setString(3, roundJson);
+            psmt.setString(4, playerJson);
+            psmt.setString(5, turnJson);
+
+            psmt.executeUpdate();
+            conn.commit();
+            conn.close();
+            psmt.close();
+            System.out.println("SUCCESSFULLY SAVED FILE TO DB");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

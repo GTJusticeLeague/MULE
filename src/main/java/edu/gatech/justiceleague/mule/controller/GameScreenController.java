@@ -286,8 +286,9 @@ public class GameScreenController {
             gamePlay.saveGame();
             System.out.println(GamePlay.gamePlayID());
             dialogStage.close();
-            //todo: close game;
 
+            //Shut down game after saving
+            System.exit(0);
         });
 
         exit.setOnAction(arg0 -> dialogStage.close());

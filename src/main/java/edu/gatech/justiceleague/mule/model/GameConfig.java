@@ -1,12 +1,16 @@
 package edu.gatech.justiceleague.mule.model;
 
-import java.io.FileNotFoundException;
+import java.io.*;
 
 /**
  * Created by Donald on 9/13/2015.
  * 9/13/2015 - Changed level to difficulty, make variables final, add getters
  */
 public class GameConfig {
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
 
     /**
      * Game difficulty
@@ -117,9 +121,5 @@ public class GameConfig {
      */
     public final Store getStore() {
         return store;
-    }
-
-    public final void setPlayers(Player[] players) {
-        this.players = players;
     }
 }

@@ -74,5 +74,4 @@ public class Tile {
     public final void setMule(Mule mule) {
         this.mule = mule;
     }
-
 }

@@ -1,16 +1,18 @@
 package edu.gatech.justiceleague.mule.model;
 
+import com.google.gson.Gson;
 import edu.gatech.justiceleague.mule.controller.GameScreenController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+
+
 
 
 /**
@@ -20,7 +22,7 @@ public class GamePlay implements Serializable {
     public static GameConfig gameConfig;
     public static int round = 0;
     public static Player currentPlayer;
-    public static Queue<Player> playerOrder = new PriorityQueue<>();
+    public static transient Queue<Player> playerOrder = new PriorityQueue<>();
     public static int turnSeconds = 0;
 
     /**
@@ -220,44 +222,23 @@ public class GamePlay implements Serializable {
      * Serializes the GamePlay object and writes the contents to the database
      */
     public void saveGame() {
-        String fileName = "SavedGameData.bin";
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
-            out.writeObject(this);
-            out.close();
-            Database.saveTxtToDB();
-        } catch (IOException | SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println("Done serializing gameplay");
-        }
+        Gson gson = new Gson();
+
+        String idJson = gson.toJson(gamePlayID());
+        String configJson = gson.toJson(gameConfig);
+        String roundJson = gson.toJson(round);
+        String playerJson = gson.toJson(currentPlayer);
+        String turnJson = gson.toJson(turnSeconds);
+
+        Database.saveGame(idJson, configJson, roundJson, playerJson, turnJson);
+
     }
 
     /**
      * Loads the GamePlay serializable from the database
      */
-    //Saved game h50-325
-    //maybe game id is passed in?
-    public static void loadGame() {
-        String fileName = "SavedGameData.bin";
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            //todo: get file from database
-            GamePlay savedGamePlay = (GamePlay) in.readObject();
-
-            //Is this all needed?
-            GamePlay.setGameConfig(savedGamePlay.getGameConfig());
-            GamePlay.round = savedGamePlay.getRound();
-            GamePlay.setCurrentPlayer(savedGamePlay.getCurrentPlayer());
-            GamePlay.playerOrder = savedGamePlay.playerOrder;
-            GamePlay.setTurnSeconds(savedGamePlay.getTurnSeconds());
-
-            in.close();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println("Done loading");
-        }
+    public static void loadGame(String loadedGameID) {
+        //todo: complete
     }
 
     /**
@@ -265,6 +246,7 @@ public class GamePlay implements Serializable {
      * @return String
      */
     public static String gamePlayID() {
-        return String.valueOf(currentPlayer.getName().charAt(0)) + turnSeconds + "-" + round + moneyFactor();
+        return String.valueOf(currentPlayer.getName()) + turnSeconds + "-" + round + moneyFactor() +
+                gameConfig.getNumPlayers() + gameConfig.getDifficulty();
     }
 }

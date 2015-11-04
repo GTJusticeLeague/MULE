@@ -1,22 +1,19 @@
 package edu.gatech.justiceleague.mule.controller;
 
+import edu.gatech.justiceleague.mule.model.Database;
 import edu.gatech.justiceleague.mule.model.GameConfig;
 import edu.gatech.justiceleague.mule.model.GamePlay;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class GameConfigController {
 
@@ -36,29 +33,38 @@ public class GameConfigController {
     private ToggleGroup difficulty;
 
     @FXML
-    private void handleLoadGame() throws IOException {
+    private void handleLoadGame() throws IOException, SQLException, ClassNotFoundException {
         Label saveGame = new Label("Select a game to load.");
         saveGame.setAlignment(Pos.CENTER);
 
         Button load = new Button("Load");
         Button cancel = new Button("Cancel");
-        SplitMenuButton gameList = new SplitMenuButton();
-        gameList.setPrefWidth(500);
-        gameList.setText("Select Game");
-        //Todo: Query database for saved games
 
-        gameList.getItems().addAll(new MenuItem("Game1"), new MenuItem("Game2"), new MenuItem("Game3"));
+        //Add items to ChoiceBox
+        ObservableList<String> gameIDs = Database.queryDatabaseForGameIDs();
+        ChoiceBox<String> gameList = new ChoiceBox<>(gameIDs);
 
-        final Stage dialogStage = GameScreenController.stageMaker("Load a Game", GameScreenController.vBoxMaker(saveGame, gameList, GameScreenController.hBoxMaker(null, load, cancel)));
-        dialogStage.setWidth(350);
-        dialogStage.setHeight(150);
+        final Stage dialogStage = GameScreenController.stageMaker("Load a Game", GameScreenController.vBoxMaker(saveGame,
+                gameList, GameScreenController.hBoxMaker(null, load, cancel)));
+        dialogStage.setWidth(175);
+        dialogStage.setHeight(175);
 
         load.setOnAction(arg0 -> {
-            // todo: code for loading a game should be here!
+            String output = gameList.getSelectionModel().getSelectedItem();
+            if (output != null) {
+                GamePlay.loadGame(output);
+                try {
+                    Stage stage = (Stage) loadGameButton.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/gameScreen.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             dialogStage.close();
-
         });
-
         cancel.setOnAction(arg0 -> dialogStage.close());
         dialogStage.show();
     }
@@ -100,10 +106,12 @@ public class GameConfigController {
                 Integer.parseInt(((RadioButton) numPlayers.getSelectedToggle()).getText())));
 
         // Move to the next scene (player configuration)
-        Stage stage = (Stage) gameConfigButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/playerConfiguration.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            Stage stage = (Stage) gameConfigButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/playerConfiguration.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        //todo: load game here?
     }
 }
