@@ -96,7 +96,7 @@ public class Player implements Comparable<Player> {
     private int smithoreMule;
     private int crystiteMule;
     private int numLand;
-    private PlayerTimer timer;
+    private transient PlayerTimer timer;
     /**
      * Initialization of players. Sets race, color (which cannot
      * be the same as other players),
@@ -379,7 +379,11 @@ public class Player implements Comparable<Player> {
      * @return The number of seconds left on the clock
      */
     public final int stopTime() {
-        return timer.stopTime();
+        if (timer != null) {
+            return timer.stopTime();
+        } else {
+            return 0;
+        }
     }
 
     /**

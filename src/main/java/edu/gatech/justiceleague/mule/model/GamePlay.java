@@ -31,6 +31,7 @@ public class GamePlay {
      * End the current players turn by beginning the turn of the next player
      */
     public static void nextPlayer() {
+        //TODO: When loading game the timer is only 5 seconds
         Player nextPlayer = playerOrder.peek();
         if (nextPlayer == null) {
             // We have gone through all players in the queue, round is over
@@ -219,7 +220,6 @@ public class GamePlay {
 
         //Write to database
         Database.saveGame(idJson, configJson, roundJson, playerJson, turnJson);
-
     }
 
     /**
@@ -239,6 +239,7 @@ public class GamePlay {
         GamePlay.round = Integer.parseInt(gameInfo.get(1));
         GamePlay.setCurrentPlayer(setCurrentPlayer(currentPlayerRootMapObject));
         GamePlay.turnSeconds = Integer.parseInt(gameInfo.get(3));
+        //TODO: restart timer and players seconds
     }
 
     private static GameConfig setGameConfig(Map<String, Object> gameConfigRootMapObject) {
@@ -294,6 +295,7 @@ public class GamePlay {
         }
 
         //Extract JSON for Board
+        //TODO: BUG FIX this doesn't write all of the tiles correctly
         Board board;
         LinkedTreeMap boardMap = (LinkedTreeMap) gameConfigRootMapObject.get("gameBoard");
         ArrayList list = (ArrayList) boardMap.get("tiles");
@@ -303,7 +305,7 @@ public class GamePlay {
             for (int j = 0; j < ((ArrayList) list.get(i)).size(); j++) {
                 LinkedTreeMap tileMap = (LinkedTreeMap) ((ArrayList) list.get(i)).get(j);
                 Player owner;
-                //TODO: Mule Logic?
+                //TODO: Mule Logic
                 String objTerrain = (String) tileMap.get("terrain");
                 Tile.Terrain terrain = null;
                 switch (objTerrain) {
