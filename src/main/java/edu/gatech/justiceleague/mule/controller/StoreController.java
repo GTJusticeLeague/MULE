@@ -131,6 +131,8 @@ public class StoreController {
     @FXML
     private Button checkout;
 
+
+
     /**
      * Initializes store
      */
@@ -416,7 +418,7 @@ public class StoreController {
      * @param itemsAvailable
      * @return whether amounts available are greater than amounts to buy
      */
-    private boolean checkAmountsAreAvailable(int[] totalItemsToBuy, int[] itemsAvailable) {
+    boolean checkAmountsAreAvailable(int[] totalItemsToBuy, int[] itemsAvailable) {
 
         for (int i = 0; i < totalItemsToBuy.length; i++) {
             if (totalItemsToBuy[i] > itemsAvailable[i]) {
