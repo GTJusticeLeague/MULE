@@ -116,7 +116,7 @@ public class GamePlay {
      *
      * @return if the current Player has the lowest score
      */
-    private static boolean curPlayerHasLowScore() {
+    static boolean curPlayerHasLowScore() {
         //Assume the curPlayer's score is the lowest
         int lowScore = currentPlayer.getScore();
 

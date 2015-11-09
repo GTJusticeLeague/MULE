@@ -9,10 +9,6 @@ import java.util.Arrays;
  */
 public class GameConfig {
 
-    public void setPlayers(Player[] players) {
-        this.players = players;
-    }
-
     /**
      * Game difficulty
      */
@@ -133,6 +129,17 @@ public class GameConfig {
      */
     public final Store getStore() {
         return store;
+    }
+
+    /**
+     * Set the player array
+     *
+     * @param players The array to set as the current player array
+     */
+    public void setPlayers(Player[] players) {
+        Player[] tempPlayer = new Player[players.length];
+        System.arraycopy(players, 0, tempPlayer, 0, players.length);
+        this.players = tempPlayer;
     }
 
     @Override
