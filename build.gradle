@@ -27,6 +27,7 @@ idea {
 
 dependencies {
     checkstyle 'com.puppycrawl.tools:checkstyle:5.9'
+    compile 'com.google.code.gson:gson:2.4'
 }
 
 repositories {
