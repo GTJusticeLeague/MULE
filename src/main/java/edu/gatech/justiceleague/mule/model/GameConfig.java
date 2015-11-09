@@ -107,7 +107,9 @@ public class GameConfig {
      * @return array of players
      */
     public final Player[] getPlayers() {
-        return players;
+        Player[] playersToGet = new Player[this.players.length];
+        System.arraycopy(this.players, 0, playersToGet, 0, this.players.length);
+        return playersToGet;
     }
 
     /**

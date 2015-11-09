@@ -6,7 +6,12 @@ import javafx.collections.ObservableList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +19,15 @@ import java.util.ArrayList;
  */
  public class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String fileName = "SavedGameData.bin";
+    static final String FILENAME = "SavedGameData.bin";
+
+    /**
+     * Do not allow an instance of this utility class to be constructed
+     */
+    private Database() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Initialize the database connection
      * @return Connection

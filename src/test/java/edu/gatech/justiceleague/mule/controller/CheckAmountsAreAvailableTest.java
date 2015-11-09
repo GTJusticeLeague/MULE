@@ -1,6 +1,7 @@
 package edu.gatech.justiceleague.mule.controller;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class CheckAmountsAreAvailableTest {
