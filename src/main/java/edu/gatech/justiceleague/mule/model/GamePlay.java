@@ -7,7 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Random;
 
 
 /**
@@ -31,7 +36,6 @@ public class GamePlay {
      * End the current players turn by beginning the turn of the next player
      */
     public static void nextPlayer() {
-        //TODO: When loading game the timer is only 5 seconds
         Player nextPlayer = playerOrder.peek();
         if (nextPlayer == null) {
             // We have gone through all players in the queue, round is over
@@ -50,7 +54,6 @@ public class GamePlay {
 
     /**
      * Initiate random event
-     * //todo: show the actual amount of $$ not m
      */
     private static void randomEvent() {
         Random r = new Random();
@@ -69,16 +72,16 @@ public class GamePlay {
                 break;
             case 3:
                 currentPlayer.setMoney(currentPlayer.getMoney() + 8 * moneyFactor());
-                eventLabel = new Label("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $ 8*m.");
+                eventLabel = new Label("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $" + (8 * moneyFactor()) + ".");
                 break;
             case 4:
                 currentPlayer.setMoney(currentPlayer.getMoney() + 2 * moneyFactor());
-                eventLabel = new Label("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $2*m");
+                eventLabel = new Label("YOU FOUND A DEAD MOOSE RAT AND SOLD THE HIDE FOR $" + (2 * moneyFactor()) + ".");
                 break;
             case 5:
                 if (!curPlayerHasLowScore()) {
                     currentPlayer.setMoney(currentPlayer.getMoney() - 4 * moneyFactor());
-                    eventLabel = new Label("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $4*m.");
+                    eventLabel = new Label("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $" + (4 * moneyFactor()) + ".");
                 }
                 break;
             case 6:
@@ -92,7 +95,7 @@ public class GamePlay {
                 if (!curPlayerHasLowScore()) {
                     currentPlayer.setMoney(currentPlayer.getMoney() - 6 * moneyFactor());
                     eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. "
-                            + "IT COST YOU $6*m TO CLEAN IT UP.");
+                            + "IT COST YOU $" + (6 * moneyFactor()) + "TO CLEAN IT UP.");
                 }
                 break;
             default:
@@ -199,10 +202,6 @@ public class GamePlay {
 
     public static void setTurnSeconds(int seconds) {
         turnSeconds = seconds;
-    }
-
-    public static Queue<Player> getPlayerOrder() {
-        return playerOrder;
     }
 
     /**
