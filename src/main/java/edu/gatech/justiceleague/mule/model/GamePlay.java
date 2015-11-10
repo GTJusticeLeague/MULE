@@ -19,11 +19,11 @@ import java.util.Random;
  * Contains the main game logic
  */
 public class GamePlay {
-    public static GameConfig gameConfig;
-    public static int round = 0;
-    public static Player currentPlayer;
-    public static transient Queue<Player> playerOrder = new PriorityQueue<>();
-    public static int turnSeconds = 0;
+    private static GameConfig gameConfig;
+    private static int round = 0;
+    private static Player currentPlayer;
+    private static transient Queue<Player> playerOrder = new PriorityQueue<>();
+    private static int turnSeconds = 0;
 
     /**
      * Start the regular gameplay. Should be called at the end of land selection phase
@@ -242,8 +242,6 @@ public class GamePlay {
     }
 
     private static GameConfig setGameConfig(Map<String, Object> gameConfigRootMapObject) {
-        Gson gson = new Gson();
-
         //Extract Json for Difficulty
         GameConfig.Difficulty difficulty = null;
         String objDifficulty = (String) gameConfigRootMapObject.get("difficulty");
@@ -300,7 +298,7 @@ public class GamePlay {
         ArrayList list = (ArrayList) boardMap.get("tiles");
         Tile[][] tiles = new Tile[5][9];
 
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < ((ArrayList) list.get(i)).size(); j++) {
                 LinkedTreeMap tileMap = (LinkedTreeMap) ((ArrayList) list.get(i)).get(j);
                 Player owner;
@@ -339,9 +337,9 @@ public class GamePlay {
         }
         board = new Board(tiles);
 
-        GameConfig gameConfig =  new GameConfig(difficulty,mapType, numPlayers, store, board, players);
+        GameConfig gameConfig = new GameConfig(difficulty, mapType, numPlayers, store, board, players);
         GamePlay.setGameConfig(gameConfig);
-        return new GameConfig(difficulty,mapType, numPlayers, store, board, players);
+        return new GameConfig(difficulty, mapType, numPlayers, store, board, players);
     }
 
     /**
@@ -390,6 +388,8 @@ public class GamePlay {
                 break;
             case "UGAITE":
                 race = Player.Race.UGAITE;
+            default:
+                break;
         }
 
         Player player = new Player((String) currentPlayerRootMapObject.get("name"),
@@ -417,7 +417,7 @@ public class GamePlay {
      * @return String
      */
     public static String gamePlayID() {
-        return String.valueOf(currentPlayer.getName()) + turnSeconds + "-" + round + moneyFactor() +
-                gameConfig.getNumPlayers() + gameConfig.getDifficulty();
+        return String.valueOf(currentPlayer.getName()) + turnSeconds + "-" + round + moneyFactor()
+                + gameConfig.getNumPlayers() + gameConfig.getDifficulty();
     }
 }

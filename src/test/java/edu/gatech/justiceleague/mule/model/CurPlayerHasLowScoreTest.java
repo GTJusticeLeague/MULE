@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class CurPlayerHasLowScoreTest {
 
     @Test
-    public void lowScore() {
+    public void lowScoreTest() {
         try {
             GamePlay.setGameConfig(new GameConfig(GameConfig.Difficulty.BEGINNER, GameConfig.MapType.STANDARD, 4));
         } catch (java.io.FileNotFoundException e) {

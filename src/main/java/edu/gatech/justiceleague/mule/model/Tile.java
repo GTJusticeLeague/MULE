@@ -76,11 +76,11 @@ public class Tile {
     }
 
     @Override
-    public String toString() {
-        return "Tile{" +
-                "terrain=" + terrain +
-                ", owner=" + owner +
-                ", mule=" + mule +
-                '}';
+    public final String toString() {
+        return "Tile{"
+                + "terrain=" + terrain
+                + ", owner=" + owner
+                + ", mule=" + mule
+                + '}';
     }
 }

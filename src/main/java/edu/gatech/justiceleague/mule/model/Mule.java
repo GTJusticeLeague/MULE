@@ -43,92 +43,111 @@ public class Mule {
         if (owner.getEnergy() == 0) {
             return; // Not enough energy to produce
         }
-        int production = 0;
         if (this.type == MULETYPE.FOOD) {
-            switch (this.terrain) {
-                case RIVER:
-                    production = 4;
-                    break;
-                case PLAIN:
-                    production = 2;
-                    break;
-                case ONEMOUNTAIN:
-                    production = 1;
-                    break;
-                case TWOMOUNTAIN:
-                    production = 1;
-                    break;
-                case THREEMOUNTAIN:
-                    production = 1;
-                    break;
-                default:
-                    break;
-            }
-            owner.setFood(owner.getFood() + production);
+            owner.setFood(owner.getFood() + getFoodProduction());
         } else if (this.type == MULETYPE.ENERGY) {
-            switch (this.terrain) {
-                case RIVER:
-                    production = 2;
-                    break;
-                case PLAIN:
-                    production = 3;
-                    break;
-                case ONEMOUNTAIN:
-                    production = 1;
-                    break;
-                case TWOMOUNTAIN:
-                    production = 1;
-                    break;
-                case THREEMOUNTAIN:
-                    production = 1;
-                    break;
-                default:
-                    break;
-            }
-            owner.setEnergy(owner.getEnergy() + production);
+            owner.setEnergy(owner.getEnergy() + getEnergyProduction());
         } else if (this.type == MULETYPE.SMITHORE) {
-            switch (this.terrain) {
-                case RIVER:
-                    production = 0;
-                    break;
-                case PLAIN:
-                    production = 1;
-                    break;
-                case ONEMOUNTAIN:
-                    production = 2;
-                    break;
-                case TWOMOUNTAIN:
-                    production = 3;
-                    break;
-                case THREEMOUNTAIN:
-                    production = 4;
-                    break;
-                default:
-                    break;
-            }
-            owner.setSmithore(owner.getSmithore() + production);
+            owner.setSmithore(owner.getSmithore() + getSmithoreProduction());
         } else if (this.type == MULETYPE.CRYSTITE) {
-            switch (this.terrain) {
-                case RIVER:
-                    production = 0;
-                    break;
-                case PLAIN:
-                    production = 0;
-                    break;
-                case ONEMOUNTAIN:
-                    production = 0;
-                    break;
-                case TWOMOUNTAIN:
-                    production = 0;
-                    break;
-                case THREEMOUNTAIN:
-                    production = 0;
-                    break;
-                default:
-                    break;
-            }
-            owner.setCrystite(owner.getCrystite() + production);
+            owner.setCrystite(owner.getCrystite() + getCrystiteProduction());
         }
         owner.setEnergy(owner.getEnergy() - 1);
+    }
+
+    private int getFoodProduction() {
+        int production = 0;
+        switch (this.terrain) {
+            case RIVER:
+                production = 4;
+                break;
+            case PLAIN:
+                production = 2;
+                break;
+            case ONEMOUNTAIN:
+                production = 1;
+                break;
+            case TWOMOUNTAIN:
+                production = 1;
+                break;
+            case THREEMOUNTAIN:
+                production = 1;
+                break;
+            default:
+                break;
+        }
+        return production;
+    }
+
+    private int getEnergyProduction() {
+        int production = 0;
+        switch (this.terrain) {
+            case RIVER:
+                production = 2;
+                break;
+            case PLAIN:
+                production = 3;
+                break;
+            case ONEMOUNTAIN:
+                production = 1;
+                break;
+            case TWOMOUNTAIN:
+                production = 1;
+                break;
+            case THREEMOUNTAIN:
+                production = 1;
+                break;
+            default:
+                break;
+        }
+        return production;
+    }
+
+    private int getSmithoreProduction() {
+        int production = 0;
+        switch (this.terrain) {
+            case RIVER:
+                production = 0;
+                break;
+            case PLAIN:
+                production = 1;
+                break;
+            case ONEMOUNTAIN:
+                production = 2;
+                break;
+            case TWOMOUNTAIN:
+                production = 3;
+                break;
+            case THREEMOUNTAIN:
+                production = 4;
+                break;
+            default:
+                break;
+        }
+        return production;
+    }
+
+    private int getCrystiteProduction() {
+        int production = 0;
+        switch (this.terrain) {
+            case RIVER:
+                production = 0;
+                break;
+            case PLAIN:
+                production = 0;
+                break;
+            case ONEMOUNTAIN:
+                production = 0;
+                break;
+            case TWOMOUNTAIN:
+                production = 0;
+                break;
+            case THREEMOUNTAIN:
+                production = 0;
+                break;
+            default:
+                break;
+        }
+        return production;
     }
 }

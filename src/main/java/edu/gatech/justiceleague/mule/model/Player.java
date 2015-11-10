@@ -6,22 +6,6 @@ package edu.gatech.justiceleague.mule.model;
  */
 public class Player implements Comparable<Player> {
 
-    public Player(String name, Race race, Color color, int number, int money, int food, int energy, int smithore, int crystite, int foodMule, int energyMule, int smithoreMule, int crystiteMule, int numLand) {
-        this.name = name;
-        this.race = race;
-        this.color = color;
-        this.number = number;
-        this.money = money;
-        this.energy = energy;
-        this.smithore = smithore;
-        this.crystite = crystite;
-        this.foodMule = foodMule;
-        this. energyMule = energyMule;
-        this.smithoreMule = smithoreMule;
-        this.crystiteMule = crystiteMule;
-        this.numLand = numLand;
-    }
-
     /**
      * Race of player
      */
@@ -143,6 +127,22 @@ public class Player implements Comparable<Player> {
 
     }
 
+    public Player(String name, Race race, Color color, int number, int money, int food, int energy, int smithore, int crystite, int foodMule, int energyMule, int smithoreMule, int crystiteMule, int numLand) {
+        this.name = name;
+        this.race = race;
+        this.color = color;
+        this.number = number;
+        this.money = money;
+        this.food = food;
+        this.energy = energy;
+        this.smithore = smithore;
+        this.crystite = crystite;
+        this.foodMule = foodMule;
+        this.energyMule = energyMule;
+        this.smithoreMule = smithoreMule;
+        this.crystiteMule = crystiteMule;
+        this.numLand = numLand;
+    }
 
     /**
      * Get name

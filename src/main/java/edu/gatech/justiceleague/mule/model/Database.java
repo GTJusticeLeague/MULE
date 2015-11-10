@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Handles database logic for the game
  */
- public class Database {
+public final class Database {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String FILENAME = "SavedGameData.bin";
 
@@ -58,8 +58,7 @@ import java.util.ArrayList;
     }
 
     public static ObservableList<String> queryDatabaseForGameIDs() throws SQLException, ClassNotFoundException {
-        String query = "SELECT game_id " +
-                "FROM saved_games";
+        String query = "SELECT game_id FROM saved_games";
         Statement stmt;
         Connection conn = getConnection();
         ArrayList<String> list = new ArrayList<>();
@@ -83,8 +82,8 @@ import java.util.ArrayList;
     }
 
     public static void saveGame(String idJson, String configJson, String roundJson, String playerJson, String turnJson) {
-        String insert = "INSERT INTO saved_games(game_id, game_config, game_round, current_player, game_seconds) " +
-                " VALUES (?, ?, ?, ?, ?)";
+        String insert = "INSERT INTO saved_games(game_id, game_config, game_round, current_player, game_seconds) "
+                + " VALUES (?, ?, ?, ?, ?)";
         PreparedStatement psmt;
 
         try (Connection conn = getConnection()) {

@@ -1,6 +1,5 @@
 package edu.gatech.justiceleague.mule.controller;
 
-import edu.gatech.justiceleague.mule.controller.StoreController;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -79,7 +79,9 @@ public class GameConfig {
         this.numPlayers = numPlayers;
         this.store = store;
         this.gameBoard = gameBoard;
-        this.players = players;
+        Player[] tempPlayers = new Player[numPlayers];
+        System.arraycopy(players, 0, tempPlayers, 0, numPlayers);
+        this.players = tempPlayers;
     }
 
     /**
@@ -136,21 +138,21 @@ public class GameConfig {
      *
      * @param players The array to set as the current player array
      */
-    public void setPlayers(Player[] players) {
+    public final void setPlayers(Player[] players) {
         Player[] tempPlayer = new Player[players.length];
         System.arraycopy(players, 0, tempPlayer, 0, players.length);
         this.players = tempPlayer;
     }
 
     @Override
-    public String toString() {
-        return "GameConfig{" +
-                "difficulty=" + difficulty +
-                ", gameBoard=" + gameBoard +
-                ", mapType=" + mapType +
-                ", store=" + store +
-                ", numPlayers=" + numPlayers +
-                ", players=" + Arrays.toString(players) +
-                '}';
+    public final String toString() {
+        return "GameConfig{"
+                + "difficulty=" + difficulty
+                + ", gameBoard=" + gameBoard
+                + ", mapType=" + mapType
+                + ", store=" + store
+                + ", numPlayers=" + numPlayers
+                + ", players=" + Arrays.toString(players)
+                + '}';
     }
 }

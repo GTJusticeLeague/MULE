@@ -31,6 +31,20 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+pmd {
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    reportsDir = file("$project.buildDir/reports/pmd")
+    ruleSets = [
+            "basic",
+            "braces"
+    ]
+}
+
 repositories {
     mavenCentral()
+}
+
+task runJar(dependsOn: "jar") << {
+    ant.java(jar: "${libsDir}${File.separator}MULE-" + version + ".jar", fork: true)
 }

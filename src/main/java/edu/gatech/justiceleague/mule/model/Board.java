@@ -98,8 +98,16 @@ public class Board {
         }
     }
 
+    /**
+     * Constructor for Board
+     * @param tiles The 2D array of Tiles to make up the board
+     */
     public Board(Tile[][] tiles) {
-        this.tiles = tiles;
+        Tile[][] tempTiles = new Tile[tiles.length][];
+        for (int i = 0; i < tempTiles.length; i++) {
+            tempTiles[i] = tiles[i].clone();
+        }
+        this.tiles = tempTiles;
     }
 
     /**
@@ -123,6 +131,10 @@ public class Board {
      * @return array of tiles
      */
     public final Tile[][] getTiles() {
-        return tiles;
+        Tile[][] tempTiles = new Tile[tiles.length][];
+        for (int i = 0; i < tempTiles.length; i++) {
+            tempTiles[i] = tiles[i].clone();
+        }
+        return tempTiles;
     }
 }

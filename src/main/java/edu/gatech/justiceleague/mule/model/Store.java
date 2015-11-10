@@ -116,13 +116,13 @@ public class Store {
     }
 
     @Override
-    public String toString() {
-        return "Store{" +
-                "numFood=" + numFood +
-                ", numEnergy=" + numEnergy +
-                ", numSmithore=" + numSmithore +
-                ", numCrystite=" + numCrystite +
-                ", numMule=" + numMule +
-                '}';
+    public final String toString() {
+        return "Store{"
+                + "numFood=" + numFood
+                + ", numEnergy=" + numEnergy
+                + ", numSmithore=" + numSmithore
+                + ", numCrystite=" + numCrystite
+                + ", numMule=" + numMule
+                + '}';
     }
 }
