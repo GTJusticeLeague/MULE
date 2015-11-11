@@ -402,7 +402,7 @@ public class StoreController {
      * @param itemPriceTotals
      * @return total bill
      */
-    private int overallBuyTotal(int[] itemPriceTotals) {
+    int overallBuyTotal(int[] itemPriceTotals) {
 
         int total = 0;
 
