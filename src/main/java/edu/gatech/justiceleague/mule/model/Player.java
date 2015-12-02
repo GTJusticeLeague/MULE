@@ -19,7 +19,6 @@ public class Player implements Comparable<Player> {
          * Flapper race; intermediate
          */
         FLAPPER,
-
         /**
          * Bonzoid race; beginner
          */
@@ -33,7 +32,17 @@ public class Player implements Comparable<Player> {
         /**
          * Buzzite race; beginner
          */
-        BUZZITE
+        BUZZITE,
+
+        /**
+         * Flapper race; intermediate
+         */
+        BADONK,
+
+        /**
+         * Flapper race; intermediate
+         */
+        DOTHRAKI,
     }
 
     /**
@@ -98,7 +107,7 @@ public class Player implements Comparable<Player> {
         //initial money amount
         if (race == Race.HUMAN) {
             this.money = 600;
-        } else if (race == Race.FLAPPER) {
+        } else if (race == Race.FLAPPER || race == Race.BADONK || race == Race.DOTHRAKI) {
             this.money = 1600;
         } else {
             this.money = 1000;

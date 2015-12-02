@@ -102,6 +102,8 @@ public class PlayerConfigController {
         String bonzoidString = "Bonzoid";
         String ugaiteString = "Ugaite";
         String buzziteString = "Buzzite";
+        String badonkString = "Badonk";
+        String dothrakiString = "Dothraki";
 
         String redString = "Red";
         String greenString = "Green";
@@ -112,7 +114,7 @@ public class PlayerConfigController {
         errorMsg.setText("");
 
         player1Race.setItems(FXCollections.observableArrayList(
-                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString, badonkString, dothrakiString));
         player1Race.getSelectionModel().selectFirst();
         player1Color.setItems(FXCollections.observableArrayList(
                 redString, greenString, blueString, yellowString, purpleString));
@@ -120,21 +122,21 @@ public class PlayerConfigController {
         player1Color.getSelectionModel().selectFirst();
 
         player2Race.setItems(FXCollections.observableArrayList(
-                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString, badonkString, dothrakiString));
         player2Race.getSelectionModel().selectFirst();
         player2Color.setItems(FXCollections.observableArrayList(
                 redString, greenString, blueString, yellowString, purpleString));
         player2Color.getSelectionModel().selectFirst();
 
         player3Race.setItems(FXCollections.observableArrayList(
-                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString, badonkString, dothrakiString));
         player3Race.getSelectionModel().selectFirst();
         player3Color.setItems(FXCollections.observableArrayList(
                 redString, greenString, blueString, yellowString, purpleString));
         player3Color.getSelectionModel().selectFirst();
 
         player4Race.setItems(FXCollections.observableArrayList(
-                humanString, flapperString, bonzoidString, ugaiteString, buzziteString));
+                humanString, flapperString, bonzoidString, ugaiteString, buzziteString, badonkString, dothrakiString));
         player4Race.getSelectionModel().selectFirst();
         player4Color.setItems(FXCollections.observableArrayList(
                 redString, greenString, blueString, yellowString, purpleString));

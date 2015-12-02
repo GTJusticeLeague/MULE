@@ -394,6 +394,10 @@ public class GameScreenController {
             icon.setImage(new Image(getClass().getResourceAsStream("/img/flapper.png")));
         } else if (race == Player.Race.UGAITE) {
             icon.setImage(new Image(getClass().getResourceAsStream("/img/ugaite.png")));
+        } else if (race == Player.Race.BADONK) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/badonk.png")));
+        } else if (race == Player.Race.DOTHRAKI) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/dothraki.png")));
         }
 
         return icon;
