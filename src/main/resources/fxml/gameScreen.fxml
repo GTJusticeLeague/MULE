@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gatech.justiceleague.mule.controller.GameScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gatech.justiceleague.mule.controller.GameScreenController">
    <children>
        <AnchorPane layoutX="-6.0" layoutY="-8.0" prefHeight="614.0" prefWidth="806.0">
            <children>
@@ -85,7 +85,7 @@
                                      <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                              <Pane prefHeight="200.0" prefWidth="200.0" stylesheets="@../stylesheet.css" GridPane.columnIndex="2">
                                  <children>
                                      <Text fx:id="playerName2" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
