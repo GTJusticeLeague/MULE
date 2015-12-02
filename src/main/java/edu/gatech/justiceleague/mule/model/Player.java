@@ -337,6 +337,27 @@ public class Player implements Comparable<Player> {
     }
 
     /**
+     * Get the count of this type mule that the player owns
+     *
+     * @param muleType Type of the mule
+     * @return Count of this type
+     */
+    public final int getMuleCount(String muleType) {
+        switch (muleType) {
+            case "FOOD":
+                return getFoodMule();
+            case "ENERGY":
+                return getEnergyMule();
+            case "SMITHORE":
+                return getSmithoreMule();
+            case "CRYSTITE":
+                return getCrystiteMule();
+            default:
+                return 0;
+        }
+    }
+
+    /**
      * String representtion of player
      * @return string representation of player
      */
