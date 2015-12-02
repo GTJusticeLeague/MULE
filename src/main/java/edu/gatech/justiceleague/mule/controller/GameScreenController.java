@@ -1,7 +1,7 @@
 package edu.gatech.justiceleague.mule.controller;
 
 import edu.gatech.justiceleague.mule.model.GamePlay;
-import edu.gatech.justiceleague.mule.model.Mule;
+import edu.gatech.justiceleague.mule.model.MuleFactory;
 import edu.gatech.justiceleague.mule.model.Player;
 import edu.gatech.justiceleague.mule.model.Tile;
 import javafx.animation.Animation;
@@ -183,25 +183,25 @@ public class GameScreenController {
 
 
         foodBtn.setOnAction(arg0 -> {
-            placeMule(Mule.MULETYPE.FOOD, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("FOOD", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         energyBtn.setOnAction(arg0 -> {
-            placeMule(Mule.MULETYPE.ENERGY, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("ENERGY", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         smithBtn.setOnAction(arg0 -> {
-            placeMule(Mule.MULETYPE.SMITHORE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("SMITHORE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
 
         crystBtn.setOnAction(arg0 -> {
-            placeMule(Mule.MULETYPE.CRYSTITE, (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
+            placeMule("CRYSTITE", (GridPane.getRowIndex(((Node) event.getSource()).getParent())),
                     (GridPane.getColumnIndex(((Node) event.getSource()).getParent())));
             dialogStage.close();
         });
@@ -456,17 +456,13 @@ public class GameScreenController {
 
         //Notify user if current tile is taken or cannot afford the property
         if (GamePlay.getCurrentPlayer().getMoney() < price) {
-
-
             Label errorLabel = new Label("You cannot afford this property.");
             errorLabel.setAlignment(Pos.CENTER);
             Button okBtn = new Button("OK");
             final Stage dialogStage = stageMaker("Sorry", vBoxMaker(errorLabel, hBoxMaker(null, okBtn)));
             okBtn.setOnAction(arg0 -> dialogStage.close());
             dialogStage.show();
-
         } else if (current.getOwner() != null) {
-
             Label errorLabel = new Label("This property already has an owner!");
             errorLabel.setAlignment(Pos.CENTER);
             Button okBtn = new Button("OK");
@@ -500,85 +496,66 @@ public class GameScreenController {
     /**
      * Places mule at coordinate
      *
-     * @param mule to place
+     * @param muleType Type to place
      * @param x coordinate
      * @param y coordinate
      */
-    private void placeMule(Mule.MULETYPE mule, Integer x, Integer y) {
+    private void placeMule(String muleType, Integer x, Integer y) {
         Tile curTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
         Player curPlayer = GamePlay.getCurrentPlayer();
 
-        switch (mule) {
-            case FOOD:
+        // If the player doesn't have any of this muletype, do nothing
+        if (curPlayer.getMuleCount(muleType) == 0) {
+            return;
+        }
+
+        switch (muleType) {
+            case "FOOD":
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
-                    //Decrement if MULE count is above 0
-                    if (curPlayer.getFoodMule() > 0) {
-                        //TODO: alert user they have lost mule
-                        curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
-                    }
+                    //TODO: alert user they have lost mule
+                    curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
                 } else {
-                    //Place corresponding MULE else do nothing
-                    //TODO: FIX HARDCODED TEST
-                    //if (curPlayer.getFood() > 0 && curPlayer.getMule > 0)
-                    if (curPlayer.getFoodMule() > 0) {
-                        curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.FOOD, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y);
-                    }
+                    //Place corresponding MULE
+                    curPlayer.setFoodMule(curPlayer.getFoodMule() - 1);
+                    curTile.setMule(MuleFactory.getMule(muleType, curPlayer, curTile.getTerrain()));
+                    updateTile(x, y);
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case ENERGY:
+            case "ENERGY":
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
-                    //Decrement if MULE count is above 0
-                    if (curPlayer.getEnergyMule() > 0) {
-                        curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
-                    }
+                    curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
                 } else {
-                    //Place corresponding MULE else do nothing
-                    //todo: remove hardcoded test
-                    //if (curPlayer.getEnergy() > 0 && curPlayer.getMule() > 0) {
-                    if (curPlayer.getEnergyMule() > 0) {
-                        curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.ENERGY, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y);
-                    }
+                    //Place corresponding MULE
+                    curPlayer.setEnergyMule(curPlayer.getEnergyMule() - 1);
+                    curTile.setMule(MuleFactory.getMule(muleType, curPlayer, curTile.getTerrain()));
+                    updateTile(x, y);
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case SMITHORE:
+            case "SMITHORE":
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
-                    //Decrement if MULE count is above 0
-                    if (curPlayer.getSmithoreMule() > 0) {
-                        curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
-                    }
+                    curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
                 } else {
-                    //Place corresponding MULE else do nothing
-                    if (curPlayer.getSmithoreMule() > 0) {
-                        curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.SMITHORE, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y);
-                    }
+                    //Place corresponding MULE
+                    curPlayer.setSmithoreMule(curPlayer.getSmithoreMule() - 1);
+                    curTile.setMule(MuleFactory.getMule(muleType, curPlayer, curTile.getTerrain()));
+                    updateTile(x, y);
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
-            case CRYSTITE:
+            case "CRYSTITE":
                 //Checks if player has lost MULE
                 if (curTile.getMule() != null || curTile.getOwner() == null || !curPlayer.equals(curTile.getOwner())) {
-                    //Decrement if MULE count is above 0
-                    if (curPlayer.getCrystiteMule() > 0) {
-                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
-                    }
+                    curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
                 } else {
-                    //Place corresponding MULE else do nothing
-                    if (curPlayer.getCrystiteMule() > 0) {
-                        curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
-                        curTile.setMule(new Mule(Mule.MULETYPE.CRYSTITE, curPlayer, curTile.getTerrain()));
-                        updateTile(x, y);
-                    }
+                    //Place corresponding MULE
+                    curPlayer.setCrystiteMule(curPlayer.getCrystiteMule() - 1);
+                    curTile.setMule(MuleFactory.getMule(muleType, curPlayer, curTile.getTerrain()));
+                    updateTile(x, y);
                 }
                 updatePlayer(curPlayer.getNumber());
                 break;
@@ -600,11 +577,11 @@ public class GameScreenController {
     private void updateTile(int x, int y) {
         // Get current tile, check if there is a mule on the tile
         Tile currentTile = GamePlay.getGameConfig().getGameBoard().getTiles()[x][y];
-        Mule.MULETYPE mule;
+        String mule;
         if (currentTile.getMule() != null) {
             mule = currentTile.getMule().getType();
         } else {
-            mule = Mule.MULETYPE.NONE;
+            mule = "NONE";
         }
 
         // Set the color styles for the border if there is an owner of the tile
@@ -617,7 +594,7 @@ public class GameScreenController {
         }
 
         switch (mule) {
-            case FOOD:
+            case "FOOD":
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_food_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -630,7 +607,7 @@ public class GameScreenController {
                     pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_food_tile.png")), y, x);
                 }
                 break;
-            case ENERGY:
+            case "ENERGY":
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_energy_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -643,7 +620,7 @@ public class GameScreenController {
                     pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_energy_tile.png")), y, x);
                 }
                 break;
-            case SMITHORE:
+            case "SMITHORE":
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_smithore_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -656,7 +633,7 @@ public class GameScreenController {
                     pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_smithore_tile.png")), y, x);
                 }
                 break;
-            case CRYSTITE:
+            case "CRYSTITE":
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_crystite_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
@@ -669,7 +646,7 @@ public class GameScreenController {
                     pane.add(hBoxMaker(styles, imageMaker("/img/mountain3_crystite_tile.png")), y, x);
                 }
                 break;
-            case NONE:
+            case "NONE":
                 if (currentTile.getTerrain() == Tile.Terrain.PLAIN) {
                     pane.add(hBoxMaker(styles, imageMaker("/img/plain_tile.png")), y, x);
                 } else if (currentTile.getTerrain() == Tile.Terrain.RIVER) {
