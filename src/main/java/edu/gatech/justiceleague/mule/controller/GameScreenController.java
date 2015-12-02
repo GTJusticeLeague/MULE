@@ -79,6 +79,19 @@ public class GameScreenController {
     @FXML
     private Label currentPlayer;
 
+    @FXML
+    private ImageView icon1;
+
+    @FXML
+    private ImageView icon2;
+
+    @FXML
+    private ImageView icon3;
+
+    @FXML
+    private ImageView icon4;
+
+
     // Keep track of which players have passed during the land selection phase
     private final HashSet<Player> passedPlayers = new HashSet<>();
 
@@ -354,7 +367,36 @@ public class GameScreenController {
             mule = (Label) playerStatGridPane.getChildren().get(7);
             // TODO: Show all mule types?
             //mule.setText(currentPlayer.getMule() + " Mule");
+
+            Player.Race race = currentPlayer.getRace();
+
+            int currentPlayerIndex = i + 1;
+            if (currentPlayerIndex == 1) {
+                icon1 = setRaceIcons(race, icon1);
+            } else if (currentPlayerIndex == 2) {
+                icon2 = setRaceIcons(race, icon2);
+            } else if (currentPlayerIndex == 3) {
+                icon3 = setRaceIcons(race, icon3);
+            } else if (currentPlayerIndex == 4) {
+                icon4 = setRaceIcons(race, icon4);
+            }
         }
+    }
+
+    private ImageView setRaceIcons(Player.Race race, ImageView icon) {
+        if (race == Player.Race.HUMAN) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/human.png")));
+        } else if (race == Player.Race.BONZOID) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/bonzoid.png")));
+        } else if (race == Player.Race.BUZZITE) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/buzzite.png")));
+        } else if (race == Player.Race.FLAPPER) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/flapper.png")));
+        } else if (race == Player.Race.UGAITE) {
+            icon.setImage(new Image(getClass().getResourceAsStream("/img/ugaite.png")));
+        }
+
+        return icon;
     }
 
     /**

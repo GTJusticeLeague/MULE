@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -62,6 +63,8 @@
                                      <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
                                      <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
                                      <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
+                                     <ImageView fx:id="icon1" fitHeight="30.0" fitWidth="30.0" layoutX="18.0"
+                                                layoutY="7.0" pickOnBounds="true" preserveRatio="true"/>
                                  </children>
                               </Pane>
                               <Pane prefHeight="133.0" prefWidth="197.0" GridPane.columnIndex="1">
@@ -78,10 +81,14 @@
                                      <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
                                      <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
                                      <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
+                                     <ImageView fx:id="icon2" fitHeight="30.0" fitWidth="30.0" layoutX="18.0"
+                                                layoutY="7.0" pickOnBounds="true" preserveRatio="true"/>
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                  <children>
+                                     <ImageView fx:id="icon3" fitHeight="30.0" fitWidth="30.0" layoutX="18.0"
+                                                layoutY="7.0" pickOnBounds="true" preserveRatio="true"/>
                                      <Text fx:id="playerName2" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Name" textAlignment="CENTER" wrappingWidth="201.0">
                                        <font>
                                            <Font name="System Bold" size="13.0" />
@@ -110,6 +117,8 @@
                                      <Label fx:id="smithore" layoutX="101.0" layoutY="45.0" text="__ Smithore" />
                                      <Label fx:id="crystite" layoutX="105.0" layoutY="69.0" text="__ Crystite" />
                                      <Label fx:id="mule" layoutX="70.0" layoutY="93.0" text="__ MULE" />
+                                     <ImageView fx:id="icon4" fitHeight="30.0" fitWidth="30.0" layoutX="18.0"
+                                                layoutY="7.0" pickOnBounds="true" preserveRatio="true"/>
                                  </children>
                               </Pane>
                            </children>

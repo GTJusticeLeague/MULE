@@ -14,7 +14,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,6 +37,17 @@ public class GameConfigController {
 
     @FXML
     private ToggleGroup difficulty;
+
+    @FXML
+    private ImageView welcomeImgView;
+
+
+    @FXML
+    private void initialize() {
+        welcomeImgView.setImage(new Image(getClass().getResourceAsStream("/img/welcome.png")));
+        welcomeImgView.setFitHeight(295);
+        welcomeImgView.setFitWidth(700);
+    }
 
     @FXML
     private void handleLoadGame() throws IOException, SQLException, ClassNotFoundException {
@@ -81,6 +94,7 @@ public class GameConfigController {
      */
     @FXML
     private void handleGameConfigButton() throws IOException {
+
         GameConfig.Difficulty gameDifficulty;
         GameConfig.MapType gameMapType;
 

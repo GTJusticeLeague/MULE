@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -13,11 +14,9 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="798.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="320.0" prefWidth="798.0" text="Welcome to M.U.L.E" textAlignment="CENTER" AnchorPane.bottomAnchor="-24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font name="Aileron Thin" size="31.0" />
-                     </font>
-                  </Label>
+                   <ImageView fx:id="welcomeImgView" fitHeight="295.0" fitWidth="798.0" pickOnBounds="true"
+                              preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="798.0">
