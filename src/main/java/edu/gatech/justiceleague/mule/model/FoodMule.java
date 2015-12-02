@@ -23,7 +23,7 @@ public class FoodMule implements Mule {
      */
     public void calculateProduction() {
         if (owner.getEnergy() == 0) {
-            return; // Not enough energy to produce
+            return; // Not enough energy to produce.
         }
         int production = 0;
         switch (this.terrain) {
