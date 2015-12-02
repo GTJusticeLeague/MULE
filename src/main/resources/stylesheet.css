@@ -1,0 +1,43 @@
+.root {
+    -fx-background-color: #d9d9d9;
+}
+
+.split-pane {
+    -fx-background-color: #d9d9d9;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #61B5D1;
+}
+
+.button:hover {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #3AA2C5;
+}
+
+.radio-button .radio {
+    -fx-background-color: #ffffff;
+    -fx-font-family: 'Helvetica';
+}
+
+.text-field {
+    -fx-display-caret: false;
+    -fx-background-color: #f2f2f2;
+}
+
+.text-field:focused {
+    -fx-display-caret: false;
+    -fx-background-color: #ffffff;
+}
+
+.choice-box {
+    -fx-background-color: #f2f2f2;
+}
+
+
+

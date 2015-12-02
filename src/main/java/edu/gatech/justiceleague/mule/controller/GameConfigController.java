@@ -127,6 +127,7 @@ public class GameConfigController {
             Stage stage = (Stage) gameConfigButton.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/playerConfiguration.fxml"));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add("/stylesheet.css");
             stage.setScene(scene);
             stage.show();
 
