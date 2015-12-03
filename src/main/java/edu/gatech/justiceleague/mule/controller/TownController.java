@@ -17,10 +17,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.java.edu.gatech.justiceleague.mule.model.Music;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -39,6 +41,7 @@ public class TownController {
     @FXML
     private Pane storePane;
 
+    private Music music;
 
 
     private final EventHandler<javafx.scene.input.MouseEvent> pubHandler = event -> {
@@ -144,6 +147,7 @@ public class TownController {
                 System.out.println(sw.toString());
             }
             stage.show();
+            music.stopMusic();
         }
     };
 
@@ -154,6 +158,9 @@ public class TownController {
     public void initialize() {
         pubPane.addEventHandler(MouseEvent.MOUSE_CLICKED, pubHandler);
         storePane.addEventHandler(MouseEvent.MOUSE_CLICKED, storeHandler);
+
+        music = new Music(Paths.get("src/main/resources/music/The_Western_Pub.mp3").toUri().toString());
+        music.startMusic();
     }
 
     /**
@@ -176,6 +183,7 @@ public class TownController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        music.stopMusic();
     }
 
 

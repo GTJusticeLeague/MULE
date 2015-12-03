@@ -30,7 +30,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.java.edu.gatech.justiceleague.mule.model.Music;
 
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.RejectedExecutionException;
@@ -97,6 +99,9 @@ public class GameScreenController {
 
     // Used to trigger an update every second
     private Timeline ticker;
+
+    //music
+    private Music music;
 
 
     /**
@@ -227,6 +232,7 @@ public class GameScreenController {
                 stage.setScene(scene);
                 stage.show();
                 event.consume();
+                music.stopMusic();
             }
         }
     };
@@ -247,6 +253,9 @@ public class GameScreenController {
         ticker = new Timeline(new KeyFrame(Duration.millis(100), ae -> updateScreen()));
         ticker.setCycleCount(Animation.INDEFINITE);
         ticker.play();
+
+        music = new Music(Paths.get("src/main/resources/music/Spanish_Flea.mp3").toUri().toString());
+        music.startMusic();
     }
 
     /**

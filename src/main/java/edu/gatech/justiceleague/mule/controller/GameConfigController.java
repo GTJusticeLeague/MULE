@@ -15,10 +15,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+import main.java.edu.gatech.justiceleague.mule.model.Music;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public class GameConfigController {
@@ -41,12 +46,16 @@ public class GameConfigController {
     @FXML
     private ImageView welcomeImgView;
 
+    private Music music;
 
     @FXML
     private void initialize() {
         welcomeImgView.setImage(new Image(getClass().getResourceAsStream("/img/welcome.png")));
         welcomeImgView.setFitHeight(295);
         welcomeImgView.setFitWidth(700);
+        //music
+        music = new Music(Paths.get("src/main/resources/music/Spanish_Flea.mp3").toUri().toString());
+        music.startMusic();
     }
 
     @FXML
@@ -122,6 +131,8 @@ public class GameConfigController {
 
         GamePlay.setGameConfig(new GameConfig(gameDifficulty, gameMapType,
                 Integer.parseInt(((RadioButton) numPlayers.getSelectedToggle()).getText())));
+
+        music.stopMusic();
 
         // Move to the next scene (player configuration)
             Stage stage = (Stage) gameConfigButton.getScene().getWindow();

@@ -21,8 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.java.edu.gatech.justiceleague.mule.model.Music;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**This is important
  * Created by danielansher on 10/4/15.
@@ -131,6 +133,7 @@ public class StoreController {
     @FXML
     private Button checkout;
 
+    private Music music;
 
 
     /**
@@ -184,6 +187,7 @@ public class StoreController {
                 }
 
             }
+            music.stopMusic();
         });
 
         returnToTown.setOnAction(event -> {
@@ -193,6 +197,9 @@ public class StoreController {
                 e.printStackTrace();
             }
         });
+
+        music = new Music(Paths.get("src/main/resources/music/Breaktime.mp3").toUri().toString());
+        music.startMusic();
     }
 
     /**
@@ -733,5 +740,6 @@ public class StoreController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        music.stopMusic();
     }
 }

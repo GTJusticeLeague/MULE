@@ -13,8 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import main.java.edu.gatech.justiceleague.mule.model.Music;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class PlayerConfigController {
@@ -64,6 +66,8 @@ public class PlayerConfigController {
     @FXML
     private Label errorMsg;
 
+    private Music music;
+
     /**
      * Constructor with nothing in it. Spooky.
      */
@@ -90,7 +94,8 @@ public class PlayerConfigController {
 
         }
 
-
+        music = new Music(Paths.get("src/main/resources/music/Spanish_Flea.mp3").toUri().toString());
+        music.startMusic();
     }
 
     /**
@@ -197,6 +202,8 @@ public class PlayerConfigController {
         }
 
         if (!inputMismatch) {
+            //stop music
+            music.stopMusic();
             // Set initial player (for land selection)
             GamePlay.setCurrentPlayer(GamePlay.getGameConfig().getPlayers()[0]);
             // Move to the next scene (player configuration)
