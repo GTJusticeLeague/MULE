@@ -11,12 +11,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Text layoutX="217.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Configure Your Players">
+                  <Label layoutX="205.0" layoutY="25.0" text="Configure Your Players">
                      <font>
-                        <Font size="35.0" />
+                        <Font name="System Bold" size="35.0" />
                      </font>
-                  </Text>
-                   <Label fx:id="errorMsg" layoutX="210.0" layoutY="65.0"
+                  </Label>
+                   <Label fx:id="errorMsg" layoutX="215.0" layoutY="65.0"
                           text="ERROR: Two or more players appear to have the same color." textFill="RED">
                        <font>
                            <Font name="System Bold" size="13.0"/>
@@ -40,11 +40,11 @@
                      <children>
                         <Pane prefHeight="260.0" prefWidth="415.0">
                            <children>
-                              <Text layoutX="156.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1">
+                              <Label layoutX="156.0" layoutY="27.0" text="Player 1">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font name="System Bold" size="25.0" />
                                  </font>
-                              </Text>
+                              </Label>
                                <TextField fx:id="player1Name" layoutX="110.0" layoutY="55.0" prefWidth="200.0"
                                           promptText="Name"/>
                                <ChoiceBox fx:id="player1Race" layoutX="110.0" layoutY="110.0" prefWidth="200.0"/>
@@ -53,11 +53,11 @@
                         </Pane>
                         <Pane prefHeight="260.0" prefWidth="415.0" GridPane.columnIndex="1">
                            <children>
-                              <Text layoutX="156.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2">
+                              <Label layoutX="156.0" layoutY="27.0" text="Player 2">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font name="System Bold" size="25.0" />
                                  </font>
-                              </Text>
+                              </Label>
                                <TextField fx:id="player2Name" layoutX="110.0" layoutY="55.0" prefWidth="200.0"
                                           promptText="Name"/>
                                <ChoiceBox fx:id="player2Race" layoutX="110.0" layoutY="110.0" prefWidth="200.0"/>
@@ -66,11 +66,11 @@
                         </Pane>
                         <Pane prefHeight="260.0" prefWidth="415.0" GridPane.rowIndex="1">
                            <children>
-                              <Text layoutX="156.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 3">
+                              <Label layoutX="156.0" layoutY="27.0" text="Player 3">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font name="System Bold" size="25.0" />
                                  </font>
-                              </Text>
+                              </Label>
                                <TextField fx:id="player3Name" layoutX="110.0" layoutY="55.0" prefWidth="200.0"
                                           promptText="Name"/>
                                <ChoiceBox fx:id="player3Race" layoutX="110.0" layoutY="110.0" prefWidth="200.0"/>
@@ -79,11 +79,11 @@
                         </Pane>
                         <Pane prefHeight="260.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Text layoutX="156.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 4">
+                              <Label layoutX="156.0" layoutY="27.0" text="Player 4">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font name="System Bold" size="25.0" />
                                  </font>
-                              </Text>
+                              </Label>
                                <TextField fx:id="player4Name" layoutX="110.0" layoutY="55.0" prefWidth="200.0"
                                           promptText="Name"/>
                                <ChoiceBox fx:id="player4Race" layoutX="110.0" layoutY="110.0" prefWidth="200.0"/>
@@ -97,6 +97,6 @@
         </items>
       </SplitPane>
        <Button fx:id="startGameButton" layoutX="685.0" layoutY="560.0" mnemonicParsing="false"
-               onAction="#handleStartGame" text="Start Game"/>
+               onAction="#handleStartGame" text="START"/>
    </children>
 </Pane>

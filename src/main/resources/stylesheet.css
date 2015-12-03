@@ -1,5 +1,18 @@
+@font-face {
+    src: url('/fonts/Larke_Neue_Bold.ttf');
+}
+
+@font-face {
+    src: url('/fonts/Larke_Neue_Regular.ttf');
+}
+
 .root {
     -fx-background-color: #d9d9d9;
+    -fx-font-family: 'Larke Neue Regular';
+}
+
+.label {
+    -fx-font-family: 'Larke Neue Bold';
 }
 
 .split-pane {
@@ -12,17 +25,29 @@
 
 .button {
     -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-family: 'Larke Neue Regular';
     -fx-background-color: #61B5D1;
 }
 
 .button:hover {
     -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-family: 'Larke Neue Regular';
     -fx-background-color: #3AA2C5;
 }
 
 .radio-button .radio {
     -fx-background-color: #ffffff;
-    -fx-font-family: 'Helvetica';
+}
+
+.radio-button .text {
+    -fx-font-size: 18px;
+    -fx-font-family: 'Larke Neue Regular';
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: #3AA2C5;
 }
 
 .text-field {
@@ -31,7 +56,7 @@
 }
 
 .text-field:focused {
-    -fx-display-caret: false;
+    -fx-display-caret: true;
     -fx-background-color: #ffffff;
 }
 
