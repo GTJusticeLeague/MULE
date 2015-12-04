@@ -1,9 +1,6 @@
 package edu.gatech.justiceleague.mule.controller;
 
-import edu.gatech.justiceleague.mule.model.GamePlay;
-import edu.gatech.justiceleague.mule.model.MuleFactory;
-import edu.gatech.justiceleague.mule.model.Player;
-import edu.gatech.justiceleague.mule.model.Tile;
+import edu.gatech.justiceleague.mule.model.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -723,7 +720,6 @@ public class GameScreenController {
         dialogStage.setTitle(title);
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.setScene(new Scene(vbox));
-
         return dialogStage;
 
     }

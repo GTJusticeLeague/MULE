@@ -15,6 +15,6 @@ public interface Mule {
      * Return a string describing the Mule type
      * @return Mule type string
      */
-    String getType();
+     String getType();
 
 }

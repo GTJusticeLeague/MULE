@@ -1,6 +1,7 @@
 package edu.gatech.justiceleague.mule.controller;
 
 import edu.gatech.justiceleague.mule.model.GamePlay;
+import edu.gatech.justiceleague.mule.model.Slots;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,7 +42,14 @@ public class TownController {
     @FXML
     private Pane storePane;
 
+    @FXML
+    private Pane casinoPane;
+
     private Music music;
+
+    private final EventHandler<javafx.scene.input.MouseEvent> casinoHandler = event -> {
+        Slots.main(null);
+    };
 
 
     private final EventHandler<javafx.scene.input.MouseEvent> pubHandler = event -> {
@@ -158,6 +166,7 @@ public class TownController {
     public void initialize() {
         pubPane.addEventHandler(MouseEvent.MOUSE_CLICKED, pubHandler);
         storePane.addEventHandler(MouseEvent.MOUSE_CLICKED, storeHandler);
+        casinoPane.addEventHandler(MouseEvent.MOUSE_CLICKED, casinoHandler);
 
         music = new Music(Paths.get("src/main/resources/music/The_Western_Pub.mp3").toUri().toString());
         music.startMusic();
