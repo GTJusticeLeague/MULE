@@ -57,7 +57,7 @@ public class GamePlay {
      */
     private static void randomEvent() {
         Random r = new Random();
-        int event = r.nextInt(7) + 1;
+        int event = r.nextInt(10) + 1;
         Label eventLabel = null;
         switch (event) {
             case 1:
@@ -95,10 +95,31 @@ public class GamePlay {
                 if (!curPlayerHasLowScore()) {
                     currentPlayer.setMoney(currentPlayer.getMoney() - 6 * moneyFactor());
                     eventLabel = new Label("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. "
-                            + "IT COST YOU $" + (6 * moneyFactor()) + "TO CLEAN IT UP.");
+                            + "IT COST YOU $" + (6 * moneyFactor()) + " TO CLEAN IT UP.");
                 }
                 break;
+            case 8:
+                currentPlayer.setEnergy(currentPlayer.getEnergy() - 3);
+                eventLabel = new Label("AN ELDRITCH ABOMINATION DEMANDED"
+                           + " 3 ENERGY AS A SACRIFICE TO HIS NEW CHURCH");
+                break;
+
+            case 9:
+                currentPlayer.setCrystite(currentPlayer.getCrystite() - 2);
+                eventLabel = new Label("A DRUG ADDLED ALIEN MADE OFF"
+                       + " WITH 3 UNITS OF YOUR CRYSTITE");
+                break;
+            case 10:
+                currentPlayer.setMoney(currentPlayer.getMoney() + 8 * moneyFactor());
+                eventLabel = new Label("SPACE GANGSTER'S GAVE YOU"
+                        + 8 * moneyFactor() + " FOR \"HELPIN\' OUT PAULIE.\"" +
+                        " YOU DECIDE TO SHUT UP AND PRETEND YOU KNOW WHAT\'S" +
+                        " HAPPENING");
             default:
+                currentPlayer.setMoney(currentPlayer.getMoney() - 5 * moneyFactor());
+                eventLabel = new Label("YOUR NO GOOD COUSIN HAS DEFAULTED" +
+                        " ON HIS HOME LOAN. PAY $" + 5 * moneyFactor() + " TO" +
+                        " BANISH THAT LOSER FROM YOUR LIFE FOR GOOD");
                 break;
         }
         if (eventLabel != null) {
